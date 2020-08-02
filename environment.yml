@@ -1,0 +1,12 @@
+name: healthtourismenv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - lxml
+  - spyder-kernels
+  - selenium
+  - pandas
+  - matplotlib
+  - geopandas
+prefix: F:\Programming_Environment\python_minicondadist\envs\healthtourismenv
