@@ -14,7 +14,7 @@ from pathlib import Path # To wrap around filepaths
 import pandas as pd
 import geopandas as gpd #A module built on top of pandas for geospatial analysis
 from pyproj import CRS #For CRS (Coordinate Reference System) functions
-from shapely.geometry import Point, MultiPoint #Required for point/polygon geometry
+from shapely.geometry import Point #Required for point/polygon geometry
 import matplotlib.pyplot as plt
 
 #%% --- Import Data ---
