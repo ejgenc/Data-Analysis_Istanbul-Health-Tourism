@@ -74,10 +74,7 @@ Below is a document tree of this project for those who wish to explore further.
 ```
     ├── LICENSE            < - License for the codes responsible in creating this data analysis projects.
     |
-    |
-    |
-    ├── README.md          <- The top-level README for developers using this project.
-    |
+    ├── README.md          <- The top-level README for the users of this project.
     |
     ├── data
     │   ├── external       <- Data from third party sources.
@@ -91,15 +88,32 @@ Below is a document tree of this project for those who wish to explore further.
     |
     |
     |── media              <- Contains internally generated figures and external photos. Internally generated figures come with a license.
-        ├── external_media <- Images and media downloaded from third party resources. A .txt file of references and attribution is included.
-    │   ├── figures        <- Data visualizations generated through scripts
+    |    ├── external_media <- Images and media downloaded from third party resources. A .txt file of references and attribution is included.
+    │    ├── figures        <- Data visualizations generated through scripts
     |                                             
     |
     |
     ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
     │
+    |
     ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │
+    |
+    |
+    ├── src                         <- Source code for use in this project.
+    │   |
+    │   │
+    │   ├── data_preparation        <- Scripts to download or generate data
+    │   |
+    |   |── data_analysis           <- Scripts to generate intermediary datasets to base visualizations on.                           
+    |   |   
+    │   └── visualization           <- Scripts to create visualizations.
+    │       
+    ├── tests                       <- Contains test modules that test the data analysis pipeline.
+    |   |
+    |   ├── unit_tests              <- Contains unit tests that test custom functions
+    |   |
+    |   ├── data_quality_tests      <- Contains data quality tests that test raw, processed and intermediary datasets.
+    |                        
     |
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
@@ -108,19 +122,18 @@ Below is a document tree of this project for those who wish to explore further.
     |── environment.yml    <- A .yml file for reproducing the analysis environment.
     |
     │
-    |── dodo.py            <- A file that contains all the information needed to run automation package Doit.
+    |── dodo.py            <- A file that contains all the information needed to run automation package Doit. Used to implement DAG structure.
     |
-    ├── src                         <- Source code for use in this project.
-    │   |
-    │   │
-    │   ├── data_preparation        <- Scripts to download or generate data
-    │   │   └── prepare_data.py     <- Final script to run all cleaning and prepration subscripts.
-    |   |
-    |   |── data_analysis           <- Scripts to generate intermediary datasets to base visualizations on.                           
-    |   |   └──analyze_data.py      <- Final script to run all analysis subscripts.
-    │   │
-    │   └── visualization           <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize_data.py   <- Final script to run all visualization subscripts.
+    |
+    |── setup.py           <- A file that contains information about the packaging of the code.
+    |
+    |
+    |── .gitignore         <- A file to specify which folders/files will be flagged with gitignore
+    |
+    |── .env               <- A file that can contain sensitive information such as passwords, hash keys etc. Flagged with .gitignore.
+    |                            ATTENTION! DO NOT COMMIT THIS FILE TO GIT!
+    |
+    |
 ```
 --------
 
