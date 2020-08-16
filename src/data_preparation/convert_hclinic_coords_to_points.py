@@ -10,12 +10,20 @@ with appropriate CRS information.
 
 #%% --- Import Required Packages ---
 
+import os
 from pathlib import Path # To wrap around filepaths
 import pandas as pd
 import geopandas as gpd #A module built on top of pandas for geospatial analysis
 from pyproj import CRS #For CRS (Coordinate Reference System) functions
 from shapely.geometry import Point #Required for point/polygon geometry
 import matplotlib.pyplot as plt
+
+#%% --- Set proper directory to assure integration with doit ---
+
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 
 #%% --- Import Data ---
 

@@ -1,0 +1,32 @@
+A SELF - REMINDER ON REPLICATION
+
+Replication is important. The project structure here aims to provide two methods of environment creation for two
+different package managers: conda and pip.
+
+Conda environment creation works with environment.yml files. To create an environment.yml file, run the following
+command in an Anaconda interpreter before loading it all into GitHub:
+
+conda env export --from-history -f environment.yml
+
+The resulting environment.yml file will include ONLY the packages you have explicitly installed using the conda
+package manager. These packages will then download their own dependencies. This will effectively create a cross-
+platform environment creation script.
+
+Some packages cannot be installed using only conda package manager. After the file is created,
+be sure to include the following under the "DEPENDENCIES:" tag:
+
+-pip
+-pip:
+   - PIP PACKAGE_1
+   - PIP PACKAGE_2
+
+We also have to account for pip-only installations. For that, do the following in an Python interpreter:
+
+pip freeze > requirements.txt
+
+These two files are the bare minimum for the reproducibility of our analysis environment.
+
+After you are done with extracting the environment, you should create a dodo.py file to use with the doit module.
+You should implement a DAG structure in the dodo.py file for two reasons:
+	- You can run your own analysis with a single command, without running the parts that are already done.
+	- The person trying to replicate the analysis can do so with a single command.

@@ -8,9 +8,16 @@ file in order to prepare it for further analysis
 """
 #%% --- Import Required Packages ---
 
+import os
 from pathlib import Path # To wrap around filepaths
 import numpy as np
 import pandas as pd
+
+#%% --- Set proper directory to assure integration with doit ---
+
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
 #%% --- Import Data ---
 
@@ -68,7 +75,7 @@ def sample_reader(dataframe):
         print("")
         for i in range(0,len(dataframe)):
             selection = dataframe.iloc[i]
-            print(selection[column])
+            print(str(selection[column]).encode("utf-8-sig"))
             print("")
             
 

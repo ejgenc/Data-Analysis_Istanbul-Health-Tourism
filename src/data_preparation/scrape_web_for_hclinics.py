@@ -17,11 +17,19 @@ and clinic-coordinate is written to a csv file.
 
 #%% --- Import required packages ---
 
+import os
 import requests # To request for an HTML file
 from lxml import html #To create the document tree / xpath query
 from selenium import webdriver # For webscraping
 from pathlib import Path # To wrap around filepaths
 import pandas as pd
+
+#%% --- Set proper directory to assure integration with doit ---
+
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 
 #%% --- Scrape the hair transplant clinic names from the web ---
 
@@ -47,6 +55,15 @@ hclinic_df = pd.DataFrame(hclinic_names, columns = ["hclinic_name"])
 #Some correction
 
 hclinic_df.loc[0,"hclinic_name"] = "Aesthetic Hairtrans Saç Ekim Merkezi"
+
+#%% --- Drop rows that come after a certain iloc ---
+
+last_row_mask = hclinic_df.loc[:,"hclinic_name"] == "Dr.İbrahim AŞKAR"
+last_row_index = hclinic_df.loc[last_row_mask].index[0]
+
+after_last_row_mask = hclinic_df.index <= last_row_index
+hclinic_df = hclinic_df[after_last_row_mask]
+
 
 #%% --- Add a "hclinic_search_url" column ---
 
