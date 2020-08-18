@@ -14,7 +14,8 @@ dependencies:
   - descartes
   - seaborn
   - doit
+  - pytest
   - pip
-  -pip install:
+  - pip:
     - .
 prefix: F:\Programming_Environment\python_minicondadist\envs\healthtourismenv

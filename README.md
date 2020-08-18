@@ -78,8 +78,8 @@ Below is a document tree of this project for those who wish to explore further.
     |
     ├── data
     │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling and visualization.
+    │   ├── final          <- Data that has been analyzed.
+    │   ├── processed      <- Cleaned and processed data ready to be analyzed.
     │   └── raw            <- The original, immutable data dump.
     │
     │
