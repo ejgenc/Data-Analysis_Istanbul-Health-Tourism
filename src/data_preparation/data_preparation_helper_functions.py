@@ -46,16 +46,17 @@ def sample_and_read_from_df(dataframe, sample_size):
                         "dataframe length is {}, sample_size is {}").format(len(dataframe), sample_size)
     assert len(dataframe) >= sample_size, IndexError(index_error_text)
     
-    dataframe_columns = dataframe.columns
-    for column in dataframe_columns:
+    sample = dataframe.sample(sample_size)
+    sample_columns = sample.columns
+    for column in sample_columns:
         print("Commencing with " + column + " column of the dataframe")
         print("")
-        for i in range(0,len(dataframe)):
-            selection = dataframe.iloc[i]
+        for i in range(0,len(sample)):
+            selection = sample.iloc[i]
             print(str(selection[column]).encode("utf-8"))
             print("")  
             
-#%% --- FUNCTION: report_missing_values ---
+#%% --- FUNCTION: report_null_values ---
 
     # --- Helper Functions ---
     
@@ -236,7 +237,7 @@ def calculate_null_values(dataframe, calculate_percentages = True):
     
     if calculate_percentages == True:
         #Divide null count by total length of each col to find a percentage
-        null_counts_pct = (null_counts / test_df.shape[0]) * 100
+        null_counts_pct = (null_counts / dataframe.shape[0]) * 100
         null_values_report = pd.concat([null_counts, null_counts_pct],
                  axis = 1)
         null_values_report.rename(columns = {0:"null_count",1:"null_percentage"},

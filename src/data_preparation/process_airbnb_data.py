@@ -12,6 +12,7 @@ import os
 from pathlib import Path # To wrap around filepaths
 import numpy as np
 import pandas as pd
+from src.data_preparation.data_preparation_helper_functions import sample_and_read_from_df
 
 #%% --- Set proper directory to assure integration with doit ---
 
@@ -56,30 +57,11 @@ print(airbnb.shape) # 16251 rows, 9 cols
 #I want to be able to randomly take n samples from each dataset and then print them
 #on a clean format to see the potential problems
 
-
-
-
-# Sample from the datasets
 #If i had something to test for, i'd strive for somewhat of a representative sample size
 #while sampling. However, i think the best to do here would be to print what i can read
 #because i don't have any computational measure to test for something:
-airbnb_sample = airbnb.sample(20)
 
-# Make some kind of a sample reader function
-def sample_reader(dataframe):
-    #Accepts a dataframe as an argument
-    #Prints out the sample dataframe into the console in a column - by - column format
-    dataframe_columns = dataframe.columns
-    for column in dataframe_columns:
-        print("Commencing with " + column + " column of the dataframe")
-        print("")
-        for i in range(0,len(dataframe)):
-            selection = dataframe.iloc[i]
-            print(str(selection[column]).encode("utf-8-sig"))
-            print("")
-            
-
-sample_reader(airbnb_sample)
+sample_and_read_from_df(airbnb, 20)
 
 #SPOTTED PROBLEMS:
 #   dataframe airbnb column neigborhood is not properly formatted:

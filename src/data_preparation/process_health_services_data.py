@@ -15,6 +15,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from src.data_preparation.data_preparation_helper_functions import report_null_values
+from src.data_preparation.data_preparation_helper_functions import plot_null_values_matrix
 
 #%% --- Set proper directory to assure integration with doit ---
 
@@ -40,35 +42,12 @@ hservices.drop(labels = columns_to_drop,
 
 #%% --- EDA: Explore Missing Values ---
 
-def visualize_missing_values(dataframe):
-    """
-    Accepts a pandas dataframe object as argument.
-    Displays a plot that shows in which columns missing values are located.
-
-    Parameters
-    ----------
-    dataframe : A pandas dataframe object
-
-    Returns
-    -------
-    None. Displays a plot.
-
-    """
-    #Initialize a figure
-    fig = plt.figure(figsize = (12,6))
-    ax = fig.add_subplot(1,1,1)
-    
-    df_nulls = dataframe.isnull()
-    sns.heatmap(df_nulls,
-                cbar = False)
-    
-    
-visualize_missing_values(hservices)
+plot_null_values_matrix(hservices)
 
 #The number of missing values appears to be either 0 or insignificant.
 #Let's tackle this numerically:
     
-print(hservices.isnull().sum())
+report_null_values(hservices, print_results = True)
 
 #There are some missing values, but none in important columns such as lat/long and
 #name.
