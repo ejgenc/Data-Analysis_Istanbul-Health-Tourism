@@ -78,13 +78,10 @@ Below is a document tree of this project for those who wish to explore further.
     |
     ├── data
     │   ├── external       <- Data from third party sources.
-<<<<<<< HEAD
     │   ├── final          <- Data that has been analyzed.
     │   ├── processed      <- Cleaned and processed data ready to be analyzed.
-=======
     │   ├── final          <- Intermediate data that has been transformed.
     │   ├── processed      <- Clean and processed data ready to be analyzed.
->>>>>>> f364152816751bf8a3087e27d181fad61496f18e
     │   └── raw            <- The original, immutable data dump.
     │
     │
@@ -134,9 +131,6 @@ Below is a document tree of this project for those who wish to explore further.
     |
     |
     |── .gitignore         <- A file to specify which folders/files will be flagged with gitignore
-    |
-    |── .env               <- A file that can contain sensitive information such as passwords, hash keys etc. Flagged with .gitignore.
-    |                            ATTENTION! DO NOT COMMIT THIS FILE TO GIT!
     |
     |
 ```
