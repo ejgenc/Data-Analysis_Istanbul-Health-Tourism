@@ -37,10 +37,12 @@ def sample_and_read_from_df(dataframe, sample_size):
 
     """
     valerror_text = "dataframe must be type pd.DataFrame, got {}".format(type(dataframe))
-    assert isinstance(dataframe, pd.DataFrame), ValueError(valerror_text)
+    if not isinstance(dataframe, pd.DataFrame):
+        raise ValueError(valerror_text)
     
     valerror_text = "sample_size must be type int, got {}".format(type(sample_size))
-    assert isinstance(sample_size, int), ValueError(valerror_text)
+    if not isinstance(sample_size, int):
+        raise ValueError(valerror_text)
     
     index_error_text = ("dataframe length must be larger than or equal to sample_size. "
                         "dataframe length is {}, sample_size is {}").format(len(dataframe), sample_size)
