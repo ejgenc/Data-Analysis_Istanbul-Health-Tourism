@@ -46,7 +46,8 @@ def sample_and_read_from_df(dataframe, sample_size):
     
     index_error_text = ("dataframe length must be larger than or equal to sample_size. "
                         "dataframe length is {}, sample_size is {}").format(len(dataframe), sample_size)
-    assert len(dataframe) >= sample_size, IndexError(index_error_text)
+    if not len(dataframe) >= sample_size:
+        raise IndexError(index_error_text)
     
     sample = dataframe.sample(sample_size)
     sample_columns = sample.columns
@@ -77,7 +78,8 @@ def is_null_values_dataframe(dataframe):
 
     """
     valerror_text = "dataframe must be type pd.DataFrame, got {}".format(type(dataframe))
-    assert isinstance(dataframe, pd.DataFrame), ValueError(valerror_text)
+    if not isinstance(dataframe, pd.DataFrame):
+        raise ValueError(valerror_text)
     
     is_null_values_dataframe = False
     
@@ -101,10 +103,12 @@ def is_extended_null_values_dataframe(null_values_dataframe):
 
     """
     valerror_text = "dataframe must be type pd.DataFrame, got {}".format(type(null_values_dataframe))
-    assert isinstance(null_values_dataframe, pd.DataFrame), ValueError(valerror_text)
+    if not isinstance(null_values_dataframe, pd.DataFrame):
+        raise ValueError(valerror_text)
     
     valerror_text = "dataframe does not contain null_count information."
-    assert is_null_values_dataframe(null_values_dataframe), ValueError(valerror_text)
+    if not is_null_values_dataframe(null_values_dataframe):
+        raise ValueError(valerror_text)
     
     is_extended_null_values_dataframe = False
     
@@ -130,10 +134,12 @@ def plot_null_values_bar_chart(null_values_dataframe):
     """
     
     valerror_text = "dataframe must be type pd.DataFrame, got {}".format(type(null_values_dataframe))
-    assert isinstance(null_values_dataframe, pd.DataFrame), ValueError(valerror_text)
+    if not isinstance(null_values_dataframe, pd.DataFrame):
+        raise ValueError(valerror_text)
     
     valerror_text = "dataframe does not contain null_count information."
-    assert is_null_values_dataframe(null_values_dataframe), ValueError(valerror_text)
+    if not is_null_values_dataframe(null_values_dataframe):
+        raise ValueError(valerror_text)
     
     fig = plt.Figure(figsize = (9.60,7.20))
     
