@@ -198,20 +198,22 @@ def plot_null_values_matrix(dataframe):
     """
     
     valerror_text = "dataframe must be type pd.DataFrame, got {}".format(type(dataframe))
-    assert isinstance(dataframe, pd.DataFrame), ValueError(valerror_text)
+    if not isinstance(dataframe, pd.DataFrame):
+        raise ValueError(valerror_text)
     
-    
-    fig = plt.Figure(figsize = (9.60,7.20))
-    ax = fig.add_subplot()
     #Create a boolean dataframe based on whether values are null or not
     df_null = dataframe.isnull()
     #create a heatmap of the boolean dataframe
-    sns.heatmap(df_null,
+    plot_object = sns.heatmap(df_null,
                 cbar = False)
+    
     plt.xticks(rotation=90, size='x-large')
     plt.show()
-    return fig   
+    
+    fig = plot_object.get_figure()
+    return fig 
 
+    
     # --- Subfunction : calculate_null_values ---
         
 def calculate_null_values(dataframe, calculate_percentages = True):
@@ -239,7 +241,12 @@ def calculate_null_values(dataframe, calculate_percentages = True):
         
     """
     valerror_text = "dataframe must be type pd.DataFrame, got {}".format(type(dataframe))
-    assert isinstance(dataframe, pd.DataFrame), ValueError(valerror_text)
+    if not isinstance(dataframe, pd.DataFrame):
+        raise ValueError(valerror_text)
+    
+    valerror_text = "calculate_percentages must be type boolean True or False, got {}".format(type(calculate_percentages))
+    if calculate_percentages not in [True, False]:
+        raise ValueError(valerror_text)
     
     null_counts = dataframe.isnull().sum()
     
@@ -278,10 +285,12 @@ def print_null_values(null_values_dataframe):
     """
     
     valerror_text = "dataframe must be type pd.DataFrame, got {}".format(type(null_values_dataframe))
-    assert isinstance(null_values_dataframe, pd.DataFrame), ValueError(valerror_text)
+    if not isinstance(null_values_dataframe, pd.DataFrame):
+        raise ValueError(valerror_text)
     
     valerror_text = "dataframe does not contain null_count information."
-    assert is_null_values_dataframe(null_values_dataframe), ValueError(valerror_text)
+    if not is_null_values_dataframe(null_values_dataframe):
+        raise ValueError(valerror_text)
     
     if is_extended_null_values_dataframe(null_values_dataframe):
         for column in null_values_dataframe.index:
@@ -300,29 +309,35 @@ def print_null_values(null_values_dataframe):
 def visualize_null_values(null_values_dataframe, kind = "bar_chart"):
     """
 
-    Lorem ipsum dolor sit amet
+    Returns a visual representation of a given null_values_dataframe.
 
     Parameters
     ----------
-    null_values_dataframe : TYPE
-        DESCRIPTION.
-    kind : TYPE, optional
-        DESCRIPTION. The default is "bar_chart".
+    null_values_dataframe : pandas.DataFrame.
+        A pandas.DataFrame that is produced as the result of calling
+        calculate_null_values() on a dataframe. Has to contain a column
+        called "null_count" at minimum.
+    
+    kind : One of the following strings "bar_chart", "matrix", "heatmap"
+         The default is "bar_chart". "matrix" and "heatmap" is not implemented yet.
 
     Returns
     -------
-    None.
+    Returns a matplotlib.pyplot.Figure object.
 
     """
     valerror_text = "dataframe must be type pd.DataFrame, got {}".format(type(null_values_dataframe))
-    assert isinstance(null_values_dataframe, pd.DataFrame), ValueError(valerror_text)
+    if not isinstance(null_values_dataframe, pd.DataFrame):
+        raise ValueError(valerror_text)
     
     valerror_text = "dataframe does not contain null_count information."
-    assert is_null_values_dataframe(null_values_dataframe), ValueError(valerror_text)
+    if not is_null_values_dataframe(null_values_dataframe):
+        raise ValueError(valerror_text)
     
     accepted_kinds = ["bar_chart", "matrix", "heatmap"]
-    valerror_text = "Parameter kind must be a string and one of bar_chart, matrix or heatmap. Got {} as type {}.".format(str(kind), type(kind))
-    assert str(kind) in accepted_kinds, ValueError(valerror_text)
+    valerror_text = "Parameter kind must be a string and one of bar_chart, matrix or heatmap. Got \"{}\" as type {}.".format(str(kind), type(kind))
+    if str(kind) not in accepted_kinds:
+        raise ValueError(valerror_text)
     
     if kind == "bar_chart":
         plot = plot_null_values_bar_chart(null_values_dataframe)
@@ -339,18 +354,61 @@ def visualize_null_values(null_values_dataframe, kind = "bar_chart"):
 
 def report_null_values(dataframe, calculate_percentages = True,
                        visualize_results = False, print_results = False):
-    
-    if calculate_percentages == True:
-        null_values_dataframe = calculate_null_values(dataframe, calculate_percentages = True)
-    else:
-        null_values_dataframe = calculate_null_values(dataframe, calculate_percentages = False)
+    """
+
+    Composes a report about the null values within the given dataframe.
+
+    Parameters
+    ----------
+    dataframe : pandas.DataFrame.
+        A pandas.DataFrame that will be evaluated for nullity information.
         
+    calculate_percentages: Boolean True or False.
+        Related to the subfuction calculate_percentages. Determines whether or not
+        percentages related to nullity will be calculated.
+        
+    visualize_results: Boolean True or False.
+        Related to the subfunction visualize_null_values. Determines whether or not
+        this function will return a matplotlib.Figure object.
+        
+    print_results: Boolean True or False.
+        Related to the subfunction print_null_values. Determines whether or not
+        this function will print out a formatted report.
+    
+    Returns
+    -------
+    Depending on the arguments passed, returns one of the following:
+        - pandas.DataFrame object
+        - matplotlib.Figure object
+        - None (print out a report)
+
+    """
+    
+    valerror_text = "dataframe must be type pd.DataFrame, got {}".format(type(dataframe))
+    if not isinstance(dataframe, pd.DataFrame):
+        raise ValueError(valerror_text)
+        
+    parameters = [calculate_percentages, visualize_results, print_results]
+    for parameter in parameters:
+        valerror_text = "{} must be type boolean True or False, got {}".format(parameter, type(parameter))
+        if parameter not in [True, False]:
+            raise ValueError(valerror_text)
+    
+    valerror_text = "Parameters visualize_results and print_results cannot be both boolean True."
+    if visualize_results == True and print_results == True:
+        raise ValueError(valerror_text)
+        
+    null_values_dataframe = calculate_null_values(dataframe, calculate_percentages = calculate_percentages)
+
     if visualize_results == True:
         plot = visualize_null_values(null_values_dataframe)
         return plot
     
     elif print_results == True:
         print_null_values(null_values_dataframe)
+        return
     
     else:
         return null_values_dataframe
+    
+    
