@@ -80,8 +80,6 @@ Below is a document tree of this project for those who wish to explore further.
     │   ├── external       <- Data from third party sources.
     │   ├── final          <- Data that has been analyzed.
     │   ├── processed      <- Cleaned and processed data ready to be analyzed.
-    │   ├── final          <- Intermediate data that has been transformed.
-    │   ├── processed      <- Clean and processed data ready to be analyzed.
     │   └── raw            <- The original, immutable data dump.
     │
     │
@@ -108,11 +106,24 @@ Below is a document tree of this project for those who wish to explore further.
     │   |
     |   |── data_analysis           <- Scripts to generate intermediary datasets to base visualizations on.                           
     |   |   
-    │   └── visualization           <- Scripts to create visualizations.
+    │   |── data_visualization      <- Scripts to create visualizations.
+    |   |
+    |   |── helper_functions        <- Scripts that contain various helper functions.
+    |   
+    |
     │       
     ├── tests                       <- Contains test modules that test the data analysis pipeline.
     |   |
-    |   ├── unit_tests              <- Contains unit tests that test custom functions
+    |   ├── unit_tests              <- Contains unit tests. Folder structure mirrors that of the folder src.
+    |   |         |
+    |   |         |
+    |   |         |── data_preparation 
+    |   |         |
+    |   |         |── data_analysis
+    |   |         |
+    |   |         |── data_visualization
+    |   |         |
+    |   |         |── helper_functions
     |   |
     |   ├── data_quality_tests      <- Contains data quality tests that test raw, processed and intermediary datasets.
     |                        

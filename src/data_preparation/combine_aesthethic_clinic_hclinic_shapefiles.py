@@ -18,12 +18,12 @@ from shapely.geometry import Point
 
 #%% --- Import Data ---
 
-#Import hair clinics data
-import_fp = Path("../../data/processed/hair_clinics_processed.shp")
-hclinics_gdf = gpd.read_file(import_fp)
+# #Import hair clinics data
+# import_fp = Path("../../data/processed/hair_clinics_processed.shp")
+# hclinics_gdf = gpd.read_file(import_fp)
 
-#Import aesthethic centers data
-import_fp = Path("../../data/processed/istanbul_aesthethic_centers_processed_shapefile.shp")
-acenters_gdf = gpd.read_file(import_fp)
+# #Import aesthethic centers data
+# import_fp = Path("../../data/processed/istanbul_aesthethic_centers_processed_shapefile.shp")
+# acenters_gdf = gpd.read_file(import_fp)
 
 

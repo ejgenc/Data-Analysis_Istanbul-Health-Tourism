@@ -17,5 +17,5 @@ dependencies:
   - pytest
   - pip
   - pip:
-    - .
+    - -e .
 prefix: F:\Programming_Environment\python_minicondadist\envs\healthtourismenv

@@ -15,14 +15,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from src.data_preparation.data_preparation_helper_functions import report_null_values
-from src.data_preparation.data_preparation_helper_functions import plot_null_values_matrix
+from src.helper_functions.data_preparation_helper_functions import report_null_values
+from src.helper_functions.data_preparation_helper_functions import plot_null_values_matrix
 
 #%% --- Set proper directory to assure integration with doit ---
 
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
+# abspath = os.path.abspath(__file__)
+# dname = os.path.dirname(abspath)
+# os.chdir(dname)
 
 #%% --- Import Data ---
 
@@ -98,10 +98,12 @@ hservices.drop(labels = "related_to_htourism",
 
 #%% --- Export Data ---
 
-export_fp = Path("../../data/processed/istanbul_aesthethic_centers_processed.csv")
-hservices.to_csv(export_fp,
-                 encoding = "utf-8-sig",
-                 index = False)
+# export_fp = Path("../../data/processed/istanbul_aesthethic_centers_processed.csv")
+# hservices.to_csv(export_fp,
+#                  encoding = "utf-8-sig",
+#                  index = False)
+
+
     
 
 

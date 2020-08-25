@@ -4,7 +4,7 @@
 
 This script contains some helper functions that are used in the scripts found found under src/data_preparation.
 The unit tests for these functions can be found at:
-     tests/unit_tests/data_preparation/test_data_preparation_helper_functions.py
+     tests/unit_tests/helper_functions/test_data_preparation_helper_functions.py
 
 """
 #%% --- Import Required Packages ---
@@ -18,9 +18,9 @@ import seaborn as sns
 
 #%% --- Set proper directory to assure integration with doit ---
 
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
+# abspath = os.path.abspath(__file__)
+# dname = os.path.dirname(abspath)
+# os.chdir(dname)
 
 #%% --- FUNCTION: sample_and_read_from_df ---
 

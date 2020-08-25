@@ -20,9 +20,9 @@ import matplotlib.pyplot as plt
 
 #%% --- Set proper directory to assure integration with doit ---
 
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
+# abspath = os.path.abspath(__file__)
+# dname = os.path.dirname(abspath)
+# os.chdir(dname)
 
 
 #%% --- Import Data ---
@@ -89,8 +89,8 @@ for district_index in district_index_list:
 #%% --- Export Data ---
 #Let's now export the file that we have created:
     
-out_fp = Path("../../data/processed/hair_clinics_processed.shp")
-hclinic_gdf.to_file(out_fp,encoding='utf-8-sig')
+# out_fp = Path("../../data/processed/hair_clinics_processed.shp")
+# hclinic_gdf.to_file(out_fp,encoding='utf-8-sig')
 
 
 

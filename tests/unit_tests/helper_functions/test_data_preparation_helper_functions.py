@@ -2,9 +2,9 @@
 """
 ------ What is this file? ------
 
-This script contains some helper functions that are used in the scripts found found under src/data_preparation.
-The unit tests for these functions can be found at:
-     tests/unit_tests/data_preparation/test_data_preparation_helper_functions.py
+This test module contains some tests for the data_preparation_helper_functions.py script.
+The script can be found at:
+    src/helper_functions/data_preparation_helper_functions.py
 
 """
 #%% --- Import Required Packages ---
@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from src.data_preparation import data_preparation_helper_functions as functions
+from src.helper_functions import data_preparation_helper_functions as functions
 from numpy import arange
 
 #%% --- Set proper directory to assure integration with doit ---
@@ -429,9 +429,7 @@ class TestReportNullValues(object):
                                          visualize_results = test_parameter_visualize_results,
                                          print_results = test_parameter_print_results)
         assert exception_info.match(expected_message), error_message
-        
-
-        
+                
     def test_returned_is_dataframe_on_calculate_percentages_true(self):
         test_dataframe = test_df
         expected = pd.DataFrame

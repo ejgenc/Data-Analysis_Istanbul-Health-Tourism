@@ -18,9 +18,9 @@ from shapely.geometry import Point
 
 #%% --- Set proper directory to assure integration with doit ---
 
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
+# abspath = os.path.abspath(__file__)
+# dname = os.path.dirname(abspath)
+# os.chdir(dname)
 
 #%% --- Import Data ---
 
@@ -44,5 +44,5 @@ acenters_gdf = gpd.GeoDataFrame(acenters_df,
                                 geometry = geometry)
 
 #%% -- Export Data ---
-export_fp = Path("../../data/processed/istanbul_aesthethic_centers_processed_shapefile.shp")
-acenters_gdf.to_file(export_fp, encoding = "utf-8-sig")
+# export_fp = Path("../../data/processed/istanbul_aesthethic_centers_processed_shapefile.shp")
+# acenters_gdf.to_file(export_fp, encoding = "utf-8-sig")
