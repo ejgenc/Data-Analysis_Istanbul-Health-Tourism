@@ -9,12 +9,19 @@ The script combines the two files into a joint shapefile.
 """
 #%% --- Import Required Packages ---
 
+import os
 from pathlib import Path # To wrap around filepaths
 import re #RegEx
 import numpy as np
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point
+
+#%% --- Set proper directory to assure integration with doit ---
+
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
 #%% --- Import Data ---
 

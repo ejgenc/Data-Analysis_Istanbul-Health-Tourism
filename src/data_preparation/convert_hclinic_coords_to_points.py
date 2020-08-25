@@ -20,9 +20,9 @@ import matplotlib.pyplot as plt
 
 #%% --- Set proper directory to assure integration with doit ---
 
-# abspath = os.path.abspath(__file__)
-# dname = os.path.dirname(abspath)
-# os.chdir(dname)
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
 
 #%% --- Import Data ---

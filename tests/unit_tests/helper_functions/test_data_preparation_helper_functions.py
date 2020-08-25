@@ -443,6 +443,7 @@ class TestReportNullValues(object):
         actual = type(functions.report_null_values(test_dataframe, calculate_percentages = False))
         error_message = "Return object is not correct. Expected {}, got {}".format(expected,actual)
         assert not isinstance(actual, expected), error_message
+
     
     
 
