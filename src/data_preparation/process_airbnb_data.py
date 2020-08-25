@@ -14,7 +14,6 @@ from pathlib import Path # To wrap around filepaths
 import numpy as np
 import pandas as pd
 from src.helper_functions.data_preparation_helper_functions import sample_and_read_from_df
-from src.helper_functions.pydoit_helper_functions import resolve_path
 
 #%% --- Set proper directory to assure integration with doit ---
 
@@ -113,7 +112,7 @@ airbnb.loc[:,"district_tr"] = airbnb.loc[:,"district_tr"].map(airbnb_unique_dist
 
 #%% --- Export Data ---
 
-#export_fp = Path("../../data/processed/istanbul_airbnb_processed.csv")
-#airbnb.to_csv(export_fp,
-              #encoding='utf-8-sig',
-              #index = False)
+export_fp = Path("../../data/processed/istanbul_airbnb_processed.csv")
+airbnb.to_csv(export_fp,
+              encoding='utf-8-sig',
+              index = False)

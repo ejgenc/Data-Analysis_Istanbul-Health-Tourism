@@ -85,12 +85,13 @@ for district_index in district_index_list:
     hclinic_gdf.loc[p_in_p_mask,"in_district_eng"] = district_name
     
 #We had to resort to the use of df.iloc[] in above code because
-#plain boolean masks did not play along well with the code.   
+#plain boolean masks did not play along well with the code.
+   
 #%% --- Export Data ---
 #Let's now export the file that we have created:
     
-# out_fp = Path("../../data/processed/hair_clinics_processed.shp")
-# hclinic_gdf.to_file(out_fp,encoding='utf-8-sig')
+out_fp = Path("../../data/processed/hair_clinics_processed.shp")
+hclinic_gdf.to_file(out_fp,encoding='utf-8-sig')
 
 
 
