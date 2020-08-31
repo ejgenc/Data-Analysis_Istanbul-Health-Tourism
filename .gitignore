@@ -85,6 +85,3 @@ target/
 
 # Mypy cache
 .mypy_cache/
-
-# Self Documentation
-self_documentation
