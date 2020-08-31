@@ -13,6 +13,8 @@ import pathlib
 from pathlib import Path # To wrap around filepaths
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
+from scipy.stats import iqr
 from src.helper_functions.data_preparation_helper_functions import sample_and_read_from_df
 from src.helper_functions.data_preparation_helper_functions import report_null_values
 
@@ -134,6 +136,61 @@ airbnb_dtype_object_only = airbnb.select_dtypes(include = ["object"])
 print(airbnb_dtype_object_only.columns)
 #As all the column names seem to accomodate only strings, we can be
 #pretty sure that showing up as object is correct behavior.
+
+#%% --- EDA - Explore Outliers in price ---
+
+fig = plt.figure(figsize = (19.20, 10.80))
+ax = fig.add_subplot(1,1,1)
+ax.hist(x = airbnb.loc[:,"price"],
+        bins = 20)
+
+#Our histogram is very wonky. It's obvious that there are some issues. Let's see:
+    
+# It doesn't make sense for a airbnb room to cost 0 liras. That's for sure.
+print(airbnb.loc[:,"price"].sort_values().head(20))
+
+#What about maxes?
+print(airbnb.loc[:,"price"].sort_values(ascending = False).head(30))
+#There are some very high maxes, that's for sure. Let's try to make heads and tails of
+#what these houses are:
+
+possible_outliers = airbnb.sort_values(by = "price",
+                                       axis = 0,
+                                       ascending = False).head(30)
+
+# A qualitative analysis of such houses show that there really aappears to be a problem
+#with pricing. Let's calculate the IQR to drop the outliers:
+
+#Calculate the iqr
+price_iqr = iqr(airbnb.loc[:,"price"], axis = 0)
+
+#Calculate q3 and q1
+q1 = airbnb["price"].quantile(0.25)
+q3 = airbnb["price"].quantile(0.75)
+
+#Create min and max mask
+min_mask = airbnb.loc[:,"price"] >= q1 - (1.5 * price_iqr)
+max_mask = airbnb.loc[:,"price"] <= q3 + (1.5 * price_iqr)
+#Combine masks
+combined_mask = min_mask & max_mask
+#Create subset
+airbnb_within_iqr = airbnb.loc[combined_mask]
+
+fig = plt.figure(figsize = (19.20, 10.80))
+ax = fig.add_subplot(1,1,1)
+ax.hist(x = airbnb_within_iqr.loc[:,"price"],
+        bins = 20)
+
+#Alright, limiting our data to an IQR appears to omit a whole lot of data.
+#I am sure that some of the outliers we have are errors of entry.
+#However, the only ones that we can conclusively prove are the entries that are rated at 0.
+#We'll drop these
+
+#Create a mask for zeros
+zero_mask = (airbnb.loc[:,"price"] > 0)
+
+#Filter using the mask
+airbnb = airbnb.loc[zero_mask,:]
 
 
 #%% --- Export Data ---
