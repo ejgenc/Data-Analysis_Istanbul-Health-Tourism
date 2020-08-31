@@ -17,6 +17,7 @@ import geopandas as gpd #A module built on top of pandas for geospatial analysis
 from pyproj import CRS #For CRS (Coordinate Reference System) functions
 from shapely.geometry import Point #Required for point/polygon geometry
 import matplotlib.pyplot as plt
+from src.helper_functions.data_preparation_helper_functions import report_null_values
 
 #%% --- Set proper directory to assure integration with doit ---
 
@@ -86,7 +87,28 @@ for district_index in district_index_list:
     
 #We had to resort to the use of df.iloc[] in above code because
 #plain boolean masks did not play along well with the code.
-   
+
+#%% --- EDA: Missing Values Exploration ---
+
+hclinic_gdf_null_report = report_null_values(hclinic_gdf)
+#We have two missing values here in in_district_eng column:
+#However, as our dataset is really small, i want to protect as much
+#values as possible.
+
+#Create a missing data mask
+missing_data_mask = hclinic_gdf.isnull().any(axis = 1) #.any is used to get rows from a multidimensional nan matrix
+missing_data_clinic_names = hclinic_gdf.loc[missing_data_mask, "hclinic_name"]
+
+#We'll insert the missing location info by hand. They are at Atasehir and Bakirkoy respectively.
+hclinic_gdf.iloc[23,-1] = "Atasehir"
+hclinic_gdf.iloc[25,-1] = "Bakirkoy"
+
+
+#%% --- EDA: Datatype Agreement ---
+
+hclinic_gdf_data_types = hclinic_gdf.dtypes
+#Everything is as expected.
+
 #%% --- Export Data ---
 #Let's now export the file that we have created:
     

@@ -14,6 +14,7 @@ from pathlib import Path # To wrap around filepaths
 import numpy as np
 import pandas as pd
 from src.helper_functions.data_preparation_helper_functions import sample_and_read_from_df
+from src.helper_functions.data_preparation_helper_functions import report_null_values
 
 #%% --- Set proper directory to assure integration with doit ---
 
@@ -109,6 +110,31 @@ unique_districts_eng_corrected = ["Kadikoy", "Fatih", "Tuzla", "Gaziosmanpasa",
 
 airbnb_unique_districts_dict_tr = dict(zip(unique_districts_eng_corrected, unique_districts_tr_corrected))
 airbnb.loc[:,"district_tr"] = airbnb.loc[:,"district_tr"].map(airbnb_unique_districts_dict_tr)
+
+#%% --- EDA: Explore Missing Values ---
+
+#Let's check null values first
+null_report = report_null_values(airbnb)
+
+#We have so few missing values, dropping them won't affect our quality at all.
+# Let's do exactly that.
+
+airbnb.dropna(axis = 0,
+              inplace = True)
+
+#%% --- EDA: Explore Datatype agreement ---
+
+#Now, let's check data type agreement for each column.
+data_types = airbnb.dtypes
+# The data types with "object" warrant further investigation
+#They could just be strings, but mixed data types also show as "object"
+
+# Let's select "object" data types and query once again.
+airbnb_dtype_object_only = airbnb.select_dtypes(include = ["object"])
+print(airbnb_dtype_object_only.columns)
+#As all the column names seem to accomodate only strings, we can be
+#pretty sure that showing up as object is correct behavior.
+
 
 #%% --- Export Data ---
 

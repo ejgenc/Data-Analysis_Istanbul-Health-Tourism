@@ -100,8 +100,8 @@ hservices.drop(labels = "related_to_htourism",
 
 export_fp = Path("../../data/processed/istanbul_aesthethic_centers_processed.csv")
 hservices.to_csv(export_fp,
-                 encoding = "utf-8-sig",
-                 index = False)
+                  encoding = "utf-8-sig",
+                  index = False)
 
 
     
