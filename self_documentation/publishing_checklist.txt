@@ -1,0 +1,22 @@
+1.) Ensure that the following packages are present in environment.yml and requirements.txt:
+	- doit (through conda forge)
+	- pytest
+
+2.) Ensure that the local package is present in environment.yml and requirements.txt:
+	In environment.yml, add this under the "-pip" portion:
+		-.
+	In requirements.txt, add this:
+		# local package
+		-e .
+
+3.) Update the name of the environment that you will export in the environment.yml file.
+
+4.) Update your README.MD file to account for changes
+	Flesh out the description
+	Settle the external links
+	Make changes in the folder structure tree if you have changed the folder structure
+
+5.) Check your git flags
+	<! ATTENTION !> Is the text file .env flagged as "ignore?" <! ATTENTION !>
+	Are all your temporary files (caches etc.) flagged as gitignore?
+	

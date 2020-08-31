@@ -1,0 +1,44 @@
+WHAT IS DAG?
+
+DAG (directed acyclic graph) is a type of graph that is used to model data analysis pipelines.
+Data analysis pipelines consist of scripts that ingest, process and use data.
+The scripts are dependent on each other. To get a meaningful result, one must run scripts following a certain order.
+This is why data analysis pipelines are modeled as a DAG.
+A DAG graph consists of one or more entry points with a clear exit point. The steps in between are hiearchical.
+A DAG structure is any way to encode the order in which the elements of your pipeline runs by defining
+prerequisites and outputs.
+Tests can also be integrated into the DAG structure.
+
+WHY IMPLEMENT A DAG STRUCTURE TO YOUR PROJECTS?
+
+You should implement a DAG structure for two reasons:
+
+	- You can run your own analysis with a single command, without running the parts that are already done.
+		A DAG structure remembers the last state it was in. When you run the whole pipeline, it only
+		runs the parts where it notes a change.
+
+	- The person trying to replicate the analysis can do so with a single command
+		You can't expect people to run your scripts one by one. If you want people to replicate your project,
+		you must provide them with a method with low friction.
+		Using a DAG structure with tools such as Makefiles, Snakemake and Pydoit is important for this end.
+
+THE DAG STRUCTURE HERE
+
+In this project, the DAG structure is established using the module "pydoit."
+The pydoit module works with the file dodo.py.
+Refer to the website of the package for a length instruction.
+
+<! ATTENTION !>
+
+To make sure your scripts work with doit, use the following inside your scripts.
+	
+	import os
+	from pathlib import Path
+
+	abspath = os.path.abspath(__file__)
+	dname = os.path.dirname(abspath)
+	os.chdir(dname)
+
+<! ATTENTION !>
+
+Integrate your tests with pydoit.
