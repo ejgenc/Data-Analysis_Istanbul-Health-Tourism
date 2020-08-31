@@ -24,8 +24,6 @@ from src.helper_functions.data_preparation_helper_functions import report_null_v
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-
-
 #%% --- Import Data ---
 
 #Import Istanbul districts data

@@ -46,11 +46,11 @@ def task_convert_hclinic_coords_to_points():
         "targets": [Path("data/processed/hair_clinics_processed.shp")]
     }
 
-# def task_combine_aesthethic_clinic_hclinic_shapefiles():
-#     action_path = Path("src/data_preparation/combine_aesthethic_clinic_hclinic_shapefiles.py")
-#     return {
-#         "file_dep": Path[("data/processed/hair_clinics_processed.shp"),
-#                     Path("istanbul_aesthethic_centers_processed_shapefile.shp")],
-#         "actions": ["python {}".format(action_path)],
-#         "targets": [Path("data/processed")]
-#     }
+def task_combine_aesthethic_clinic_hclinic_shapefiles():
+    action_path = Path("src/data_preparation/combine_aesthethic_clinic_hclinic_shapefiles.py")
+    return {
+        "file_dep": [Path("data/processed/hair_clinics_processed.shp"),
+                    Path("data/processed/istanbul_aesthethic_centers_processed_shapefile.shp")],
+        "actions": ["python {}".format(action_path)],
+        "targets": [Path("data/processed/htourism_centers_processed.shp")]
+    }
