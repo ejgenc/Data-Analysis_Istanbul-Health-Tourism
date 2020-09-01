@@ -26,7 +26,8 @@ def task_run_data_quality_tests_for_processed_airbnb_data():
 def task_convert_airbnb_data_to_shapefile():
     action_path = Path("src/data_preparation/convert_airbnb_data_to_shapefile.py")
     return {
-        "file_dep": [Path("data/processed/istanbul_airbnb_processed.csv")],
+        "file_dep": [Path("data/processed/istanbul_airbnb_processed.csv"),
+                    Path("data/processed/hair_clinics_processed.shp")],
         "task_dep": ["run_data_quality_tests_for_processed_airbnb_data"],
         "actions": ["python {}".format(action_path)]
     }
