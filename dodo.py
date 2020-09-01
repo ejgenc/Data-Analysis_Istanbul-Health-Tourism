@@ -3,7 +3,8 @@ from pathlib import Path # To wrap around filepaths
 def task_run_data_preparation_helper_functions_unit_tests():
     action_path = Path("tests/unit_tests/helper_functions/test_data_preparation_helper_functions.py")
     return {
-        "actions": ["pytest {}".format(action_path)]
+        "actions": ["pytest {}".format(action_path)],
+        "file_dep": [Path("src/helper_functions/data_preparation_helper_functions.py")],
     }
 
 def task_process_airbnb_data():
@@ -18,7 +19,16 @@ def task_run_data_quality_tests_for_processed_airbnb_data():
     action_path = Path("tests/data_quality_tests/test_istanbul_airbnb_processed_data_quality.py")
     return {
         "file_dep": [Path("data/processed/istanbul_airbnb_processed.csv")],
+        "task_dep": ["process_airbnb_data"],
         "actions": ["pytest {}".format(action_path)]
+    }
+
+def task_convert_airbnb_data_to_shapefile():
+    action_path = Path("src/data_preparation/convert_airbnb_data_to_shapefile.py")
+    return {
+        "file_dep": [Path("data/processed/istanbul_airbnb_processed.csv")],
+        "task_dep": ["run_data_quality_tests_for_processed_airbnb_data"],
+        "actions": ["python {}".format(action_path)]
     }
 
 def task_process_health_services_data():
