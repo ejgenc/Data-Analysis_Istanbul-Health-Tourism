@@ -9,8 +9,6 @@ It converts the file into a shapefile in order to further prepare it for merging
 
 import os
 from pathlib import Path # To wrap around filepaths
-import re #RegEx
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import geopandas as gpd
