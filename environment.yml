@@ -1,21 +1,23 @@
 name: healthtourismenv
 channels:
-  - defaults
   - conda-forge
+  - defaults
 dependencies:
-  - lxml
-  - spyder-kernels
-  - selenium
-  - pandas
-  - matplotlib
-  - geopandas
-  - requests
-  - spyder
-  - descartes
-  - seaborn
-  - doit
-  - pytest
   - pip
+  - requests
+  - geopandas
+  - selenium
+  - matplotlib
+  - pytest
+  - spyder
+  - pandas
+  - seaborn
+  - lxml
+  - doit
+  - descartes
+  - spyder-kernels
   - pip:
     - -e .
+    - textdistance
+
 prefix: F:\Programming_Environment\python_minicondadist\envs\healthtourismenv
