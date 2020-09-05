@@ -35,7 +35,7 @@ hclinics_gdf = gpd.read_file(import_fp)
 #Use the crs of hclinics_gdf as reference crs
 reference_crs = hclinics_gdf.crs
 #Convert latitude and longitude information of airbnb_df into Shapely point objects.
-geometry = [Point(xy) for xy in zip(airbnb_df["latitude"], airbnb_df["longitude"])]
+geometry = [Point(xy) for xy in zip(airbnb_df["longitude"], airbnb_df["latitude"])]
 #convert airbnb_df to a GeoDataframe with crs as reference crs and geometry as geometry
 airbnb_gdf = gpd.GeoDataFrame(airbnb_df,
                               crs = reference_crs,

@@ -105,7 +105,7 @@ unique_districts_eng_corrected = ["Kadikoy", "Fatih", "Tuzla", "Gaziosmanpasa",
                                  "Esenyurt", "Bahcelievler", "Avcilar", "Basaksehir",
                                  "Sultangazi", "Maltepe", "Sancaktepe", "Beykoz",
                                  "Buyukcekmece", "Bakirkoy", "Pendik", "Bagcilar",
-                                 "Esenler", "Beylikduzu", "Umraniye", "Eyup",
+                                 "Esenler", "Beylikduzu", "Umraniye", "Eyupsultan",
                                  "Cekmekoy", "Atasehir", "Sultanbeyli", "Zeytinburnu",
                                  "Gungoren", "Bayrampasa"]
 
