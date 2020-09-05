@@ -81,6 +81,11 @@ airbnb_columns_in_english = ["listing_id", "name", "host_id", "host_name", "dist
                              "latitude", "longitude", "room_type", "price"]
 airbnb.columns = airbnb_columns_in_english 
 
+#%% --- One-off fix for districts named "Eyup" ---
+
+eyup_mask = airbnb.loc[:,"district_eng"] == "Eyup"
+
+airbnb.loc[eyup_mask, "district_eng"] = "Eyupsultan"
 #%% --- Add a new "district_tr" column
 
 airbnb.loc[:,"district_tr"] = airbnb.loc[:,"district_eng"].str.lower().str.capitalize()  
@@ -193,7 +198,7 @@ zero_mask = (airbnb.loc[:,"price"] > 0)
 airbnb = airbnb.loc[zero_mask,:]
 
 
-#%% --- Export Data ---
+# #%% --- Export Data ---
 
 export_fp = Path("../../data/processed/istanbul_airbnb_processed.csv")
 airbnb.to_csv(export_fp,
