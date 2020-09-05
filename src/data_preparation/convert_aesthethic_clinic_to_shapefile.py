@@ -35,7 +35,7 @@ hclinics_gdf = gpd.read_file(import_fp)
 #Get the crs of reference from hclinics_gdf
 reference_crs = hclinics_gdf.crs
 #Convert latitude and longitude information from acenters_df into points
-geometry = [Point(xy) for xy in zip(acenters_df["latitude"],acenters_df["longitude"])]
+geometry = [Point(xy) for xy in zip(acenters_df["longitude"],acenters_df["latitude"])]
 #Conver acenters_df to gdf with crs as reference_crs and geometry as geometry
 acenters_gdf = gpd.GeoDataFrame(acenters_df,
                                 crs = reference_crs,
