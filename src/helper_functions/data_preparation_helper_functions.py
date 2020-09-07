@@ -2,7 +2,7 @@
 """
 ------ What is this file? ------
 
-This script contains some helper functions that are used in the scripts found found under src/data_preparation.
+This script contains some helper functions that are used in the scripts found under src/data_preparation.
 The unit tests for these functions can be found at:
      tests/unit_tests/helper_functions/test_data_preparation_helper_functions.py
 
