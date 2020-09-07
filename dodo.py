@@ -72,3 +72,11 @@ def task_combine_aesthethic_clinic_hclinic_shapefiles():
         "actions": ["python {}".format(action_path)],
         "targets": [Path("data/processed/htourism_centers_processed.shp")]
     }
+
+def task_run_data_quality_tests_for_processed_htourism_centers_data():
+    action_path = Path("tests/data_quality_tests/test_htourism_centers_processed_data_quality.py")
+    return {
+        "file_dep": [Path("data/processed/htourism_centers_processed.shp")],
+        "task_dep": ["combine_aesthethic_clinic_hclinic_shapefiles"],
+        "actions": ["pytest {}".format(action_path)]
+    }
