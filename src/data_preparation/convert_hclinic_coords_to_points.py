@@ -112,6 +112,37 @@ hclinic_gdf_data_types = hclinic_gdf.dtypes
 institution_name_counts = hclinic_gdf["hclinic_name"].value_counts()
 for institution_appearance_number in institution_name_counts:
     assert(institution_appearance_number == 1)
+    
+#%% --- EDA: check for values outside polygons ---
+
+#We've done a point-in-polygon query before and could find where each
+#hair transplant center was located in.
+
+#However, the map above shows that we've mis-labeled two hair transplant
+#centers.
+#Let's discover which ones they are:
+    
+polygons = istanbul_districts.geometry
+
+not_in_any_polygon = []
+for row in hclinic_gdf.iterrows():
+    row_name = row[1]["hclinic_name"]
+    row_geometry = row[1]["geometry"]
+    in_any = False
+    for polygon in polygons:
+        if row_geometry.within(polygon):
+            in_any = True
+    if in_any == False:
+        not_in_any_polygon.append((row_name, row_geometry))
+
+#Since our only means of programatically determining where each transplant center is,
+#we'll drop these two centers.
+
+#Use mask to get index, then drop by index.
+for center_tuple in not_in_any_polygon:
+    hclinic = center_tuple[0]
+    to_drop_mask = hclinic_gdf.loc[:,"hclinic_name"] == hclinic
+    hclinic_gdf.drop(hclinic_gdf.index[to_drop_mask], inplace = True)
 #%% --- Export Data ---
 #Let's now export the file that we have created:
     

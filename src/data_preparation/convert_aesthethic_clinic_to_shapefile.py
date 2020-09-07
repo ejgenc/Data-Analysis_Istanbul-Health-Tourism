@@ -29,7 +29,6 @@ acenters_df = pd.read_csv(import_fp, encoding = "utf-8-sig")
 #also import secondary dataset
 import_fp = Path("../../data/processed/hair_clinics_processed.shp")
 hclinics_gdf = gpd.read_file(import_fp)
-
 #%% --- Convert acenters_df into a geodataframe ---
 
 #Get the crs of reference from hclinics_gdf
@@ -40,7 +39,6 @@ geometry = [Point(xy) for xy in zip(acenters_df["longitude"],acenters_df["latitu
 acenters_gdf = gpd.GeoDataFrame(acenters_df,
                                 crs = reference_crs,
                                 geometry = geometry)
-
 #%% -- Export Data ---
 export_fp = Path("../../data/processed/istanbul_aesthethic_centers_processed_shapefile.shp")
 acenters_gdf.to_file(export_fp, encoding = "utf-8-sig")
