@@ -107,6 +107,11 @@ hclinic_gdf.iloc[25,-1] = "Bakirkoy"
 hclinic_gdf_data_types = hclinic_gdf.dtypes
 #Everything is as expected.
 
+#%% --- EDA: Replicate Values ---
+
+institution_name_counts = hclinic_gdf["hclinic_name"].value_counts()
+for institution_appearance_number in institution_name_counts:
+    assert(institution_appearance_number == 1)
 #%% --- Export Data ---
 #Let's now export the file that we have created:
     
