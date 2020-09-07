@@ -22,11 +22,37 @@ from geopy import distance
 
 #%% --- FUNCTION : nearest_neighbor_analysis ---
 
-#%% --- Helper Functions ---
+#%%     --- Helper Functions ---
 
+def crs_is_equal(reference_geodataframe, comparison_geodataframe):
+    """
+    Checks if two geopandas GeoDataFrame objects share the same crs.
 
+    Parameters
+    ----------
+    reference_geodataframe : geopandas GeoDataFrame object.
+    comparison_geodataframe : geopandas GeoDataFrame object.
 
-#%% --- Subfunctions ---
+    Returns
+    -------
+    True if both GeoDataFrame objects share the same crs.
+
+    """
+    valerror_text = ("Both function arguments should be of type geopandas.GeoDataFrame"
+    "Got {} and {}").format(type(reference_geodataframe), type(comparison_geodataframe))
+    if not isinstance(reference_geodataframe, gpd.geodataframe.GeoDataFrame) or not isinstance(comparison_geodataframe, gpd.geodataframe.GeoDataFrame):
+        raise ValueError(valerror_text)
+        
+    valerror_text = "At least one geopandas.GeoDataFrame object is missing crs information."
+    if reference_geodataframe.crs is None or comparison_geodataframe.crs is None:
+        raise ValueError(valerror_text)
+    
+    return reference_geodataframe.crs == comparison_geodataframe.crs
+
+def has_geometry():
+    pass
+
+#%%     --- Subfunctions ---
 
 def calculate_centroid(geodataframe):
     pass
@@ -40,7 +66,7 @@ def calculate_nearest_neighbor():
 def calculate_distance():
     pass
 
-#%% --- Main Function ---
+#%%     --- Main Function ---
 
 
 def nearest_neighbor_analysis(gdf1, gdf2):
