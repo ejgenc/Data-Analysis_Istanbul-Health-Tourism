@@ -96,6 +96,39 @@ hservices.drop(labels = "related_to_htourism",
                            axis = 1,
                            inplace = True)
 
+#%% --- EDA: Replicate Values ---
+
+#Let's check for duplicate values.
+institution_name_counts = hservices["institution_name"].value_counts()
+#There appears to be one. Are they truly duplicate values?
+#This can be confirmed by looking at their longitude and latitude:
+
+#Get the suspect names
+suspects = []
+i = 0
+for institution_name_count in institution_name_counts:
+    if institution_name_count > 1:
+        suspects.append(institution_name_counts.index[i])
+        i += 1
+    
+#Query for their latitude/longitude values
+suspect_coords = 0
+for suspect in suspects:
+    suspect_mask = hservices.loc[:,"institution_name"] == suspect
+    subset = hservices.loc[suspect_mask, ["latitude", "longitude"]].values
+    suspect_coords = subset
+    
+#See if their lat/lon values are different
+assert not np.array_equal(suspect_coords[0], suspect_coords[1])
+
+#Since their lat/lon values are different, we'll name them as x_1 and x_2
+
+i = 0
+for suspect_coord in suspect_coords:
+    coord_mask = (hservices.loc[:,"latitude"] == suspect_coord[0])
+    hservices.loc[coord_mask,"institution_name"] = hservices.loc[coord_mask,"institution_name"] + str("_" + str(i))
+    i += 1
+
 #%% --- Export Data ---
 
 export_fp = Path("../../data/processed/istanbul_aesthethic_centers_processed.csv")
