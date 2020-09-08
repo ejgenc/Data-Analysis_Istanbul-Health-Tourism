@@ -141,7 +141,7 @@ def has_geometry(geodataframe):
 
     """
     
-    valerror_text = "Function argument should be of type geopandas.GeoDataFrame. Got at {} ".format(type(geodataframe))
+    valerror_text = "Function argument should be of type geopandas.GeoDataFrame. Got {} ".format(type(geodataframe))
     if is_gdf(geodataframe) is False:
         raise ValueError(valerror_text)
     
@@ -197,24 +197,106 @@ def crs_is_equal(reference_geodataframe, comparison_geodataframe):
     -------
     True if both GeoDataFrame objects share the same crs.
 
-    """
-    valerror_text = ("Both function arguments should be of type geopandas.GeoDataFrame"
-    "Got {} and {}").format(type(reference_geodataframe), type(comparison_geodataframe))
-    if not isinstance(reference_geodataframe, gpd.geodataframe.GeoDataFrame) or not isinstance(comparison_geodataframe, gpd.geodataframe.GeoDataFrame):
+    """        
+    #The values we recieve are turned into gdf to make use of
+    #the list checking functions i've built
+    gdf_list = [reference_geodataframe, comparison_geodataframe]
+    
+    # Check if gdf_list is gdf
+    valerror_text = "Both function arguments should be of type geopandas.GeoDataFrame"
+    if check_if_all_elements_are_gdf(gdf_list) is False:
         raise ValueError(valerror_text)
         
+    # Check if gdf_list has crs info
     attriberror_text = "At least one geopandas.GeoDataFrame object is missing crs information."
-    if reference_geodataframe.crs is None or comparison_geodataframe.crs is None:
+    if check_if_all_elements_have_crs(gdf_list) is False:
         raise AttributeError(attriberror_text)
     
     return reference_geodataframe.crs == comparison_geodataframe.crs
 
+def map_geometry_types(geodataframe, return_most_common = False):
+    """
+    Calculates a value - count table for each type of geometry object
+    that appears in the geometry column of the targeted geodataframe.
+
+    Parameters
+    ----------
+    geodataframe : geopandas GeoDataFrame object.
+
+    return_most_common : Boolean, optional
+        Affects what is returned.
+        If True, function returns a tuple.
+        If False, function returns a pd.Series
+
+    Returns
+    -------
+    Tuple if return_most_common == True
+        Returns a tuple that contains the most recurring geometry type and how many times it appears
+        
+    pandas.Series if return_most_commo == False
+        A series that shows how many time each geometry type appears.
+
+    """
+    valerror_text = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(geodataframe))
+    if is_gdf(geodataframe) is False:
+        raise ValueError(valerror_text)
+        
+    attriberror_text = "Argument provided does not have geometry information."
+    if has_geometry(geodataframe) is False:
+        raise AttributeError(attriberror_text)
+        
+    valerror_text = "Only Boolean True/False can be passed as an argument to return_most_common"
+    if not isinstance(return_most_common, bool):
+        raise ValueError(valerror_text)
+    
+    geometry_types = geodataframe.geometry.geom_type
+    
+    value_counts = geometry_types.value_counts()
+    
+    if return_most_common == True:
+        most_common_value_pair = (value_counts.index[0], value_counts[0])
+        return most_common_value_pair
+    
+    return value_counts
+    
 #%%     --- Subfunctions ---
 
 def calculate_centroid(geodataframe):
-    pass
+    """
+    Calculates the centroid of each geometry datapoint in the geodataframe.
+
+    Parameters
+    ----------
+    geodataframe : geopandas GeoDataFrame object.
+
+    Returns
+    -------
+    centroids : geopandas.GeoSeries object.
+        A geopandas.GeoSeries object that has the information about the centroid of
+        each geometry datapoint in the original geodataframe
+
+    """
+    valerror_text = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(geodataframe))
+    if is_gdf(geodataframe) is False:
+        raise ValueError(valerror_text)
+        
+    attriberror_text= "Argument provided does not have geometry information."
+    if has_geometry(geodataframe) is False:
+        raise AttributeError(attriberror_text)
+        
+    if isinstance(geodataframe.geometry[0], Point):
+        centroids = geodataframe.geometry
+    else:
+        centroids = geodataframe.geometry.centroid
+        
+    return centroids
 
 def create_unary_union(geodataframe):
+    ### Accepts a geodataframe
+    ### Geodataframe has geometry information
+    ### Geometry information is composed of points
+    ### Creates a unary union
+    ### Returns the unary union
     pass
 
 def calculate_nearest_neighbor():
@@ -225,24 +307,38 @@ def calculate_distance():
 
 #%%     --- Main Function ---
 
-
 def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe):
+    
+    gdf_list = [reference]
+    
+    valerror_text = ("Both arguments should be geopandas.GeoDataFrame objects."
+                     "Got {} and {} as object types.").format(type(reference_geodataframe), type(comparison_geodataframe))
+    if check_if_all_elements_are_gdf(gdf_list) is False:
+        raise ValueError(valerror_text)
+    
+    attriberror_text= ("At least one of the arguments provided do not have geometry information.")
+    if check_if_all_elements_have_geometry(gdf_list) is False:
+        raise AttributeError(attriberror_text)
  
     attriberror_text = ("The arguments provided to do not share the same crs."
                         "Got {} and {} as crs.").format(reference_geodataframe.crs, comparison_geodataframe.crs)
-    if not crs_is_equal(reference_geodataframe, comparison_geodataframe):
+    if crs_is_equal(reference_geodataframe, comparison_geodataframe) is False:
         raise AttributeError(attriberror_text)
         
-    attriberror_text= ("At least one of the arguments provided do not have geometry information.")
-    if not has_geometry(reference_geodataframe, comparison_geodataframe):
-        raise AttributeError
+    # FUNCTION: PREPARE FOR NN #
+        # - Get centroids
+        # - Create unary union of centroids
+    
+    # FUNCTION: NN Analysis
+    
+    # If calculate_distance is True:
+    # FUNCTION: Do the distance calculations
+        # Check for parameters
+        
+    # Return final gdf
 
 
-
-
-
-
-
+#%%
 # def nearest_neighbor_analysis(gdf1, gdf2):
 #     '''
 # Accepts as an an argument two Geopandas GeoDataFrames
@@ -304,3 +400,5 @@ def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe):
 #                                  crs = lst_of_series[0].crs)
     
 #     return gdf_final
+
+

@@ -224,7 +224,7 @@ class TestCheckIfAllElementsHaveCrs(object):
 class TestHasGeometry(object):
     def test_valerror_on_nongdf_value_float(self):
         test_geodataframe = test_float
-        expected_message = "Function argument should be of type geopandas.GeoDataFrame. Got at {} ".format(type(test_geodataframe))
+        expected_message = "Function argument should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
         with pytest.raises(ValueError) as exception_info:
             functions.has_geometry(test_geodataframe)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
@@ -232,7 +232,7 @@ class TestHasGeometry(object):
         
     def test_valerror_on_nongdf_value_str(self):
         test_geodataframe = test_str
-        expected_message = "Function argument should be of type geopandas.GeoDataFrame. Got at {} ".format(type(test_geodataframe))
+        expected_message = "Function argument should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
         with pytest.raises(ValueError) as exception_info:
             functions.has_geometry(test_geodataframe)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
@@ -315,8 +315,7 @@ class TestCrsIsEqual(object):
     def test_valerror_on_nongdf_values_str_and_int(self):
         test_geodataframe_1 = test_str
         test_geodataframe_2 = test_int
-        expected_message = ("Both function arguments should be of type geopandas.GeoDataFrame"
-        "Got {} and {}").format(type(test_geodataframe_1), type(test_geodataframe_2))
+        expected_message = "Both function arguments should be of type geopandas.GeoDataFrame"
         with pytest.raises(ValueError) as exception_info:
             functions.crs_is_equal(test_geodataframe_1,test_geodataframe_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
@@ -325,8 +324,7 @@ class TestCrsIsEqual(object):
     def test_valerror_on_gdf_and_nongdf_values_int(self):
         test_geodataframe_1 = test_gdf
         test_geodataframe_2 = test_int
-        expected_message = ("Both function arguments should be of type geopandas.GeoDataFrame"
-        "Got {} and {}").format(type(test_geodataframe_1), type(test_geodataframe_2))
+        expected_message = "Both function arguments should be of type geopandas.GeoDataFrame"
         with pytest.raises(ValueError) as exception_info:
             functions.crs_is_equal(test_geodataframe_1,test_geodataframe_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
@@ -358,16 +356,122 @@ class TestCrsIsEqual(object):
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
         assert expected is actual, error_message
         
-#%%     --- Test subfuction: calculate_centroid
+#%% --- Test helper function: map_geometry_types: ---
+
+class TestMapGeometryTypes(object):
+    def test_valerror_on_nongdf_value_float(self):
+        test_geodataframe = test_float
+        expected_message = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.map_geometry_types(test_geodataframe, return_most_common = False)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_value_dict(self):
+        test_geodataframe = test_dict
+        expected_message = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.map_geometry_types(test_geodataframe, return_most_common = False)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_geometry(self):
+        test_geodataframe = test_gdf_no_geom
+        expected_message = "Argument provided does not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.map_geometry_types(test_geodataframe, return_most_common = False)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_incorrect_keyword_arg_str(self):
+        test_geodataframe = test_gdf
+        expected_message = "Only Boolean True/False can be passed as an argument to return_most_common"
+        with pytest.raises(ValueError) as exception_info:
+            functions.map_geometry_types(test_geodataframe, return_most_common = "False")
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_output_type_for_return_most_common_false(self):
+        test_geodataframe = test_gdf
+        expected = pd.Series
+        actual = type(functions.map_geometry_types(test_geodataframe, return_most_common = False))
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+        
+    def test_output_type_for_return_most_common_true(self):
+        test_geodataframe = test_gdf
+        expected = tuple
+        actual = type(functions.map_geometry_types(test_geodataframe, return_most_common = True))
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+        
+#%%     --- Test subfuction: calculate_centroid --- 
 
 class TestCalculateCentroid(object):
     def test_valerror_on_nongdf_value_bool(self):
-        pass
+        test_geodataframe = test_bool
+        expected_message = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_centroid(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
     
     def test_valerror_on_nongdf_value_int(self):
-        pass
-
+        test_geodataframe = test_int
+        expected_message = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_centroid(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_geometry(self):
+        test_geodataframe = test_gdf_no_geom
+        expected_message = "Argument provided does not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.calculate_centroid(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_data_type_of_output(self):
+        test_geodataframe = test_gdf
+        expected = Point
+        actual = type(functions.calculate_centroid(test_geodataframe)[0])
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+        
 #%%     --- Test subfunction: create_unary_union
+
+@pytest.mark.skip(reason="not fully implemented yet")
+class TestCreateUnaryUnion(object):
+    def test_valerror_on_nongdf_value_dict(self):
+        test_geodataframe = test_dict
+        expected_message = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.create_unary_union(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_value_str(self):
+        test_geodataframe = test_str
+        expected_message = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.create_unary_union(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_geometry(self):
+        test_geodataframe = test_gdf_no_geom
+        expected_message = "Argument provided does not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.create_unary_union(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+        
+    def test_attriberror_on_nonpoint_geometry(self):
+        pass
+    
+    def test_data_type_of_output(self):
+        pass
 
 #%%     --- Test subfunction: calculate_nearest_neighbor
 
@@ -375,7 +479,56 @@ class TestCalculateCentroid(object):
 
 #%%     --- Test main function: nearest_neighbor_analysis
 
+@pytest.mark.skip(reason="not fully implemented yet")
 def TestNearestNeighborAnalysis(object):
+    def test_valerror_on_nongdf_argument_str(self):
+        test_gdf_1 = test_str
+        test_gdf_2 = test_str
+        expected_message = ("Both arguments should be geopandas.GeoDataFrame objects."
+                     "Got {} and {} as object types.").format(type(test_gdf_1), type(test_gdf_2))
+        with pytest.raises(ValueError) as exception_info:
+            functions.nearest_neighbor_analysis(test_gdf_1, test_gdf_2)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_arguments_str_and_int(self):
+        test_gdf_1 = test_str
+        test_gdf_2 = test_int
+        expected_message = ("Both arguments should be geopandas.GeoDataFrame objects."
+                     "Got {} and {} as object types.").format(type(test_gdf_1), type(test_gdf_2))
+        with pytest.raises(ValueError) as exception_info:
+            functions.nearest_neighbor_analysis(test_gdf_1, test_gdf_2)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_mixed_arguments_gdf_and_df(self):
+        test_gdf_1 = test_gdf
+        test_gdf_2 = test_df
+        expected_message = ("Both arguments should be geopandas.GeoDataFrame objects."
+                     "Got {} and {} as object types.").format(type(test_gdf_1), type(test_gdf_2))
+        with pytest.raises(ValueError) as exception_info:
+            functions.nearest_neighbor_analysis(test_gdf_1, test_gdf_2)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_geometry(self):
+        test_gdf_1 = test_gdf_no_geom
+        test_gdf_2 = test_gdf
+        expected_message = "At least one of the arguments provided do not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.nearest_neighbor_analysis(test_gdf_1, test_gdf_2)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+        
+    def test_attriberror_on_missing_geometries(self):
+        test_gdf_1 = test_gdf_no_geom
+        test_gdf_2 = test_gdf_no_geom
+        expected_message = "At least one of the arguments provided do not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.nearest_neighbor_analysis(test_gdf_1, test_gdf_2)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
     def test_attriberror_on_uneven_crs(self):
         test_geodataframe_1 = test_gdf
         test_geodataframe_2 = test_gdf_diff_crs
@@ -385,6 +538,9 @@ def TestNearestNeighborAnalysis(object):
             functions.nearest_neighbor_analysis(test_geodataframe_1, test_geodataframe_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
+        
+        
+#%%
         
         
     
