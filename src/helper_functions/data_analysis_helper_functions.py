@@ -24,6 +24,52 @@ from geopy import distance
 
 #%%     --- Helper Functions ---
 
+def is_gdf(argument):
+    """
+    Check the given argument to see if it is of type geopandas.GeoDataFrame
+    
+    Parameters
+    ----------
+    argument : A single argument of any type
+
+    Returns
+    -------
+    bool
+        True if argument is of type geopandas GeoDataFrame.
+        False if argument is not of type geopandas GeoDataFrame
+
+    """
+    if not isinstance(argument, gpd.geodataframe.GeoDataFrame):
+        return False
+        
+    return True
+
+def check_if_all_elements_are_gdf(arguments_list):
+    """
+    Checks if the elements of a list are instances of geopandas.GeoDataFrame
+    
+    Parameters
+    ----------
+    arguments_list : A single argument of type list
+        The list contains all elements that will be typechecked by is_gdf()
+
+    Returns
+    -------
+    bool
+        True if all elements of arguments_list is an instance of gpd.GeoDataFrame
+        False if at least one elemnt is not an instance of gpd.GeoDataFrame
+    """
+    valerror_text = "arguments_list must be of type list. Got {}".format(type(arguments_list))
+    if not isinstance(arguments_list, list):
+        raise ValueError(valerror_text)
+    
+    for argument in arguments_list:
+        if is_gdf(argument) is False:
+            return False
+        
+    return True
+    
+
 def has_crs(*geodataframes):
     """
     Checks if the given geopandas GeoDataFrames have crs information.
@@ -121,22 +167,7 @@ def calculate_distance():
 
 
 def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe):
-    """
-    
-
-    Parameters
-    ----------
-    reference_geodataframe : TYPE
-        DESCRIPTION.
-    comparison_geodataframe : TYPE
-        DESCRIPTION.
-
-    Returns
-    -------
-    None.
-
-    """
-    
+ 
     attriberror_text = ("The arguments provided to do not share the same crs."
                         "Got {} and {} as crs.").format(reference_geodataframe.crs, comparison_geodataframe.crs)
     if not crs_is_equal(reference_geodataframe, comparison_geodataframe):

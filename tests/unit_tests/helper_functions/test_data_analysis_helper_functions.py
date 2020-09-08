@@ -55,6 +55,8 @@ test_gdf_no_crs = gpd.GeoDataFrame(test_df.copy(),
                             geometry = random_points) 
 
 test_gdf_no_geom = gpd.GeoDataFrame(test_df.copy())
+
+test_gdf_list = [test_gdf, test_gdf]
     
 #%%     --- other  ---
 
@@ -62,11 +64,69 @@ test_str = "Test"
 test_int = 10
 test_float = 10.5
 test_bool = False
+test_list = ["A,B"]
+test_dict = {"A":1, "B":2}
 test_sample_size_int_correct = 5
 test_sample_size_int_wrong = 105
 
 #%% --- Testing ---
 
+#%% --- Test helper function: is_gdf ---
+
+class TestIsGdf(object):
+    def test_false_on_nongdf_value_list(self):
+        test_argument = test_list
+        expected = False
+        actual = functions.is_gdf(test_argument)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+    
+    def test_false_on_nongdf_value_str(self):
+        test_argument = test_str
+        expected = False
+        actual = functions.is_gdf(test_argument)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+    
+    def test_true_on_gdf_value(self):
+        test_argument = test_gdf
+        expected = True
+        actual = functions.is_gdf(test_argument)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+
+#%% --- Test helper function: test_if_all_elements_are_gdf ---
+class TestCheckIfAllElementsAreGdf(object):
+    def test_valerror_on_nonlist_value_bool(self):
+        test_argumentslist = test_bool
+        expected_message = "arguments_list must be of type list. Got {}".format(type(test_argumentslist))
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_are_gdf(test_argumentslist)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nonlist_value_dict(self):
+        test_argumentslist = test_dict
+        expected_message = "arguments_list must be of type list. Got {}".format(type(test_argumentslist))
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_are_gdf(test_argumentslist)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_false_on_nongdf_list(self):
+        test_argumentslist = test_list
+        expected = False
+        actual = functions.check_if_all_elements_are_gdf(test_argumentslist)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+    
+    def test_true_on_gdf_list(self):
+        test_argumentslist = test_gdf_list
+        expected = True
+        actual = functions.check_if_all_elements_are_gdf(test_argumentslist)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+    
 #%% --- Test helper function: has_crs ---
 
 class TestHasCrs(object):
