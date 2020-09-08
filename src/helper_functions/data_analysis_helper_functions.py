@@ -25,11 +25,34 @@ from geopy import distance
 #%%     --- Helper Functions ---
 
 def has_crs(*geodataframes):
-    pass
+    """
+    Checks if the given geopandas GeoDataFrames have crs information.
+
+    Parameters
+    ----------
+    *geodataframes : One or more geopandas geodataframe object(s)
+
+    Returns
+    -------
+    True if each geodataframe has crs information specified.
+    False if at least one geodataframe doesn't have crs information specified.
+
+    """
+    for geodataframe in geodataframes:
+        valerror_text = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(geodataframe))
+        if not isinstance(geodataframe, gpd.geodataframe.GeoDataFrame):
+            raise ValueError(valerror_text)
+        
+        if geodataframe.crs is None:
+            return False
+        
+    return True
+        
+        
 
 def has_geometry(*geodataframes):
     """
-    Checks if the given geopandas GeoDataFrame has geometry information.
+    Checks if the given geopandas GeoDataFrames have geometry information.
 
     Parameters
     ----------
@@ -37,8 +60,8 @@ def has_geometry(*geodataframes):
 
     Returns
     -------
-    True if the geodataframe has geometry information specified.
-    False if the geodataframe doesn't have geometry information specified.
+    True if each geodataframe has geometry information specified.
+    False if at least one geodataframe doesn't have geometry information specified.
 
     """
     for geodataframe in geodataframes:

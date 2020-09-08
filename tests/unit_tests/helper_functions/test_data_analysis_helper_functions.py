@@ -69,6 +69,64 @@ test_sample_size_int_wrong = 105
 
 #%% --- Test helper function: has_crs ---
 
+class TestHasCrs(object):
+    def test_valerror_on_nongdf_value_bool(self):
+        test_geodataframe = test_bool
+        expected_message = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.has_crs(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_values_str(self):
+        test_geodataframe_1 = test_str
+        test_geodataframe_2 = test_str
+        expected_message = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(test_geodataframe_1))
+        with pytest.raises(ValueError) as exception_info:
+            functions.has_crs(test_geodataframe_1, test_geodataframe_2)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_gdf_and_nongdf_values(self):
+        test_geodataframe_1 = test_gdf
+        test_geodataframe_2 = test_str
+        expected_message = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(test_geodataframe_2))
+        with pytest.raises(ValueError) as exception_info:
+            functions.has_crs(test_geodataframe_1, test_geodataframe_2)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_false_on_no_crs(self):
+        test_geodataframe = test_gdf_no_crs
+        expected = False
+        actual = functions.has_crs(test_geodataframe)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+    
+    def test_false_on_no_crs_multiple_values(self):
+        test_geodataframe_1 = test_gdf_no_crs
+        test_geodataframe_2 = test_gdf
+        expected = False
+        actual = functions.has_crs(test_geodataframe_1, test_geodataframe_2)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+    
+    def test_true_on_crs(self):
+        test_geodataframe = test_gdf
+        expected = True
+        actual = functions.has_crs(test_geodataframe)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+    
+    def test_true_on_crs_multiple_values(self):
+        test_geodataframe_1 = test_gdf
+        test_geodataframe_2 = test_gdf
+        expected = True
+        actual = functions.has_crs(test_geodataframe_1, test_geodataframe_2)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+        
+
 #%% -- Test helper function: has_geometry ---
 
 class TestHasGeometry(object):
