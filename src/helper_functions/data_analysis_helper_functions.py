@@ -70,59 +70,119 @@ def check_if_all_elements_are_gdf(arguments_list):
     return True
     
 
-def has_crs(*geodataframes):
+def has_crs(geodataframe):
     """
-    Checks if the given geopandas GeoDataFrames have crs information.
+    Checks if the given geopandas GeoDataFrame has crs information.
 
     Parameters
     ----------
-    *geodataframes : One or more geopandas geodataframe object(s)
+    geodataframe: A geopandas.GeoDataFrame object.
 
     Returns
     -------
-    True if each geodataframe has crs information specified.
-    False if at least one geodataframe doesn't have crs information specified.
+    True if geodataframe has crs information specified.
+    False if geodataframe doesn't have crs information specified.
 
     """
-    for geodataframe in geodataframes:
-        valerror_text = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(geodataframe))
-        if not isinstance(geodataframe, gpd.geodataframe.GeoDataFrame):
-            raise ValueError(valerror_text)
+    valerror_text = "Function argument should be of type geopandas.GeoDataFrame. Got {}".format(type(geodataframe))
+    if is_gdf(geodataframe) is False:
+        raise ValueError(valerror_text)
         
-        if geodataframe.crs is None:
-            return False
+    if geodataframe.crs is None:
+        return False
         
     return True
         
-        
-
-def has_geometry(*geodataframes):
+def check_if_all_elements_have_crs(geodataframes_list):
     """
-    Checks if the given geopandas GeoDataFrames have geometry information.
+    Iterates over a list and checks if all members of the list have crs
+    information associated with them.
 
     Parameters
     ----------
-    geodataframe : geopandas GeoDataFrame object.
+    geodataframes_list : A list object
+        A list object that contains one or more geopandas.GeoDataFrame objects
 
     Returns
     -------
-    True if each geodataframe has geometry information specified.
-    False if at least one geodataframe doesn't have geometry information specified.
+    bool
+        Returns True if all elements within geodataframes_list have crs info associated with them
+        Returns False if atleast one element within geodataframes_list does not have crs info associated with it
 
     """
-    for geodataframe in geodataframes:
-        valerror_text = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(geodataframe))
-        if not isinstance(geodataframe, gpd.geodataframe.GeoDataFrame):
-            raise ValueError(valerror_text)
     
-    for geodataframe in geodataframes:    
-        try:
-            geodataframe.geometry  
-        except AttributeError:
+    valerror_text = "geodataframes_list must be of list type. Got {}".format(type(geodataframes_list))
+    if not isinstance(geodataframes_list, list):
+        raise ValueError(valerror_text)
+    
+    valerror_text = "Elements of the list should be of type geopandas.GeoDataFrame. Got at least one value that is not."
+    if check_if_all_elements_are_gdf(geodataframes_list) is False:
+        raise ValueError(valerror_text)
+            
+    for geodataframe in geodataframes_list:
+        if has_crs(geodataframe) is False:
             return False
+        
     return True
         
 
+def has_geometry(geodataframe):
+    """
+    Checks if the given geopandas.GeoDataFrame object has geometry information.
+
+    Parameters
+    ----------
+    geodataframe: A geopandas.GeoDataFrame object.
+
+    Returns
+    -------
+    True if geodataframe has geometry information specified.
+    False if geodataframe doesn't have geometry information specified.
+
+    """
+    
+    valerror_text = "Function argument should be of type geopandas.GeoDataFrame. Got at {} ".format(type(geodataframe))
+    if is_gdf(geodataframe) is False:
+        raise ValueError(valerror_text)
+    
+    try:
+        geodataframe.geometry  
+    except AttributeError:
+        return False
+    
+    return True
+        
+def check_if_all_elements_have_geometry(geodataframes_list):
+    """
+    Iterates over a list and checks if all members of the list have geometry
+    information associated with them.
+
+    Parameters
+    ----------
+    geodataframes_list : A list object
+        A list object that contains one or more geopandas.GeoDataFrame objects
+
+    Returns
+    -------
+    bool
+        Returns True if all elements within geodataframes_list have geometry info associated with them
+        Returns False if atleast one element within geodataframes_list does not have geometry info associated with it
+
+    """
+    
+    valerror_text = "geodataframes_list must be of list type. Got {}".format(type(geodataframes_list))
+    if not isinstance(geodataframes_list, list):
+        raise ValueError(valerror_text)
+        
+    valerror_text = "Elements of the list should be of type geopandas.GeoDataFrame. Got at least one value that is not."
+    if check_if_all_elements_are_gdf(geodataframes_list) is False:
+        raise ValueError(valerror_text)
+    
+    for geodataframe in geodataframes_list:
+        if has_geometry(geodataframe) is False:
+            return False
+
+    return True
 
 def crs_is_equal(reference_geodataframe, comparison_geodataframe):
     """

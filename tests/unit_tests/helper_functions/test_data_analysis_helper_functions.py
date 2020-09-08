@@ -96,6 +96,7 @@ class TestIsGdf(object):
         assert expected is actual, error_message
 
 #%% --- Test helper function: test_if_all_elements_are_gdf ---
+
 class TestCheckIfAllElementsAreGdf(object):
     def test_valerror_on_nonlist_value_bool(self):
         test_argumentslist = test_bool
@@ -130,29 +131,19 @@ class TestCheckIfAllElementsAreGdf(object):
 #%% --- Test helper function: has_crs ---
 
 class TestHasCrs(object):
-    def test_valerror_on_nongdf_value_bool(self):
-        test_geodataframe = test_bool
-        expected_message = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(test_geodataframe))
+    def test_valerror_on_nongdf_value_df(self):
+        test_geodataframe = test_df
+        expected_message = "Function argument should be of type geopandas.GeoDataFrame. Got {}".format(type(test_geodataframe))
         with pytest.raises(ValueError) as exception_info:
             functions.has_crs(test_geodataframe)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
-    
-    def test_valerror_on_nongdf_values_str(self):
-        test_geodataframe_1 = test_str
-        test_geodataframe_2 = test_str
-        expected_message = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(test_geodataframe_1))
+        
+    def test_valerror_on_nongdf_value_list(self):
+        test_geodataframe = test_list
+        expected_message = "Function argument should be of type geopandas.GeoDataFrame. Got {}".format(type(test_geodataframe))
         with pytest.raises(ValueError) as exception_info:
-            functions.has_crs(test_geodataframe_1, test_geodataframe_2)
-        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
-        assert exception_info.match(expected_message), error_message
-    
-    def test_valerror_on_gdf_and_nongdf_values(self):
-        test_geodataframe_1 = test_gdf
-        test_geodataframe_2 = test_str
-        expected_message = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(test_geodataframe_2))
-        with pytest.raises(ValueError) as exception_info:
-            functions.has_crs(test_geodataframe_1, test_geodataframe_2)
+            functions.has_crs(test_geodataframe)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
     
@@ -163,26 +154,67 @@ class TestHasCrs(object):
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
         assert expected is actual, error_message
     
-    def test_false_on_no_crs_multiple_values(self):
-        test_geodataframe_1 = test_gdf_no_crs
-        test_geodataframe_2 = test_gdf
-        expected = False
-        actual = functions.has_crs(test_geodataframe_1, test_geodataframe_2)
-        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
-        assert expected is actual, error_message
-    
     def test_true_on_crs(self):
         test_geodataframe = test_gdf
         expected = True
         actual = functions.has_crs(test_geodataframe)
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
         assert expected is actual, error_message
+            
+#%% --- Test helper function: check_if_all_elements_have_crs ---
+
+class TestCheckIfAllElementsHaveCrs(object):
+    def test_valerror_on_nonlist_value_dict(self):
+        test_geodataframes_list = test_dict
+        expected_message = "geodataframes_list must be of list type. Got {}".format(type(test_geodataframes_list))
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_have_crs(test_geodataframes_list)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
     
-    def test_true_on_crs_multiple_values(self):
+    def test_valerror_on_nonlist_value_df(self):
+        test_geodataframes_list = test_df
+        expected_message = "geodataframes_list must be of list type. Got {}".format(type(test_geodataframes_list))
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_have_crs(test_geodataframes_list)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_list_elements_str(self):
+        test_geodataframe_1 = test_str
+        test_geodataframe_2 = test_str
+        test_list = [test_geodataframe_1, test_geodataframe_2]
+        expected_message = "Elements of the list should be of type geopandas.GeoDataFrame. Got at least one value that is not."
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_have_crs(test_list)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_gdf_and_nongdf_list_elements(self):
+        test_geodataframe_1 = test_gdf
+        test_geodataframe_2 = test_str
+        test_list = [test_geodataframe_1, test_geodataframe_2]
+        expected_message = "Elements of the list should be of type geopandas.GeoDataFrame. Got at least one value that is not."
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_have_crs(test_list)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+        
+    def test_false_on_no_crs_multiple_list_elements(self):
+        test_geodataframe_1 = test_gdf_no_crs
+        test_geodataframe_2 = test_gdf
+        test_list = [test_geodataframe_1, test_geodataframe_2]
+        expected = False
+        actual = functions.check_if_all_elements_have_crs(test_list)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+        
+    def test_true_on_crs_multiple_list_elements(self):
         test_geodataframe_1 = test_gdf
         test_geodataframe_2 = test_gdf
+        test_list = [test_geodataframe_1, test_geodataframe_2]
         expected = True
-        actual = functions.has_crs(test_geodataframe_1, test_geodataframe_2)
+        actual = functions.check_if_all_elements_have_crs(test_list)
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
         assert expected is actual, error_message
         
@@ -192,7 +224,7 @@ class TestHasCrs(object):
 class TestHasGeometry(object):
     def test_valerror_on_nongdf_value_float(self):
         test_geodataframe = test_float
-        expected_message = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(test_geodataframe))
+        expected_message = "Function argument should be of type geopandas.GeoDataFrame. Got at {} ".format(type(test_geodataframe))
         with pytest.raises(ValueError) as exception_info:
             functions.has_geometry(test_geodataframe)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
@@ -200,7 +232,7 @@ class TestHasGeometry(object):
         
     def test_valerror_on_nongdf_value_str(self):
         test_geodataframe = test_str
-        expected_message = "Function arguments should be of type geopandas.GeoDataFrame. Got at least one {} ".format(type(test_geodataframe))
+        expected_message = "Function argument should be of type geopandas.GeoDataFrame. Got at {} ".format(type(test_geodataframe))
         with pytest.raises(ValueError) as exception_info:
             functions.has_geometry(test_geodataframe)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
@@ -220,7 +252,62 @@ class TestHasGeometry(object):
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
         assert expected is actual, error_message
         
+#%% --- Test helper function: check_if_all_elements_have_geometry ---
 
+class TestCheckIfAllElementsHaveGeometry(object):
+    def test_valerror_on_nonlist_value_dict(self):
+        test_geodataframes_list = test_dict
+        expected_message = "geodataframes_list must be of list type. Got {}".format(type(test_geodataframes_list))
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_have_geometry(test_geodataframes_list)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nonlist_value_df(self):
+        test_geodataframes_list = test_df
+        expected_message = "geodataframes_list must be of list type. Got {}".format(type(test_geodataframes_list))
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_have_geometry(test_geodataframes_list)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_list_elements_str(self):
+        test_geodataframe_1 = test_str
+        test_geodataframe_2 = test_str
+        test_list = [test_geodataframe_1, test_geodataframe_2]
+        expected_message = "Elements of the list should be of type geopandas.GeoDataFrame. Got at least one value that is not."
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_have_geometry(test_list)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_gdf_and_nongdf_list_elements(self):
+        test_geodataframe_1 = test_gdf
+        test_geodataframe_2 = test_str
+        test_list = [test_geodataframe_1, test_geodataframe_2]
+        expected_message = "Elements of the list should be of type geopandas.GeoDataFrame. Got at least one value that is not."
+        with pytest.raises(ValueError) as exception_info:
+            functions.check_if_all_elements_have_geometry(test_list)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+        
+    def test_false_on_no_geom_multiple_list_elements(self):
+        test_geodataframe_1 = test_gdf_no_geom
+        test_geodataframe_2 = test_gdf
+        test_list = [test_geodataframe_1, test_geodataframe_2]
+        expected = False
+        actual = functions.check_if_all_elements_have_geometry(test_list)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+        
+    def test_true_on_gdf_multiple_list_elements(self):
+        test_geodataframe_1 = test_gdf
+        test_geodataframe_2 = test_gdf
+        test_list = [test_geodataframe_1, test_geodataframe_2]
+        expected = True
+        actual = functions.check_if_all_elements_have_geometry(test_list)
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
 
 #%% --- Test helper function: crs_is_equal ---
 
