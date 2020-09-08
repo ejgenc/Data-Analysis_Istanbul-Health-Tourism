@@ -113,7 +113,7 @@ class TestSampleAndReadFromDf(object):
                         "dataframe length is {}, sample_size is {}").format(len(test_dataframe), test_sample_size)
         with pytest.raises(IndexError) as exception_info:
             functions.sample_and_read_from_df(test_dataframe, test_sample_size)
-        error_message = "Expected the following message: {}. Got the following: {}"
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
         
 #%%     --- Test: report_null_values ---
