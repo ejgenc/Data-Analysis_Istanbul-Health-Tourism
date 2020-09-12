@@ -69,7 +69,6 @@ def check_if_all_elements_are_gdf(arguments_list):
         
     return True
     
-
 def has_crs(geodataframe):
     """
     Checks if the given geopandas GeoDataFrame has crs information.
@@ -280,7 +279,7 @@ def calculate_centroid(geodataframe):
     if is_gdf(geodataframe) is False:
         raise ValueError(valerror_text)
         
-    attriberror_text= "Argument provided does not have geometry information."
+    attriberror_text = "Argument provided does not have geometry information."
     if has_geometry(geodataframe) is False:
         raise AttributeError(attriberror_text)
         
@@ -289,15 +288,52 @@ def calculate_centroid(geodataframe):
     else:
         centroids = geodataframe.geometry.centroid
         
-    return centroids
+    return gpd.GeoDataFrame(centroids,
+                            crs = geodataframe.crs)
 
 def create_unary_union(geodataframe):
-    ### Accepts a geodataframe
-    ### Geodataframe has geometry information
-    ### Geometry information is composed of points
-    ### Creates a unary union
-    ### Returns the unary union
-    pass
+    """
+    Creates a unary union from the geometry datapoints of the given
+    geopandas GeoDataFrame object.
+
+    Parameters
+    ----------
+    geodataframe : geopandas GeoDataFrame object.
+
+    Returns
+    -------
+    unary_union : shapely.geometry.multipoint.MultiPoint object
+        A shapely MultiPoint object that is composed from the geometry datapoints
+        of the given geopandas GeoDataFrame object.
+
+    """
+    valerror_text = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(geodataframe))
+    if is_gdf(geodataframe) is False:
+        raise ValueError(valerror_text)
+        
+    attriberror_text = "Argument provided does not have geometry information."
+    if has_geometry(geodataframe) is False:
+        raise AttributeError(attriberror_text)
+        
+    attriberror_text = ("Geometry information of the argument provided should be composed of Points."
+                        "Found at least one non-point shape.")
+    most_common_geom = map_geometry_types(geodataframe, return_most_common = True)
+    if most_common_geom[0] != "Point":
+        raise AttributeError(attriberror_text)
+    
+    unary_union = geodataframe.geometry.unary_union
+    
+    return unary_union
+
+def prepare_for_nearest_neighbor_analysis(geodataframe):
+    # Accept a geodataframe
+    # Check if geodataframe has geometry information
+    # Check if geometry is composed of points
+    # Call calculate_centroid and create_unary_union on geodataframe
+    # Return geodataframe_prepared, which should be a multipoint
+    
+    geodataframe_prepared = create_unary_union(calculate_centroid(geodataframe))
+    return geodataframe_prepared
 
 def calculate_nearest_neighbor():
     pass
@@ -309,7 +345,7 @@ def calculate_distance():
 
 def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe):
     
-    gdf_list = [reference]
+    gdf_list = [reference_geodataframe, comparison_geodataframe]
     
     valerror_text = ("Both arguments should be geopandas.GeoDataFrame objects."
                      "Got {} and {} as object types.").format(type(reference_geodataframe), type(comparison_geodataframe))

@@ -16,7 +16,7 @@ import pytest
 import numpy as np
 import pandas as pd
 import geopandas as gpd
-from shapely.geometry import Point
+from shapely.geometry import Point, Polygon, MultiPoint
 from src.helper_functions import data_analysis_helper_functions as functions
 
 #%% --- Set proper directory to assure integration with doit ---
@@ -42,10 +42,15 @@ for col in test_df.columns:
 random_points_basis_x = np.random.randint(low = 20, high = 40, size = 100)
 random_points_basis_y = np.random.randint(low = 20, high = 40, size = 100)
 random_points = [Point(x,y) for (x,y) in zip(random_points_basis_x,random_points_basis_y)]
+sample_polygon = Polygon([[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]])
+sample_polygons = [sample_polygon for i in range (0,100)]
 
 test_gdf = gpd.GeoDataFrame(test_df.copy(),
                             geometry = random_points,
                             crs = "EPSG:4326")
+
+test_gseries = gpd.GeoSeries(random_points,
+                             crs = "EPSG:4326")
  
 test_gdf_diff_crs = gpd.GeoDataFrame(test_df.copy(),
                             geometry = random_points,
@@ -55,6 +60,10 @@ test_gdf_no_crs = gpd.GeoDataFrame(test_df.copy(),
                             geometry = random_points) 
 
 test_gdf_no_geom = gpd.GeoDataFrame(test_df.copy())
+
+test_gdf_geom_is_polygon = gpd.GeoDataFrame(test_df.copy(),
+                            geometry = sample_polygons,
+                            crs = "EPSG:4326")
 
 test_gdf_list = [test_gdf, test_gdf]
     
@@ -127,7 +136,7 @@ class TestCheckIfAllElementsAreGdf(object):
         actual = functions.check_if_all_elements_are_gdf(test_argumentslist)
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
         assert expected is actual, error_message
-    
+   
 #%% --- Test helper function: has_crs ---
 
 class TestHasCrs(object):
@@ -435,13 +444,12 @@ class TestCalculateCentroid(object):
     def test_data_type_of_output(self):
         test_geodataframe = test_gdf
         expected = Point
-        actual = type(functions.calculate_centroid(test_geodataframe)[0])
+        actual = type(functions.calculate_centroid(test_geodataframe).geometry[0])
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
         assert expected is actual, error_message
         
 #%%     --- Test subfunction: create_unary_union
 
-@pytest.mark.skip(reason="not fully implemented yet")
 class TestCreateUnaryUnion(object):
     def test_valerror_on_nongdf_value_dict(self):
         test_geodataframe = test_dict
@@ -468,10 +476,65 @@ class TestCreateUnaryUnion(object):
         assert exception_info.match(expected_message), error_message
         
     def test_attriberror_on_nonpoint_geometry(self):
-        pass
+        test_geodataframe = test_gdf_geom_is_polygon
+        expected_message = ("Geometry information of the argument provided should be composed of Points."
+                            "Found at least one non-point shape.")
+        with pytest.raises(AttributeError) as exception_info:
+            functions.create_unary_union(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
     
     def test_data_type_of_output(self):
-        pass
+        test_geodataframe = test_gdf
+        expected = MultiPoint
+        actual = type(functions.create_unary_union(test_geodataframe))
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+        
+#%%     --- Test subfunction: prepare_for_nearest_neighbor_analysis ---
+
+class TestPrepareForNearestNeighborAnalysis(object):
+    def test_valerror_on_nongdf_value_list(self):
+        test_geodataframe = test_list
+        expected_message = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.prepare_for_nearest_neighbor_analysis(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_value_str(self):
+        test_geodataframe = test_bool
+        expected_message = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.prepare_for_nearest_neighbor_analysis(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_geometry(self):
+        test_geodataframe = test_gdf_no_geom
+        expected_message = "Argument provided does not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.prepare_for_nearest_neighbor_analysis(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+        
+    def test_attriberror_on_nonpoint_geometry(self):
+        test_geodataframe = test_gdf_geom_is_polygon
+        expected_message = ("Geometry information of the argument provided should be composed of Points."
+                            "Found at least one non-point shape.")
+        with pytest.raises(AttributeError) as exception_info:
+            functions.prepare_for_nearest_neighbor_analysis(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_data_type_of_output(self):
+        test_geodataframe = test_gdf
+        expected = MultiPoint
+        actual = type(prepare_for_nearest_neighbor_analysis(test_geodataframe))
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+
+        
 
 #%%     --- Test subfunction: calculate_nearest_neighbor
 
@@ -540,7 +603,6 @@ def TestNearestNeighborAnalysis(object):
         assert exception_info.match(expected_message), error_message
         
         
-#%%
         
         
     
