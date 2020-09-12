@@ -17,6 +17,8 @@ import numpy as np
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point, Polygon, MultiPoint
+from shapely.ops import nearest_points
+from geopy import distance
 from src.helper_functions import data_analysis_helper_functions as functions
 
 #%% --- Set proper directory to assure integration with doit ---
@@ -601,6 +603,48 @@ def TestNearestNeighborAnalysis(object):
             functions.nearest_neighbor_analysis(test_geodataframe_1, test_geodataframe_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
+        
+        
+#%%
+
+# SORT THIS SHIT
+#centroid
+a = functions.prepare_for_nearest_neighbor_analysis(test_gdf)
+                # reference gdf
+                
+temp_list_1 = []
+temp_list_2 = []
+for index, row in test_gdf.iterrows():
+    #nearest neighbor analysis, 0 is reference and 1 is query
+    b = nearest_points(row.geometry, a)
+    p1 = b[0]
+    p2 = b[1]
+    ps = [p1, p2]
+    temp_list_1.append(ps)
+    
+    
+df_1 = pd.DataFrame(temp_list_1,
+                    columns = ["A", "B"])
+
+df_2 = df_1.copy()
+
+dists = []
+for index, row in df_2.iterrows():
+    row_coord_1 = row["A"].coords
+    row_coord_2 = row["B"].coords
+    dist = distance.distance(row_coord_1, row_coord_2).m
+    heh = [row["A"], dist]
+    dists.append(heh)
+    
+df_3 = pd.DataFrame(dists,
+                    columns = ["A", "dist"])
+
+df_4 = pd.concat([df_1, df_3["dist"]], axis=1)
+    
+    # t_distance = distance.distance(p1.coords, p2.coords).m
+    # needed = [p1, p2, t_distance]
+    # temp_list_2.append(needed)
+    
         
         
         

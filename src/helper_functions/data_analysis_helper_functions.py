@@ -17,7 +17,7 @@ import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point, MultiPoint
 from shapely.ops import nearest_points
-from geopy import distance
+ 
 
 
 #%% --- FUNCTION : nearest_neighbor_analysis ---
@@ -385,9 +385,7 @@ def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe):
     if crs_is_equal(reference_geodataframe, comparison_geodataframe) is False:
         raise AttributeError(attriberror_text)
         
-    # FUNCTION: PREPARE FOR NN #
-        # - Get centroids
-        # - Create unary union of centroids
+    nearest_neighbor_reference = prepare_for_nearest_neighbor_analysis(comparison_geodataframe)
     
     # FUNCTION: NN Analysis
     
