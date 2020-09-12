@@ -326,11 +326,35 @@ def create_unary_union(geodataframe):
     return unary_union
 
 def prepare_for_nearest_neighbor_analysis(geodataframe):
-    # Accept a geodataframe
-    # Check if geodataframe has geometry information
-    # Check if geometry is composed of points
-    # Call calculate_centroid and create_unary_union on geodataframe
-    # Return geodataframe_prepared, which should be a multipoint
+    """
+    Calculates the centroid of all geometry datapoints of the given dataframe
+    by calling calculate_centroid.
+    After calculating the centroids, composes a unary union of all the centroids.
+
+    Parameters
+    ----------
+    geodataframe : geopandas GeoDataFrame object.
+
+    Returns
+    -------
+    geodataframe_prepared :  shapely.geometry.multipoint.MultiPoint object
+        A shapely MultiPoint object that is composed from the centroids
+        of the given geopandas GeoDataFrame object.
+
+    """
+    valerror_text = "Argument provided should be of type geopandas.GeoDataFrame. Got {} ".format(type(geodataframe))
+    if is_gdf(geodataframe) is False:
+        raise ValueError(valerror_text)
+        
+    attriberror_text = "Argument provided does not have geometry information."
+    if has_geometry(geodataframe) is False:
+        raise AttributeError(attriberror_text)
+        
+    attriberror_text = ("Geometry information of the argument provided should be composed of Points."
+                        "Found at least one non-point shape.")
+    most_common_geom = map_geometry_types(geodataframe, return_most_common = True)
+    if most_common_geom[0] != "Point":
+        raise AttributeError(attriberror_text)
     
     geodataframe_prepared = create_unary_union(calculate_centroid(geodataframe))
     return geodataframe_prepared

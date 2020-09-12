@@ -530,7 +530,7 @@ class TestPrepareForNearestNeighborAnalysis(object):
     def test_data_type_of_output(self):
         test_geodataframe = test_gdf
         expected = MultiPoint
-        actual = type(prepare_for_nearest_neighbor_analysis(test_geodataframe))
+        actual = type(functions.prepare_for_nearest_neighbor_analysis(test_geodataframe))
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
         assert expected is actual, error_message
 
