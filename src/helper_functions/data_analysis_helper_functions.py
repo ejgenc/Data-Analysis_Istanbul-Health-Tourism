@@ -11,9 +11,10 @@ The unit tests for these functions can be found at:
 
 import pandas as pd
 import geopandas as gpd
-from shapely.geometry import Point, MultiPoint
+from shapely.geometry import Point, MultiPoint, LineString
 from shapely.ops import nearest_points
 from geopy import distance
+import matplotlib.pyplot as plt
  
 #%% --- FUNCTION : nearest_neighbor_analysis ---
 
@@ -430,6 +431,30 @@ def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe, d
     
     return result
 
+#%% --- FUNCTION : plot_nearest_neighbor_analysis ---
 
+#%% --- Subfunctions ---
+def create_link_between_origin_and_nearest_geom(nn_analysis_gdf):
+    pass
+    #create a geoseries of LineString objects
+    # return geoseries of LineString objects with geometry and crs
 
-
+def plot_nearest_neighbor_analysis(point_of_origin, nearest_point, link):
+    pass
+    #create a fig object
+        #set size
+        # set background color
+    #create three axes
+    # plot origin on 1 ax, nearest in 2nd ax, link in 3rd ax
+    #return fig object
+    
+#%% --- Main Function ---
+def confirm_nearest_neighbor_analysis(nn_analysis_gdf):
+        # accept a nn analysis gdf:
+        # must be gdf
+        # must have geom info
+        # must have crs
+        # must have all three columns
+        #create link
+        #return plot
+    pass
