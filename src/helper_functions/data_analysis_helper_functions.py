@@ -2,25 +2,19 @@
 """
 ------ What is this file? ------
 
-This script contains some helper functions that are used in the scripts foundunder src/data_analysis.
+This script contains some helper functions that are used in the scripts found under src/data_analysis.
 The unit tests for these functions can be found at:
      tests/unit_tests/helper_functions/test_data_preparation_helper_functions.py
 
 """
-
 #%% --- Import Required Packages ---
 
-import os
-from pathlib import Path # To wrap around filepaths
-import numpy as np
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point, MultiPoint
 from shapely.ops import nearest_points
 from geopy import distance
  
-
-
 #%% --- FUNCTION : nearest_neighbor_analysis ---
 
 #%%     --- Helper Functions ---
@@ -410,11 +404,11 @@ def calculate_distance(nearest_points_gdf):
 
 #%%     --- Main Function ---
 
-def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe, calculate_distance = True):
+def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe, distance = True):
         
     valerror_text = ("Both arguments should be geopandas.GeoDataFrame objects."
                      "Got {} and {} as object types.").format(type(reference_geodataframe), type(comparison_geodataframe))
-    if check_if_all_elements_are_gdf(gdf_list) is False:
+    if check_if_all_elements_are_gdf([reference_geodataframe, comparison_geodataframe]) is False:
         raise ValueError(valerror_text)
     
     attriberror_text= ("At least one of the arguments provided do not have geometry information.")
@@ -425,78 +419,16 @@ def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe, c
                         "Got {} and {} as crs.").format(reference_geodataframe.crs, comparison_geodataframe.crs)
     if crs_is_equal(reference_geodataframe, comparison_geodataframe) is False:
         raise AttributeError(attriberror_text)
+        
+    comparison_geodataframe = prepare_for_nearest_neighbor_analysis(comparison_geodataframe)
     
-    # FUNCTION: NN Analysis
+    result = calculate_nearest_neighbor(reference_geodataframe, comparison_geodataframe)
     
-    # If calculate_distance is True:
-    # FUNCTION: Do the distance calculations
-        # Check for parameters
-        
-    # Return final gdf
-
-
-#%%
-# def nearest_neighbor_analysis(gdf1, gdf2):
-#     '''
-# Accepts as an an argument two Geopandas GeoDataFrames
-# Takes the gdf1 as the GeoDataFrame of origin and gdf2 as the GeoDataFrame of query
-# For each element of gdf1, finds which element of gdf2 is closest and also calculates the distance
-# Returns a GeoDataFrame containing origin geometry, nearest geometry and the distance in meters
-
-# NOTE: gdf2 is turned into a MultiPoint object first through unary union.
-# NOTE: This method is extremely slow as it is not vectorized. Proceed with caution.
-# Note: The distance is calculated via geopy 
-#     '''
+    if distance == True:
+        distances = calculate_distance(result)
+        result["distance_in_meter"] = distances
     
-# #Calculate the centroid of gdf2
-
-#     gdf2_copy = gdf2.copy()
-
-#     gdf2_copy["centroid"] = gdf2_copy.geometry.centroid
-
-# #Set geometry of gdf2_copy
-#     gdf2_copy.set_geometry("centroid", inplace = True)
-    
-# #Take the unary union of gdf2_copy
-#     gdf2_copy_bundled = gdf2_copy.geometry.unary_union
-    
-# #Create an empty list of series to store individual series
-#     lst_of_series = []
-    
-# #Iterate over gdf1
-        
-#     for index, row in gdf1.iterrows():
-        
-#         #For each row, do the actual nearest points analysis
-#         points = nearest_points(row["geometry"], gdf2_copy_bundled)
-        
-#         #Create a mask for the gdf2_copy
-#         mask = gdf2_copy.geometry == points[1]
-        
-#         #Select data based on that mask
-        
-#         data = gdf2_copy.loc[mask,["centroid"]]
-        
-#         #Create a backlink to the point from which the query is made
-        
-#         data["origin_geometry"] = row["geometry"]
-        
-#         #Do the distance calculation
-        
-#         origin_geom_coords = data["origin_geometry"].values[0].coords
-#         query_centroid_coords = data["centroid"].values[0].coords
-        
-#         data["distance_origin_to_centroid"] = distance.distance(origin_geom_coords,
-#                                                                 query_centroid_coords).m
-        
-#         lst_of_series.append(data)
-    
-# #Now we can turn turn the lst_of_series into a geodataframe
-    
-#     gdf_final = gpd.GeoDataFrame(pd.concat(lst_of_series, ignore_index = True),
-#                                  crs = lst_of_series[0].crs)
-    
-#     return gdf_final
+    return result
 
 
 

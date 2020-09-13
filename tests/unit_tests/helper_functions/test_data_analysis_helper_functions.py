@@ -7,18 +7,14 @@ The script can be found at:
     src/helper_functions/data_analysis_helper_functions.py
 
 """
-
 #%% --- Import Required Packages ---
 
 import os
-from pathlib import Path # To wrap around filepaths
 import pytest
 import numpy as np
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point, Polygon, MultiPoint
-from shapely.ops import nearest_points
-from geopy import distance
 from src.helper_functions import data_analysis_helper_functions as functions
 
 #%% --- Set proper directory to assure integration with doit ---
@@ -73,8 +69,6 @@ test_multipoint_object = test_gdf.geometry.unary_union
 
 test_nearest_point_gdf = test_gdf.rename(columns = {"A" : "point_of_origin",
                                                     "B" : "nearest_point"})
-
-    
 #%%     --- other  ---
 
 test_str = "Test"
@@ -85,7 +79,6 @@ test_list = ["A,B"]
 test_dict = {"A":1, "B":2}
 test_sample_size_int_correct = 5
 test_sample_size_int_wrong = 105
-
 #%% --- Testing ---
 
 #%% --- Test helper function: is_gdf ---
@@ -664,7 +657,6 @@ class TestCalculateDistance(object):
         
 #%%     --- Test main function: nearest_neighbor_analysis
 
-@pytest.mark.skip(reason="not fully implemented yet")
 class TestNearestNeighborAnalysis(object):
     def test_valerror_on_nongdf_argument_str(self):
         test_gdf_1 = test_str
@@ -723,12 +715,3 @@ class TestNearestNeighborAnalysis(object):
             functions.nearest_neighbor_analysis(test_geodataframe_1, test_geodataframe_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
-            
-        
-#%% =
-
-a = functions.prepare_for_nearest_neighbor_analysis(test_gdf)
-b = functions.calculate_nearest_neighbor(test_gdf,a)
-c = functions.calculate_distance(b)
-
-    
