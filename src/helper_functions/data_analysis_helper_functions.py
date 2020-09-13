@@ -360,18 +360,44 @@ def prepare_for_nearest_neighbor_analysis(geodataframe):
     return geodataframe_prepared
 
 def calculate_nearest_neighbor(geodataframe, multipoint_obj):
-    #Accept two arguments, a gdf and a MultiPoint object
-    #GDF must also have crs info
-    #Gdf must have geometry information and it should be composed of points
-    #For each row in gdf, calculate the nearest neighbor from MultiPoint
-    #Record gdf geometry and nearest neighbor into a list
-    #append it into a list of lists
+    valerror_text = "Argument geodataframe should be of type geopandas.GeoDataFrame. Got {} ".format(type(geodataframe))
+    if is_gdf(geodataframe) is False:
+        raise ValueError(valerror_text)
     
-    ## TURN LIST OF LISTS INTO A GDF
-    #Turn list of lists into a new gdf whose crs is gdf the original crs
-    #return new gdf
-    pass
+    attriberror_text = "geopandas.GeoDataFrame object is missing crs information."
+    if has_crs(geodataframe) is False:
+        raise AttributeError(attriberror_text)
+        
+    attriberror_text = "Argument provided does not have geometry information."
+    if has_geometry(geodataframe) is False:
+        raise AttributeError(attriberror_text)
+        
+    attriberror_text = ("Geometry information of the argument provided should be composed of Points."
+                        "Found at least one non-point shape.")
+    most_common_geom = map_geometry_types(geodataframe, return_most_common = True)
+    if most_common_geom[0] != "Point":
+        raise AttributeError(attriberror_text)
+        
+    valerror_text = "Argument multipoint_obj should be of type shapely.geometry.MultiPoint. Got {} ".format(type(multipoint_obj))
+    if not isinstance(multipoint_obj, MultiPoint):
+        raise ValueError(valerror_text)
+    
+    nearest_points_list = []
+    for index, row in geodataframe.iterrows():
+        nearest_points_tuple = nearest_points(row.geometry, multipoint_obj)
+        point_of_origin = row.geometry
+        nearest_point = nearest_points_tuple[1]
+        nearest_points_list.append([point_of_origin, nearest_point])
+        
+        
+    nearest_points_gdf = gpd.GeoDataFrame(nearest_points_list,
+                                          columns = ["point_of_origin",
+                                                     "nearest_point"],
+                                          crs = geodataframe.crs,
+                                          geometry = "point_of_origin")
 
+    return nearest_points_gdf
+    
 def calculate_distance():
     #Accepts a single argument, a gdf that has origin-nearest point info
     #GDF must have geometry info and crs info
