@@ -17,6 +17,7 @@ import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point, MultiPoint
 from shapely.ops import nearest_points
+from geopy import distance
  
 
 
@@ -380,8 +381,8 @@ def calculate_nearest_neighbor(geodataframe, multipoint_obj):
     
     nearest_points_list = []
     for index, row in geodataframe.iterrows():
-        nearest_points_tuple = nearest_points(row.geometry, multipoint_obj)
         point_of_origin = row.geometry
+        nearest_points_tuple = nearest_points(point_of_origin, multipoint_obj)
         nearest_point = nearest_points_tuple[1]
         nearest_points_list.append([point_of_origin, nearest_point])
         
@@ -394,36 +395,36 @@ def calculate_nearest_neighbor(geodataframe, multipoint_obj):
 
     return nearest_points_gdf
     
-def calculate_distance():
-    #Accepts a single argument, a gdf that has origin-nearest point info
-    #GDF must have geometry info and crs info
-    #For each row in gdf, calculate the distance between origin and nearest point
-    #add it all into a list
-    #add the list to the left of original gdf
-    #return original gdf with added distance info
-    pass
+def calculate_distance(nearest_points_gdf):
+    valerror_text = "Argument nearest_points_gdf should be of type geopandas.GeoDataFrame. Got {} ".format(type(nearest_points_gdf))
+    if is_gdf(nearest_points_gdf) is False:
+        raise ValueError(valerror_text)
+        
+    valerror_text = "The geodataframe provided does not contain columns point_of_origin and nearest_point"
+    if not ("point_of_origin" in nearest_points_gdf.columns and "nearest_point" in nearest_points_gdf.columns):
+        raise ValueError(valerror_text)
+        
+    distances = [distance.distance(p1.coords,p2.coords).m for p1,p2 in nearest_points_gdf.loc[:,["point_of_origin","nearest_point"]].values]
+    
+    return pd.Series(distances)
 
 #%%     --- Main Function ---
 
-def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe):
-    
-    gdf_list = [reference_geodataframe, comparison_geodataframe]
-    
+def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe, calculate_distance = True):
+        
     valerror_text = ("Both arguments should be geopandas.GeoDataFrame objects."
                      "Got {} and {} as object types.").format(type(reference_geodataframe), type(comparison_geodataframe))
     if check_if_all_elements_are_gdf(gdf_list) is False:
         raise ValueError(valerror_text)
     
     attriberror_text= ("At least one of the arguments provided do not have geometry information.")
-    if check_if_all_elements_have_geometry(gdf_list) is False:
+    if check_if_all_elements_have_geometry([reference_geodataframe, comparison_geodataframe]) is False:
         raise AttributeError(attriberror_text)
  
     attriberror_text = ("The arguments provided to do not share the same crs."
                         "Got {} and {} as crs.").format(reference_geodataframe.crs, comparison_geodataframe.crs)
     if crs_is_equal(reference_geodataframe, comparison_geodataframe) is False:
         raise AttributeError(attriberror_text)
-        
-    nearest_neighbor_reference = prepare_for_nearest_neighbor_analysis(comparison_geodataframe)
     
     # FUNCTION: NN Analysis
     
@@ -496,5 +497,7 @@ def nearest_neighbor_analysis(reference_geodataframe, comparison_geodataframe):
 #                                  crs = lst_of_series[0].crs)
     
 #     return gdf_final
+
+
 
 

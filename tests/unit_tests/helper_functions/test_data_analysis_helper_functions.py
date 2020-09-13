@@ -70,6 +70,10 @@ test_gdf_geom_is_polygon = gpd.GeoDataFrame(test_df.copy(),
 test_gdf_list = [test_gdf, test_gdf]
 
 test_multipoint_object = test_gdf.geometry.unary_union
+
+test_nearest_point_gdf = test_gdf.rename(columns = {"A" : "point_of_origin",
+                                                    "B" : "nearest_point"})
+
     
 #%%     --- other  ---
 
@@ -633,6 +637,31 @@ class TestCalculateNearestNeighbor(object):
     
 #%%     --- Test subfunction: calculate_distance
 
+class TestCalculateDistance(object):
+    def test_valerror_on_nongdf_value_str(self):
+        test_geodataframe = test_str
+        expected_message = "Argument nearest_points_gdf should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_distance(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_value_dict(self):
+        test_geodataframe = test_dict
+        expected_message = "Argument nearest_points_gdf should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_distance(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+
+    def test_valerror_on_non_nearest_point_gdf(self):
+        test_geodataframe = test_gdf
+        expected_message = "The geodataframe provided does not contain columns point_of_origin and nearest_point"
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_distance(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+        
 #%%     --- Test main function: nearest_neighbor_analysis
 
 @pytest.mark.skip(reason="not fully implemented yet")
@@ -694,50 +723,12 @@ class TestNearestNeighborAnalysis(object):
             functions.nearest_neighbor_analysis(test_geodataframe_1, test_geodataframe_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
+            
         
-        
-#%%
+#%% =
 
-# # SORT THIS SHIT
-# #centroid
-# a = functions.prepare_for_nearest_neighbor_analysis(test_gdf)
-#                 # reference gdf
-                
-# temp_list_1 = []
-# temp_list_2 = []
-# for index, row in test_gdf.iterrows():
-#     #nearest neighbor analysis, 0 is reference and 1 is query
-#     b = nearest_points(row.geometry, a)
-#     p1 = b[0]
-#     p2 = b[1]
-#     ps = [p1, p2]
-#     temp_list_1.append(ps)
-    
-    
-# df_1 = pd.DataFrame(temp_list_1,
-#                     columns = ["A", "B"])
+a = functions.prepare_for_nearest_neighbor_analysis(test_gdf)
+b = functions.calculate_nearest_neighbor(test_gdf,a)
+c = functions.calculate_distance(b)
 
-# df_2 = df_1.copy()
-
-# dists = []
-# for index, row in df_2.iterrows():
-#     row_coord_1 = row["A"].coords
-#     row_coord_2 = row["B"].coords
-#     dist = distance.distance(row_coord_1, row_coord_2).m
-#     heh = [row["A"], dist]
-#     dists.append(heh)
-    
-# df_3 = pd.DataFrame(dists,
-#                     columns = ["A", "dist"])
-
-# df_4 = pd.concat([df_1, df_3["dist"]], axis=1)
-    
-#     # t_distance = distance.distance(p1.coords, p2.coords).m
-#     # needed = [p1, p2, t_distance]
-#     # temp_list_2.append(needed)
-    
-        
-        
-        
-        
     
