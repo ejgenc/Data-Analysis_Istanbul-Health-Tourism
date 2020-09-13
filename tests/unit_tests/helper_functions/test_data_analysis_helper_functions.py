@@ -69,7 +69,7 @@ test_gdf_geom_is_polygon = gpd.GeoDataFrame(test_df.copy(),
 
 test_gdf_list = [test_gdf, test_gdf]
 
-test_multipoint_obj = test_gdf.geometry.unary_union
+test_multipoint_object = test_gdf.geometry.unary_union
     
 #%%     --- other  ---
 
@@ -538,15 +538,12 @@ class TestPrepareForNearestNeighborAnalysis(object):
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
         assert expected is actual, error_message
 
-        
-
 #%%     --- Test subfunction: calculate_nearest_neighbor
 
-@pytest.mark.skip(reason="not fully implemented yet")
-def TestCalculateNearestNeighbor(object):
+class TestCalculateNearestNeighbor(object):
     def test_valerror_on_nongdf_value_bool(self):
         test_geodataframe = test_bool
-        test_multipoint_obj = test_multipoint_obj
+        test_multipoint_obj = test_multipoint_object
         expected_message = "Argument geodataframe should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
         with pytest.raises(ValueError) as exception_info:
             functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
@@ -555,7 +552,7 @@ def TestCalculateNearestNeighbor(object):
     
     def test_valerror_on_nongdf_value_df(self):
         test_geodataframe = test_df
-        test_multipoint_obj = test_multipoint_obj
+        test_multipoint_obj = test_multipoint_object
         expected_message = "Argument geodataframe should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
         with pytest.raises(ValueError) as exception_info:
             functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
@@ -581,7 +578,7 @@ def TestCalculateNearestNeighbor(object):
         assert exception_info.match(expected_message), error_message
     
     def test_valerror_on_nongdf_nonmultipoint_values(self):
-        test_geodataframe = test_gdf
+        test_geodataframe = test_df
         test_multipoint_obj = test_int
         expected_message = "Argument geodataframe should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
         with pytest.raises(ValueError) as exception_info:
@@ -589,18 +586,9 @@ def TestCalculateNearestNeighbor(object):
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
     
-    def test_attriberror_on_missing_crs(self):
-        test_geodataframe = test_gdf_no_crs
-        test_multipoint_obj = test_multipoint_obj
-        expected_message = "geopandas.GeoDataFrame object is missing crs information."
-        with pytest.raises(AttributeError) as exception_info:
-            functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
-        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
-        assert exception_info.match(expected_message), error_message
-    
     def test_attriberror_on_missing_geometry(self):
         test_geodataframe = test_gdf_no_geom
-        test_multipoint_obj = test_multipoint_obj
+        test_multipoint_obj = test_multipoint_object
         expected_message = "Argument provided does not have geometry information."
         with pytest.raises(AttributeError) as exception_info:
             functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
@@ -609,7 +597,7 @@ def TestCalculateNearestNeighbor(object):
     
     def test_attriberror_on_nonpoint_geometry(self):
         test_geodataframe = test_gdf_geom_is_polygon
-        test_multipoint_obj = test_multipoint_obj
+        test_multipoint_obj = test_multipoint_object
         expected_message = ("Geometry information of the argument provided should be composed of Points."
                             "Found at least one non-point shape.")
         with pytest.raises(AttributeError) as exception_info:
@@ -619,7 +607,7 @@ def TestCalculateNearestNeighbor(object):
     
     def test_data_type_of_output(self):
         test_geodataframe = test_gdf
-        test_multipoint_obj = test_multipoint_obj
+        test_multipoint_obj = test_multipoint_object
         expected = gpd.geodataframe.GeoDataFrame
         actual = type(functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj))
         error_message = "Expected function to return {}, function returned {}".format(expected, actual)
@@ -628,7 +616,7 @@ def TestCalculateNearestNeighbor(object):
     
     def test_crs_equality_of_output(self):
         test_geodataframe = test_gdf
-        test_multipoint_obj = test_multipoint_obj
+        test_multipoint_obj = test_multipoint_object
         expected = test_geodataframe.crs
         actual = functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj).crs
         error_message = "Expected output geoDataFrame crs to be {} but crs is {}".format(expected, actual)
@@ -637,25 +625,23 @@ def TestCalculateNearestNeighbor(object):
     
     def test_geometry_equality_of_output(self):
         test_geodataframe = test_gdf
-        test_multipoint_obj = test_multipoint_obj
+        test_multipoint_obj = test_multipoint_object
         expected = len(test_geodataframe.geometry)
-        actual = len(test_geodataframe.geometry.geom_equals(functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj).geometry).sum())
+        actual = test_geodataframe.geometry.geom_equals(functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj).geometry).sum()
         error_message = "Expected output geoDataFrame crs to be {} but crs is {}".format(expected, actual)
-        assert expected is actual, error_message
+        assert int(expected) is int(actual), error_message
     
-    
-
 #%%     --- Test subfunction: calculate_distance
 
 #%%     --- Test main function: nearest_neighbor_analysis
 
 @pytest.mark.skip(reason="not fully implemented yet")
-def TestNearestNeighborAnalysis(object):
+class TestNearestNeighborAnalysis(object):
     def test_valerror_on_nongdf_argument_str(self):
         test_gdf_1 = test_str
         test_gdf_2 = test_str
         expected_message = ("Both arguments should be geopandas.GeoDataFrame objects."
-                     "Got {} and {} as object types.").format(type(test_gdf_1), type(test_gdf_2))
+                      "Got {} and {} as object types.").format(type(test_gdf_1), type(test_gdf_2))
         with pytest.raises(ValueError) as exception_info:
             functions.nearest_neighbor_analysis(test_gdf_1, test_gdf_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
@@ -665,7 +651,7 @@ def TestNearestNeighborAnalysis(object):
         test_gdf_1 = test_str
         test_gdf_2 = test_int
         expected_message = ("Both arguments should be geopandas.GeoDataFrame objects."
-                     "Got {} and {} as object types.").format(type(test_gdf_1), type(test_gdf_2))
+                      "Got {} and {} as object types.").format(type(test_gdf_1), type(test_gdf_2))
         with pytest.raises(ValueError) as exception_info:
             functions.nearest_neighbor_analysis(test_gdf_1, test_gdf_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
@@ -675,7 +661,7 @@ def TestNearestNeighborAnalysis(object):
         test_gdf_1 = test_gdf
         test_gdf_2 = test_df
         expected_message = ("Both arguments should be geopandas.GeoDataFrame objects."
-                     "Got {} and {} as object types.").format(type(test_gdf_1), type(test_gdf_2))
+                      "Got {} and {} as object types.").format(type(test_gdf_1), type(test_gdf_2))
         with pytest.raises(ValueError) as exception_info:
             functions.nearest_neighbor_analysis(test_gdf_1, test_gdf_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
@@ -712,43 +698,43 @@ def TestNearestNeighborAnalysis(object):
         
 #%%
 
-# SORT THIS SHIT
-#centroid
-a = functions.prepare_for_nearest_neighbor_analysis(test_gdf)
-                # reference gdf
+# # SORT THIS SHIT
+# #centroid
+# a = functions.prepare_for_nearest_neighbor_analysis(test_gdf)
+#                 # reference gdf
                 
-temp_list_1 = []
-temp_list_2 = []
-for index, row in test_gdf.iterrows():
-    #nearest neighbor analysis, 0 is reference and 1 is query
-    b = nearest_points(row.geometry, a)
-    p1 = b[0]
-    p2 = b[1]
-    ps = [p1, p2]
-    temp_list_1.append(ps)
+# temp_list_1 = []
+# temp_list_2 = []
+# for index, row in test_gdf.iterrows():
+#     #nearest neighbor analysis, 0 is reference and 1 is query
+#     b = nearest_points(row.geometry, a)
+#     p1 = b[0]
+#     p2 = b[1]
+#     ps = [p1, p2]
+#     temp_list_1.append(ps)
     
     
-df_1 = pd.DataFrame(temp_list_1,
-                    columns = ["A", "B"])
+# df_1 = pd.DataFrame(temp_list_1,
+#                     columns = ["A", "B"])
 
-df_2 = df_1.copy()
+# df_2 = df_1.copy()
 
-dists = []
-for index, row in df_2.iterrows():
-    row_coord_1 = row["A"].coords
-    row_coord_2 = row["B"].coords
-    dist = distance.distance(row_coord_1, row_coord_2).m
-    heh = [row["A"], dist]
-    dists.append(heh)
+# dists = []
+# for index, row in df_2.iterrows():
+#     row_coord_1 = row["A"].coords
+#     row_coord_2 = row["B"].coords
+#     dist = distance.distance(row_coord_1, row_coord_2).m
+#     heh = [row["A"], dist]
+#     dists.append(heh)
     
-df_3 = pd.DataFrame(dists,
-                    columns = ["A", "dist"])
+# df_3 = pd.DataFrame(dists,
+#                     columns = ["A", "dist"])
 
-df_4 = pd.concat([df_1, df_3["dist"]], axis=1)
+# df_4 = pd.concat([df_1, df_3["dist"]], axis=1)
     
-    # t_distance = distance.distance(p1.coords, p2.coords).m
-    # needed = [p1, p2, t_distance]
-    # temp_list_2.append(needed)
+#     # t_distance = distance.distance(p1.coords, p2.coords).m
+#     # needed = [p1, p2, t_distance]
+#     # temp_list_2.append(needed)
     
         
         

@@ -363,10 +363,6 @@ def calculate_nearest_neighbor(geodataframe, multipoint_obj):
     valerror_text = "Argument geodataframe should be of type geopandas.GeoDataFrame. Got {} ".format(type(geodataframe))
     if is_gdf(geodataframe) is False:
         raise ValueError(valerror_text)
-    
-    attriberror_text = "geopandas.GeoDataFrame object is missing crs information."
-    if has_crs(geodataframe) is False:
-        raise AttributeError(attriberror_text)
         
     attriberror_text = "Argument provided does not have geometry information."
     if has_geometry(geodataframe) is False:
