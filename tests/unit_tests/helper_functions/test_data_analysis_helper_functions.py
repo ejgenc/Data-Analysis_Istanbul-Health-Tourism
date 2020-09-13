@@ -68,6 +68,8 @@ test_gdf_geom_is_polygon = gpd.GeoDataFrame(test_df.copy(),
                             crs = "EPSG:4326")
 
 test_gdf_list = [test_gdf, test_gdf]
+
+test_multipoint_obj = test_gdf.geometry.unary_union
     
 #%%     --- other  ---
 
@@ -539,6 +541,109 @@ class TestPrepareForNearestNeighborAnalysis(object):
         
 
 #%%     --- Test subfunction: calculate_nearest_neighbor
+
+@pytest.mark.skip(reason="not fully implemented yet")
+def TestCalculateNearestNeighbor(object):
+    def test_valerror_on_nongdf_value_bool(self):
+        test_geodataframe = test_bool
+        test_multipoint_obj = test_multipoint_obj
+        expected_message = "Argument geodataframe should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_value_df(self):
+        test_geodataframe = test_df
+        test_multipoint_obj = test_multipoint_obj
+        expected_message = "Argument geodataframe should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nonmultipoint_value_str(self):
+        test_geodataframe = test_gdf
+        test_multipoint_obj = test_str
+        expected_message = "Argument multipoint_obj should be of type shapely.geometry.MultiPoint. Got {} ".format(type(test_multipoint_obj))
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nonmultipoint_value_int(self):
+        test_geodataframe = test_gdf
+        test_multipoint_obj = test_int
+        expected_message = "Argument multipoint_obj should be of type shapely.geometry.MultiPoint. Got {} ".format(type(test_multipoint_obj))
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nongdf_nonmultipoint_values(self):
+        test_geodataframe = test_gdf
+        test_multipoint_obj = test_int
+        expected_message = "Argument geodataframe should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_crs(self):
+        test_geodataframe = test_gdf_no_crs
+        test_multipoint_obj = test_multipoint_obj
+        expected_message = "geopandas.GeoDataFrame object is missing crs information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_geometry(self):
+        test_geodataframe = test_gdf_no_geom
+        test_multipoint_obj = test_multipoint_obj
+        expected_message = "Argument provided does not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_nonpoint_geometry(self):
+        test_geodataframe = test_gdf_geom_is_polygon
+        test_multipoint_obj = test_multipoint_obj
+        expected_message = ("Geometry information of the argument provided should be composed of Points."
+                            "Found at least one non-point shape.")
+        with pytest.raises(AttributeError) as exception_info:
+            functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_data_type_of_output(self):
+        test_geodataframe = test_gdf
+        test_multipoint_obj = test_multipoint_obj
+        expected = gpd.geodataframe.GeoDataFrame
+        actual = type(functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj))
+        error_message = "Expected function to return {}, function returned {}".format(expected, actual)
+        assert expected is actual, error_message
+        
+    
+    def test_crs_equality_of_output(self):
+        test_geodataframe = test_gdf
+        test_multipoint_obj = test_multipoint_obj
+        expected = test_geodataframe.crs
+        actual = functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj).crs
+        error_message = "Expected output geoDataFrame crs to be {} but crs is {}".format(expected, actual)
+        assert expected is actual, error_message
+        
+    
+    def test_geometry_equality_of_output(self):
+        test_geodataframe = test_gdf
+        test_multipoint_obj = test_multipoint_obj
+        expected = len(test_geodataframe.geometry)
+        actual = len(test_geodataframe.geometry.geom_equals(functions.calculate_nearest_neighbor(test_geodataframe, test_multipoint_obj).geometry).sum())
+        error_message = "Expected output geoDataFrame crs to be {} but crs is {}".format(expected, actual)
+        assert expected is actual, error_message
+    
+    
 
 #%%     --- Test subfunction: calculate_distance
 

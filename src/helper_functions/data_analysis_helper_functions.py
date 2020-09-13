@@ -359,10 +359,26 @@ def prepare_for_nearest_neighbor_analysis(geodataframe):
     geodataframe_prepared = create_unary_union(calculate_centroid(geodataframe))
     return geodataframe_prepared
 
-def calculate_nearest_neighbor():
+def calculate_nearest_neighbor(geodataframe, multipoint_obj):
+    #Accept two arguments, a gdf and a MultiPoint object
+    #GDF must also have crs info
+    #Gdf must have geometry information and it should be composed of points
+    #For each row in gdf, calculate the nearest neighbor from MultiPoint
+    #Record gdf geometry and nearest neighbor into a list
+    #append it into a list of lists
+    
+    ## TURN LIST OF LISTS INTO A GDF
+    #Turn list of lists into a new gdf whose crs is gdf the original crs
+    #return new gdf
     pass
 
 def calculate_distance():
+    #Accepts a single argument, a gdf that has origin-nearest point info
+    #GDF must have geometry info and crs info
+    #For each row in gdf, calculate the distance between origin and nearest point
+    #add it all into a list
+    #add the list to the left of original gdf
+    #return original gdf with added distance info
     pass
 
 #%%     --- Main Function ---
