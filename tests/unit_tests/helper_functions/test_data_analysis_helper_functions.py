@@ -715,3 +715,78 @@ class TestNearestNeighborAnalysis(object):
             functions.nearest_neighbor_analysis(test_geodataframe_1, test_geodataframe_2)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
+        
+#%% --- Test subfunction: create_link_between_origin_and_nearest_geom ---
+
+class TestCreateLinkBetweenOriginAndNearestGeom(object):
+    def test_valerror_on_nongdf_argument_str(self):
+        test_geodataframe = test_str
+        expected_message = "Argument nn_analysis_gdf should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.create_link_between_origin_and_nearest_geom(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_geometry(self):
+        test_geodataframe = test_gdf_no_geom
+        expected_message = "Argument provided does not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.create_link_between_origin_and_nearest_geom(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+        
+    def test_attriberror_on_missing_crs(self):
+        test_geodataframe= test_gdf_no_crs
+        expected_message = "nn_analysis_gdf object is missing crs information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.create_link_between_origin_and_nearest_geom(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+#%% --- Test subfunction: plot_nearest_neighbor_analysis ---
+
+class TestPlotNearestNeighborAnalysis(object):
+    def test_valerror_on_nongdf_argument_bool(self):
+        test_geodataframe = test_bool
+        expected_message = "Argument nn_analysis_gdf should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.plot_nearest_neighbor_analysis(test_geodataframe, test_gseries)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_geometry(self):
+        test_geodataframe = test_gdf_no_geom
+        expected_message = "Argument provided does not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.plot_nearest_neighbor_analysis(test_geodataframe, test_gseries)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_crs(self):
+        test_geodataframe= test_gdf_no_crs
+        expected_message = "nn_analysis_gdf object is missing crs information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.plot_nearest_neighbor_analysis(test_geodataframe, test_gseries)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+#%% --- Test main function: confirm_nearest_neighbor_analysis ---
+
+class TestConfirmNearestNeighborAnalysis(object):
+    def test_valerror_on_nongdf_argument_df(self):
+        test_geodataframe = test_df
+        expected_message = "Argument nn_analysis_gdf should be of type geopandas.GeoDataFrame. Got {} ".format(type(test_geodataframe))
+        with pytest.raises(ValueError) as exception_info:
+            functions.confirm_nearest_neighbor_analysis(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_attriberror_on_missing_geometry(self):
+        test_geodataframe = test_gdf_no_geom
+        expected_message = "Argument provided does not have geometry information."
+        with pytest.raises(AttributeError) as exception_info:
+            functions.confirm_nearest_neighbor_analysis(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    
