@@ -53,58 +53,9 @@ links_gseries = gpd.GeoSeries(links,
 
 result["links"] = links_gseries
 
-# Scheme quantiles?
-# IS THIS REALLY THE RIGHT WAY TO DO THIS?
-fig = plt.figure(figsize = (10,10))
-ax_1 = fig.add_subplot(1,1,1)
 
+#%%
 
-for spine in ax_1.spines:
-    ax_1.spines[spine].set_visible(False)
-
-ax_1.xaxis.set_visible(False)
-ax_1.yaxis.set_visible(False)
-    
-color_1 = "#599CCF"
-color_2 = "#E4784D"
-color_3 = "#1CB2FE"
-color_4 = "#F68C69"
-color_5 = "#1A1C1A"
-
-fig.set_facecolor(color_5)
-ax_1.set_facecolor(color_5)
-
-result.set_geometry("links", inplace = True)
-result.plot(ax = ax_1,
-                    color = "white",
-                    alpha = 1,
-                    lw=2)
-
-result.set_geometry("point_of_origin", inplace = True)
-result["point_of_origin"].plot(ax = ax_1,
-                               color = color_3,
-                               alpha = 1,
-                               zorder = 2,
-                               markersize = 50,
-                               marker = "o")
-
-result.set_geometry("nearest_point", inplace = True)
-result["nearest_point"].plot(ax = ax_1,
-                             color = color_4,
-                             zorder = 3,
-                             alpha = 1,
-                             markersize = 50,
-                             marker = "^")
-
-#result.set_geometry("links", inplace = True)
-# result.plot(ax = ax_1,
-#                     column = "distance_in_meter",
-#                     cmap = "Purples",
-#                     alpha=1,
-#                     lw=2)
-
-
-
-plt.savefig("test.png")
+functions.confirm_nearest_neighbor_analysis(result, save_figure = True)
 
 
