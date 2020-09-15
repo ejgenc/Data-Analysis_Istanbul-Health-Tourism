@@ -39,35 +39,39 @@ htourism_gdf = gpd.read_file(import_fp, encoding = "utf-8-sig")
 import_fp = Path("../../data/external/istanbul_districts.shp")
 istanbul_districts = gpd.read_file(import_fp, encoding = "utf-8-sig")
 
-#%% --- Conduct Nearest Neighbor Analysis ---
+#%% --- Conduct Nearest Neighbor Analysis for all districts ---
 
-nn_analysis_results = nearest_neighbor_analysis(airbnb_gdf, htourism_gdf)
+nn_analysis_results_all = nearest_neighbor_analysis(airbnb_gdf, htourism_gdf)
 
-#%% --- Confirm Nearest Neighbor Analysis ---
+#%% --- Conduct Nearest Neighbor Analysis for five districts with most Htourism centers ---
 
-nn_analysis_confirmation_plot = confirm_nearest_neighbor_analysis(nn_analysis_results)
-#Although it seems as if it worked at first glance, it's better to 
+nn_analysis_results_districts = {}
+selected_districts = ["Sisli", "Besiktas", "Kadikoy", "Atasehir", "Uskudar"]
 
-#%% --- Re-do Nearest Neighbor Analysis confirmation on the scale of a single district ---
+for district in selected_districts:
+    district_mask = airbnb_gdf.loc[:,"district_e"] == district
+    selection = airbnb_gdf.loc[district_mask,:]
+    result = nearest_neighbor_analysis(selection, htourism_gdf)
+    nn_analysis_results_districts[district] = result
+    
+#%% --- Plot 'em ---
+# for district in nn_analysis_results_districts.keys():
+#     confirm_nearest_neighbor_analysis(nn_analysis_results_districts[district])
 
-#Single out Sisli as a district
-sisli_mask = istanbul_districts.loc[:,"district_e"] == "Sariyer"
-sisli_only = istanbul_districts.loc[sisli_mask, :]
+#%% --- Export data : nn_analysis_results_all ---
 
-#Check which geometries in nn_analysis_results are in sisli
-in_sisli_mask = nn_analysis_results.within(sisli_only.geometry.values[0])
-in_sisli = nn_analysis_results.loc[in_sisli_mask, :]
+export_fp = Path("../../data/final/nn_analysis_results_all.csv")
+nn_analysis_results_all.to_csv(export_fp, encoding = "utf-8-sig")
 
-nn_analysis_confirmation_plot = confirm_nearest_neighbor_analysis(in_sisli)
+#%% --- Export data: nn_analysis_results_districts ---
+
+for district, nn_analysis in nn_analysis_results_districts.items():
+    path_string = ("../../data/final/nn_analysis_results_{}.csv").format(district)
+    export_fp = Path(path_string)
+    nn_analysis.to_csv(export_fp, encoding = "utf-8-sig")
 
 
-#%%
 
-bsk_mask = airbnb_gdf.loc[:,"district_e"] == "Sariyer"
-bsk_only = airbnb_gdf.loc[bsk_mask,:]
-
-nn_analysis_results_2 = nearest_neighbor_analysis(bsk_only, htourism_gdf)
-nn_analysis_confirmation_plot_2 = confirm_nearest_neighbor_analysis(nn_analysis_results_2)
 
 
 
