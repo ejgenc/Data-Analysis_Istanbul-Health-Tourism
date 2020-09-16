@@ -87,3 +87,21 @@ def task_run_data_quality_tests_for_processed_htourism_centers_data():
         "task_dep": ["combine_aesthethic_clinic_hclinic_shapefiles"],
         "actions": ["pytest {}".format(action_path)]
     }
+
+def task_run_nearest_neighbor_analysis():
+    action_path = Path("src/data_analysis/nearest_neighbor_analysis.py")
+    return {
+        "file_dep": [Path("data/processed/htourism_centers_processed.shp"),
+                    Path("data/processed/istanbul_airbnb_processed_shapefile.shp")],
+        "task_dep": ["combine_aesthethic_clinic_hclinic_shapefiles",
+                    "convert_airbnb_data_to_shapefile",
+                    "run_data_quality_tests_for_processed_htourism_centers_data"],
+        "actions": ["python {}".format(action_path)],
+        "targets": [Path("data/final/nn_analysis_results_all.csv"),
+                    Path("data/final/nn_analysis_results_atasehir.csv"),
+                    Path("data/final/nn_analysis_results_besiktas.csv"),
+                    Path("data/final/nn_analysis_results_kadikoy.csv"),
+                    Path("data/final/nn_analysis_results_sisli.csv"),
+                    Path("data/final/nn_analysis_results_uskudar.csv"),
+                    Path("data/final/nn_analysis_results_normalized.csv")]
+    }

@@ -15,7 +15,7 @@ to each AirBnB rental along with the distance.
 
 import os
 from pathlib import Path # To wrap around filepaths
-
+from scipy.stats import iqr
 import geopandas as gpd
 from src.helper_functions.data_analysis_helper_functions import nearest_neighbor_analysis
 #%% --- Set proper directory to assure integration with doit ---
@@ -33,9 +33,28 @@ airbnb_gdf = gpd.read_file(import_fp, encoding = "utf-8-sig")
 #Import htourism centers data
 import_fp = Path("../../data/processed/htourism_centers_processed.shp")
 htourism_gdf = gpd.read_file(import_fp, encoding = "utf-8-sig")
-#%% --- Conduct Nearest Neighbor Analysis for all districts ---
+#%% --- Conduct Nearest Neighbor Analysis for all districts - without normalization ---
 
 nn_analysis_results_all = nearest_neighbor_analysis(airbnb_gdf, htourism_gdf)
+
+#%% --- Conduct Nearest Neighbor Analysis for all districts - with normalization ---
+
+#Calculate iqr, q1 and q3 for price
+price_iqr = iqr(airbnb_gdf.loc[:,"price"], axis = 0)
+q1 = airbnb_gdf.loc[:,"price"].quantile(0.25)
+q3 = airbnb_gdf.loc[:,"price"].quantile(0.75)
+
+#Create masks to select values within IQR
+min_mask = airbnb_gdf.loc[:,"price"] >= q1 - (price_iqr * 1.5)
+max_mask = airbnb_gdf.loc[:,"price"] <= q3 + (price_iqr * 1.5)
+combined_mask = min_mask & max_mask
+
+#Select values according to mask 
+airbnb_gdf_normalized = airbnb_gdf[combined_mask]
+
+#Conduct nn analysis
+nn_analysis_results_normalized = nearest_neighbor_analysis(airbnb_gdf_normalized,
+                                                           htourism_gdf)
 
 #%% --- Conduct Nearest Neighbor Analysis for five districts with most Htourism centers ---
 
@@ -52,6 +71,11 @@ for district in selected_districts:
 
 export_fp = Path("../../data/final/nn_analysis_results_all.csv")
 nn_analysis_results_all.to_csv(export_fp, encoding = "utf-8-sig")
+
+#%% --- Export data : nn_analysis_results_normalized ---
+
+export_fp = Path("../../data/final/nn_analysis_results_normalized.csv")
+nn_analysis_results_normalized.to_csv(export_fp, encoding = "utf-8-sig")
 
 #%% --- Export data: nn_analysis_results_districts ---
 
