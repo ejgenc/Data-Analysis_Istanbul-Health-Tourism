@@ -112,3 +112,14 @@ def task_run_nearest_neighbor_analysis():
                     Path("data/final/nn_analysis_results_uskudar.csv"),
                     Path("data/final/nn_analysis_results_normalized.csv")]
     }
+
+def task_analyze_geographic_distribution_of_htourism_centers():
+    action_path = Path("src/data_analysis/analyze_geographic_distribution_of_htourism_centers.py")
+    return {
+        "file_dep": [Path("data/processed/htourism_centers_processed.shp"),
+                    Path("data/external/istanbul_districts.shp"),
+                    Path("data/external/district_income.xlsx")],
+        "task_dep": ["combine_aesthethic_clinic_hclinic_shapefiles"],
+        "actions": ["python {}".format(action_path)],
+        "targets": [Path("data/final/geographic_distribution_of_htourism_centers.shp")]
+    }
