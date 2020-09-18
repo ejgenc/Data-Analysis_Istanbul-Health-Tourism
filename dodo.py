@@ -14,6 +14,13 @@ def task_run_data_analysis_helper_functions_unit_tests():
         "file_dep": [Path("src/helper_functions/data_analysis_helper_functions.py")],
     }
 
+def task_run_data_visualization_helper_functions_unit_tests():
+    action_path = Path("tests/unit_tests/helper_functions/test_data_visualization_helper_functions.py")
+    return {
+        "actions": ["pytest {}".format(action_path)],
+        "file_dep": [Path("src/helper_functions/data_visualization_helper_functions.py")],
+    }
+
 def task_process_airbnb_data():
     action_path = Path("src/data_preparation/process_airbnb_data.py")
     return {
