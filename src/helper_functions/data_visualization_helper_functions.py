@@ -10,6 +10,7 @@ found under src/data_visualization.
 
 #%% --- Import required packages ---
 
+import os
 import matplotlib.pyplot as plt
 from src.helper_functions import data_analysis_helper_functions as functions_analysis
 
@@ -117,7 +118,7 @@ def confirm_nearest_neighbor_analysis(nn_analysis_gdf, save_figure = False):
     return fig
 
 #%% --- FUNCTION --- add_watermark ---
-
+#%% --- Main function ---
 def add_watermark(fig, watermark_str, ax_is_constrained = False,
                   position_x = 0.85, position_y = 0.09):
     """
@@ -152,3 +153,65 @@ def add_watermark(fig, watermark_str, ax_is_constrained = False,
                    position_y,
                    watermark_str, 
                    alpha=0.5)
+    
+#%% --- FUNCTION: setup_export_path ---
+#%%
+#Get the absolute filepath
+dirname = os.path.dirname(__file__)
+
+#Split by \ to make it into relative
+dirname_intermediary = dirname.split("\\")
+
+#Join in a way that would make it relative
+separator = r"/"
+dirname_final = separator.join(dirname_intermediary[0:5])
+
+#Craft a filepath without the final folder to which the plot will be exported
+incomplete_output_directory = dirname_final + "/Data Analysis_Istanbul Health Services Map/Media/Plots/"
+
+#Get the name of the script
+filename = os.path.basename(__file__)
+
+#Split by _
+filename_split = filename.split("_")
+
+#Get the last to get the last folder name
+filename_final = filename_split[-1]
+
+#Remove the .py suffix
+filename_final_processed = filename_final.split(".")[0]
+
+#Craft the complete output directory
+complete_output_directory = incomplete_output_directory + filename_final_processed
+
+#Create the directory using os.mkdir.
+try:
+    os.mkdir(complete_output_directory)
+except:
+    pass
+
+export_path = complete_output_directory +  r"/" + (filename_final_processed + "_eng.png")
+
+def create_output_directory():
+    #Get the absolute filepath
+    dirname = os.path.dirname(__file__)
+
+    #Split by \ to make it into relative
+    dirname_intermediary = dirname.split("\\")
+    
+    #Find folder named src
+    
+
+#%%
+def create_filename():
+    #Get the name of the script
+    filename = os.path.basename(__file__)
+
+    #Split by _
+    filename_split = filename.split("_")
+    
+    #Get the last to get the last folder name
+    filename_final = filename_split[-1]
+
+def setup_export_path():
+    pass

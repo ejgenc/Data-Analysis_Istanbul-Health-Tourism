@@ -11,7 +11,7 @@ The script analyzes the geographic distribution of health tourism centers at
 the district level while also adding some extra information for further
 bivariate correlation analysis.
 
-Returns XXXXXXXXXXXXX
+Returns geographic_distribution_of_htourism_centers.shp
 """
 #%% --- Import Required Packages ---
 
