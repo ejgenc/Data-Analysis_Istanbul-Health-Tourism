@@ -48,19 +48,15 @@ districts_gdf = districts_gdf.merge(htourism_count_per_district,
                                                on = "district_e",
                                                how = "left")
 
-#%% --- Fill NA's with 0 ---
-
-districts_gdf.fillna(0, inplace = True)
-
 #%% --- Subset only the info that you might need from districts_gdf ---
 
 columns_to_drop = ["OBJECTID", "Shape_Leng", "Shape_Area",
                    "continent"]
+districts_gdf.drop(columns_to_drop, axis = 1, inplace = True)
 
 #%% --- Add in extra data ---
 
 extra_data.rename(columns = {"district_eng" : "district_e"}, inplace = True)
-districts_gdf.drop(columns_to_drop, axis = 1, inplace = True)
 districts_gdf = districts_gdf.merge(extra_data.loc[:,["district_e", "population", "yearly_average_household_income"]],
                                                on = "district_e",
                                                how = "left")

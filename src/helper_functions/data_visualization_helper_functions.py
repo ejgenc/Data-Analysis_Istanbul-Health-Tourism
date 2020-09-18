@@ -154,64 +154,40 @@ def add_watermark(fig, watermark_str, ax_is_constrained = False,
                    watermark_str, 
                    alpha=0.5)
     
-#%% --- FUNCTION: setup_export_path ---
-#%%
-#Get the absolute filepath
-dirname = os.path.dirname(__file__)
+#%% --- FUNCTION: label_district_on_map --
 
-#Split by \ to make it into relative
-dirname_intermediary = dirname.split("\\")
-
-#Join in a way that would make it relative
-separator = r"/"
-dirname_final = separator.join(dirname_intermediary[0:5])
-
-#Craft a filepath without the final folder to which the plot will be exported
-incomplete_output_directory = dirname_final + "/Data Analysis_Istanbul Health Services Map/Media/Plots/"
-
-#Get the name of the script
-filename = os.path.basename(__file__)
-
-#Split by _
-filename_split = filename.split("_")
-
-#Get the last to get the last folder name
-filename_final = filename_split[-1]
-
-#Remove the .py suffix
-filename_final_processed = filename_final.split(".")[0]
-
-#Craft the complete output directory
-complete_output_directory = incomplete_output_directory + filename_final_processed
-
-#Create the directory using os.mkdir.
-try:
-    os.mkdir(complete_output_directory)
-except:
-    pass
-
-export_path = complete_output_directory +  r"/" + (filename_final_processed + "_eng.png")
-
-def create_output_directory():
-    #Get the absolute filepath
-    dirname = os.path.dirname(__file__)
-
-    #Split by \ to make it into relative
-    dirname_intermediary = dirname.split("\\")
+def label_district_on_map(ax_object, geodataframe, column_to_look_at, districts_list):
+    labels_mask = geodataframe.loc[:,column_to_look_at].isin(districts_list)
+    districts_to_label = geodataframe.loc[labels_mask,[column_to_look_at, "geometry"]]
+    districts_to_label["representative_point"] = districts_to_label.geometry.representative_point().geometry.values
     
-    #Find folder named src
+    for idx, row in districts_to_label.iterrows():
+        ax_object.annotate(s=row[column_to_look_at], xy=(row["representative_point"].x,row["representative_point"].y),
+                 horizontalalignment='center')
+        
+#%% --- FUNCTION: create_cmap_in_figure ---
+
+def create_cmap_legend_in_figure(ax,label, label_size, label_weight, cmap_object,
+                                 legend_height = "5%", legend_width = "50%", legend_loc = "upper right",
+                                 orientation = "horizontal", shrink = 0.25,
+                                 anchor = (30,10)):
+
     
-
-#%%
-def create_filename():
-    #Get the name of the script
-    filename = os.path.basename(__file__)
-
-    #Split by _
-    filename_split = filename.split("_")
+    from mpl_toolkits.axes_grid1.inset_locator import inset_axes
     
-    #Get the last to get the last folder name
-    filename_final = filename_split[-1]
+    #Create an inset axis within the main ax
+    axins = inset_axes(ax,
+                       height = legend_height,
+                       width = legend_width,
+                       loc = legend_loc)
 
-def setup_export_path():
-    pass
+    cbar = plt.colorbar(cmap_object,
+                        cax = axins,
+                        # ticks = [] Cna also set ticks like this
+                        orientation = orientation,
+                        shrink = shrink,
+                        anchor = anchor)
+    
+    cbar.set_label(label,
+                    size = label_size,
+                    weight = label_weight)
