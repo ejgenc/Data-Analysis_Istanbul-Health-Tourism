@@ -11,21 +11,22 @@ found under src/data_visualization.
 #%% --- Import required packages ---
 
 import matplotlib.pyplot as plt
+from src.helper_functions import data_analysis_helper_functions as functions_analysis
 
 #%% --- FUNCTION : confirm_nearest_neighbor_analysis ---
 
 #%% --- Subfunctions ---
 def create_link_between_origin_and_nearest_geom(nn_analysis_gdf):
     valerror_text = "Argument nn_analysis_gdf should be of type geopandas.GeoDataFrame. Got {} ".format(type(nn_analysis_gdf))
-    if is_gdf(nn_analysis_gdf) is False:
+    if functions_analysis.is_gdf(nn_analysis_gdf) is False:
         raise ValueError(valerror_text)
         
     attriberror_text = "Argument provided does not have geometry information."
-    if has_geometry(nn_analysis_gdf) is False:
+    if functions_analysis.has_geometry(nn_analysis_gdf) is False:
         raise AttributeError(attriberror_text)
         
     attriberror_text = "nn_analysis_gdf object is missing crs information."
-    if has_crs(nn_analysis_gdf) is False:
+    if functions_analysis.has_crs(nn_analysis_gdf) is False:
         raise AttributeError(attriberror_text)
         
     links = [LineString([p1,p2]) for p1, p2 in nn_analysis_gdf.loc[:,["point_of_origin","nearest_point"]].values]
@@ -37,15 +38,15 @@ def create_link_between_origin_and_nearest_geom(nn_analysis_gdf):
 
 def plot_nearest_neighbor_analysis(nn_analysis_gdf, link_gseries):
     valerror_text = "Argument nn_analysis_gdf should be of type geopandas.GeoDataFrame. Got {} ".format(type(nn_analysis_gdf))
-    if is_gdf(nn_analysis_gdf) is False:
+    if functions_analysis.is_gdf(nn_analysis_gdf) is False:
         raise ValueError(valerror_text)
         
     attriberror_text = "Argument provided does not have geometry information."
-    if has_geometry(nn_analysis_gdf) is False:
+    if functions_analysis.has_geometry(nn_analysis_gdf) is False:
         raise AttributeError(attriberror_text)
         
     attriberror_text = "nn_analysis_gdf object is missing crs information."
-    if has_crs(nn_analysis_gdf) is False:
+    if functions_analysis.has_crs(nn_analysis_gdf) is False:
         raise AttributeError(attriberror_text)
         
     fig = plt.figure(figsize = (10,10))
@@ -97,11 +98,11 @@ def plot_nearest_neighbor_analysis(nn_analysis_gdf, link_gseries):
 #%% --- Main Function ---
 def confirm_nearest_neighbor_analysis(nn_analysis_gdf, save_figure = False):
     valerror_text = "Argument nn_analysis_gdf should be of type geopandas.GeoDataFrame. Got {} ".format(type(nn_analysis_gdf))
-    if is_gdf(nn_analysis_gdf) is False:
+    if functions_analysis.is_gdf(nn_analysis_gdf) is False:
         raise ValueError(valerror_text)
         
     attriberror_text = "Argument provided does not have geometry information."
-    if has_geometry(nn_analysis_gdf) is False:
+    if functions_analysis.has_geometry(nn_analysis_gdf) is False:
         raise AttributeError(attriberror_text)
     
     fig = plot_nearest_neighbor_analysis(nn_analysis_gdf,
