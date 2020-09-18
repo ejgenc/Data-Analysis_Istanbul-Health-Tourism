@@ -118,16 +118,37 @@ def confirm_nearest_neighbor_analysis(nn_analysis_gdf, save_figure = False):
 
 #%% --- FUNCTION --- add_watermark ---
 
-#USE WITH BBOX INCHES
-def add_watermark(ax):
-    ax.text(ax.get_xlim()[1] - 1.5, 
-            ax.get_ylim()[0] - 0.5,  
-            "<Company Name>", 
-            alpha=0.5)
-    
+def add_watermark(fig, watermark_str, ax_is_constrained = False,
+                  position_x = 0.85, position_y = 0.09):
+    """
+    Watermarks the selected plot with a given selected string.
+    The watermark is located at the lower right corner of the plot.
 
-def add_watermark_2(plt):
-    plt.gcf().text(0.8,
-                   0.09,
-                   "<Company Name>", 
+    Parameters
+    ----------
+    plt :matplotlib.Figure
+    
+    watermark_str : Python str object
+    
+    position_x : Python int or float
+        
+    position_y : Python int or float
+
+    Returns
+    -------
+    None.
+
+    """
+    
+    valerror_text = "Argument fig should be of type matplotlib.Figure. Got {} ".format(type(fig))
+    if not isinstance(fig, plt.Figure):
+        raise ValueError(valerror_text)
+        
+    valerror_text = "Argument watermark_str should be of type str. Got {} ".format(type(watermark_str))
+    if not isinstance(watermark_str, str):
+        raise ValueError(valerror_text)
+    
+    plt.gcf().text(position_x,
+                   position_y,
+                   watermark_str, 
                    alpha=0.5)

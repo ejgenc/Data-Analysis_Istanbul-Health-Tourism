@@ -14,6 +14,7 @@ import pytest
 import numpy as np
 import pandas as pd
 import geopandas as gpd
+import matplotlib.pyplot as plt
 from shapely.geometry import Point, Polygon, MultiPoint
 from src.helper_functions import data_analysis_helper_functions as functions_analysis
 from src.helper_functions import data_visualization_helper_functions as functions_visualization
@@ -80,6 +81,12 @@ test_list = ["A,B"]
 test_dict = {"A":1, "B":2}
 test_sample_size_int_correct = 5
 test_sample_size_int_wrong = 105
+
+#%% --- Test figure ---
+
+test_fig = plt.figure()
+ax = test_fig.add_subplot(1,1,1)
+ax.scatter(test_df["A"], test_df["B"])
 #%% --- Testing ---
 
 #%% --- Test subfunction: create_link_between_origin_and_nearest_geom ---
@@ -152,6 +159,25 @@ class TestConfirmNearestNeighborAnalysis(object):
         expected_message = "Argument provided does not have geometry information."
         with pytest.raises(AttributeError) as exception_info:
             functions_visualization.confirm_nearest_neighbor_analysis(test_geodataframe)
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+        
+#%% --- Test main function: add_watermark ---
+
+class TestAddWatermark(object):
+    def test_valerror_on_nonplt_plt(self):
+        test_plt = test_int
+        expected_message = "Argument fig should be of type matplotlib.Figure. Got {} ".format(type(test_plt))
+        with pytest.raises(ValueError) as exception_info:
+            functions_visualization.add_watermark(test_plt, "Test")
+        error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
+        assert exception_info.match(expected_message), error_message
+    
+    def test_valerror_on_nonstr_watermark(self):
+        test_watermark = test_bool
+        expected_message = "Argument watermark_str should be of type str. Got {} ".format(type(test_watermark))
+        with pytest.raises(ValueError) as exception_info:
+            functions_visualization.add_watermark(test_fig, test_watermark)
         error_message = "Expected the following message: {}. Got the following: {}".format(expected_message, exception_info)
         assert exception_info.match(expected_message), error_message
     
