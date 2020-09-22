@@ -226,7 +226,7 @@ def create_cmap_legend_in_figure(ax,label, label_size, label_weight, cmap_object
                     size = label_size,
                     weight = label_weight)
     
-    return axins
+    return (axins,cbar)
 
 #%% --- FUNCTION: add_value_labels_on_bar_chart
 
