@@ -123,3 +123,14 @@ def task_analyze_geographic_distribution_of_htourism_centers():
         "actions": ["python {}".format(action_path)],
         "targets": [Path("data/final/geographic_distribution_of_htourism_centers.shp")]
     }
+
+def task_visualize_geographic_distribution_of_htourism_centers():
+    action_path = Path("src/data_visualization/visualize_geographic_distribution_of_htourism_centers.py")
+    return {
+        "file_dep": [Path("data/final/geographic_distribution_of_htourism_centers.shp"),
+                    Path("data/processed/htourism_centers_processed.shp"),
+                    Path("data/external/istanbul_districts.shp")],
+        "task_dep": ["analyze_geographic_distribution_of_htourism_centers"],
+        "actions": ["python {}".format(action_path)],
+        "targets": [Path("media/figures/raw/visualize_geographic_distribution_of_htourism")]
+    }
