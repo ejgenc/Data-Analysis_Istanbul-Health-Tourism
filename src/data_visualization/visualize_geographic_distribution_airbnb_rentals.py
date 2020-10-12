@@ -3,15 +3,13 @@
 ------ What is this file? ------
 
 This script targets two files:
-    - htourism_centers_processed.shp
-    - istanbul_districts.shp
+    - istanbul_airbnb_processed_shapefile.shp
+    - geographic_distribution_of_airbnb_rentals.shp
     
-The script visualizes the geographic distribution of health tourism centers at
+The script visualizes the geographic distribution of airbnb rentals at
 the district level and at the individual center level. 
 
-Returns multiple iterations of data visualizations that represent the geographric
-distribution of health tourism centers. The visualizations include:
-    - Choropleth map
-    - Symbol map
-    - The above combined + a horizontal bar chart
+Returns a data visualization that represents the geographic
+distribution of airbnb rental. The visualization is a combined view of
+a choropleth map, a symbol map and a horizontal bar chart.
 """

@@ -154,3 +154,14 @@ def task_visualize_bivariate_analysis_htourism_center_count_at_district_level():
         "actions": ["python {}".format(action_path)],
         "targets": [Path("media/figures/raw/visualize_bivariate_analysis_htourism_center_count_at_district_level")]
     }
+
+def task_visualize_geographic_distribution_of_airbnb_rentals():
+    action_path = Path("src/data_visualization/visualize_geographic_distribution_airbnb_rentals.py")
+    return {
+        "file_dep": [Path("data/final/geographic_distribution_of_airbnb_rentals.shp"),
+                    Path("data/processed/istanbul_airbnb_processed_shapefile.shp"),
+                    Path("data/external/istanbul_districts.shp")],
+        "task_dep": ["analyze_geographic_distribution_of_airbnb_rentals"],
+        "actions": ["python {}".format(action_path)],
+        #"targets": [Path("media/figures/raw/visualize_geographic_distribution_of_airbnb_rentals")]
+    }
