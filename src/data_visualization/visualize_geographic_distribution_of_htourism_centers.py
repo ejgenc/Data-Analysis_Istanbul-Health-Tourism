@@ -205,7 +205,7 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
     plt.tight_layout()
     plt.subplots_adjust(hspace = -0.28)
     
-#%% --- Visualization Four : Choropleth Map + Distribution + Vertical Bar Chart
+#%% --- Visualization Four : Choropleth Map + Distribution + Horizontal Bar Chart
 
 with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
     
