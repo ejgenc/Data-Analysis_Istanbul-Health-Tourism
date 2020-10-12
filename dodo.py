@@ -132,7 +132,7 @@ def task_analyze_geographic_distribution_of_airbnb_rentals():
                     Path("data/external/district_income.xlsx")],
         "task_dep": ["convert_airbnb_data_to_shapefile"],
         "actions": ["python {}".format(action_path)],
-        #"targets": [Path("data/final/geographic_distribution_of_airbnb_rentals.shp")]
+        "targets": [Path("data/final/geographic_distribution_of_airbnb_rentals.shp")]
     }
 
 def task_visualize_geographic_distribution_of_htourism_centers():

@@ -27,7 +27,7 @@ os.chdir(dname)
 
 #%% --- Import Data ---
 
-#Import airbnb data
+#Import district data
 import_fp = Path("../../data/external/istanbul_districts.shp")
 districts_gdf = gpd.read_file(import_fp, encoding = "utf-8-sig")
 
@@ -35,6 +35,7 @@ districts_gdf = gpd.read_file(import_fp, encoding = "utf-8-sig")
 import_fp = Path("../../data/processed/htourism_centers_processed.shp")
 htourism_gdf = gpd.read_file(import_fp, encoding = "utf-8-sig")
 
+#Import extra data
 import_fp = Path("../../data/external/district_income.xlsx")
 extra_data = pd.read_excel(import_fp)
 
