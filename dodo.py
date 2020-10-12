@@ -163,5 +163,5 @@ def task_visualize_geographic_distribution_of_airbnb_rentals():
                     Path("data/external/istanbul_districts.shp")],
         "task_dep": ["analyze_geographic_distribution_of_airbnb_rentals"],
         "actions": ["python {}".format(action_path)],
-        "targets": [Path("media/figures/raw/visualize_geographic_distribution_of_airbnb_rentals")]
+        "targets": [Path("media/figures/raw/visualize_geographic_distribution_airbnb")]
     }
