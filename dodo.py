@@ -124,6 +124,17 @@ def task_analyze_geographic_distribution_of_htourism_centers():
         "targets": [Path("data/final/geographic_distribution_of_htourism_centers.shp")]
     }
 
+def task_analyze_geographic_distribution_of_airbnb_rentals():
+    action_path = Path("src/data_analysis/analyze_geographic_distribution_of_airbnb_rentals.py")
+    return {
+        "file_dep": [Path("data/processed/istanbul_airbnb_processed_shapefile.shp"),
+                    Path("data/external/istanbul_districts.shp"),
+                    Path("data/external/district_income.xlsx")],
+        "task_dep": ["convert_airbnb_data_to_shapefile"],
+        "actions": ["python {}".format(action_path)],
+        #"targets": [Path("data/final/geographic_distribution_of_airbnb_rentals.shp")]
+    }
+
 def task_visualize_geographic_distribution_of_htourism_centers():
     action_path = Path("src/data_visualization/visualize_geographic_distribution_of_htourism_centers.py")
     return {
