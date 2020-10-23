@@ -165,3 +165,12 @@ def task_visualize_geographic_distribution_of_airbnb_rentals():
         "actions": ["python {}".format(action_path)],
         "targets": [Path("media/figures/raw/visualize_geographic_distribution_airbnb")]
     }
+
+def task_visualize_bivariate_analysis_airbnb_count_at_district_level():
+    action_path = Path("src/data_visualization/visualize_bivariate_analysis_airbnb_count_at_district_level.py")
+    return {
+        "file_dep": [Path("data/final/geographic_distribution_of_airbnb_rentals.shp")],
+        "task_dep": ["analyze_geographic_distribution_of_airbnb_rentals"],
+        "actions": ["python {}".format(action_path)],
+        "targets": [Path("media/figures/raw/visualize_bivariate_analysis_airbnb_rental_count_at_district_level")],
+    }
