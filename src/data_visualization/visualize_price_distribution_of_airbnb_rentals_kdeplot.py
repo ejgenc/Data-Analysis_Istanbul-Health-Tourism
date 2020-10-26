@@ -239,33 +239,50 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
 #%% --- Visualization Three: Small multiples histogram for Airbnb price data
 # faceted by district
 
+#RED IF NO INFO CAN BE READ
+
 with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
 
     # --- Create figure and axes ---
-    i = 1
+    i = 0
    
     fig_3 = plt.figure(figsize = (25.00, 25.00))
    
     for group in airbnb_districts_prices.groups:
-   
-        ax = fig_3.add_subplot(13,3,i)
+        
+        price_skew = skew(airbnb_districts_prices.get_group(group))
         
         i += 1
    
+        ax = fig_3.add_subplot(13,3,i)
+   
         sns.distplot(airbnb_districts_prices.get_group(group),
                      ax = ax,
-                     color = "#02b72e",
+                     color = (lambda x :"#02b72e" if price_skew < 10 else "purple")(skew),
                      hist_kws = {
                          "edgecolor" : "black"},
                      kde = False)
+               
+        ax.set_xlabel("Price",
+              fontfamily = "Arial",
+              fontsize = 16,
+              fontweight = "bold")
+                
+        if i in [1,22,37]:
+            ax.set_ylabel("Count",
+                  fontfamily = "Arial",
+                  fontsize = 16,
+                  fontweight = "bold")
    
-        if i == 1:
-            ax.set_xlabel("Price (normalized)",
-                          fontfamily = "Arial",
-                          fontsize = 16,
-                          fontweight = "bold")
-   
-        ax.set_title(group)
+        ax.set_title(group,
+                     loc = "right",
+                     x = 1,
+                     y = 0.75,
+                     color = (lambda x :"black" if price_skew < 10 else "purple")(skew),
+                     fontfamily = "Arial",
+                     fontsize = 14,
+                     fontweight = "bold")
+        
     
    
    
