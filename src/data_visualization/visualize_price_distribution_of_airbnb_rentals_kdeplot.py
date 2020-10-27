@@ -239,8 +239,6 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
 #%% --- Visualization Three: Small multiples histogram for Airbnb price data
 # faceted by district
 
-#RED IF NO INFO CAN BE READ
-
 with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
 
     # --- Create figure and axes ---
@@ -250,7 +248,21 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
    
     for group in airbnb_districts_prices.groups:
         
+        price_n_of_observations = len(airbnb_districts_prices.get_group(group))
+        price_mean = np.mean(airbnb_districts_prices.get_group(group))
+        price_median = np.median(airbnb_districts_prices.get_group(group))
+        price_std = np.std(airbnb_districts_prices.get_group(group))
         price_skew = skew(airbnb_districts_prices.get_group(group))
+        
+        stats = [price_n_of_observations, price_mean, price_median,
+                 price_std, price_skew]
+   
+            
+        if price_skew >= 5:
+            face_color = "#DE9C12"
+            
+        else:
+            face_color = "#02b72e"
         
         i += 1
    
@@ -258,7 +270,7 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
    
         sns.distplot(airbnb_districts_prices.get_group(group),
                      ax = ax,
-                     color = (lambda x :"#02b72e" if price_skew < 10 else "purple")(skew),
+                     color = face_color,
                      hist_kws = {
                          "edgecolor" : "black"},
                      kde = False)
@@ -278,15 +290,19 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
                      loc = "right",
                      x = 1,
                      y = 0.75,
-                     color = (lambda x :"black" if price_skew < 10 else "purple")(skew),
+                     color = "black",
                      fontfamily = "Arial",
                      fontsize = 14,
                      fontweight = "bold")
         
-    
-   
-   
-   
-    
-
-        
+        j = 0
+        y = .70
+        for stat in stats:
+            ax.annotate(s = "Skew = {:.2f}".format(stat),
+                    xy = (.7, y),
+                    xycoords=ax.transAxes,
+                    color = "black",
+                    weight = "bold",
+                    fontsize = 10)
+            y -= 0.125
+             
