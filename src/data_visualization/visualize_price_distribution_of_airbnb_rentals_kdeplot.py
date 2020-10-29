@@ -99,7 +99,8 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
                 ax = ax,
                 color = "#02b72e",
                 hist_kws = {
-                    "edgecolor" : "black"},
+                    "edgecolor" : "black",
+                    "alpha" : 0.6},
                 kde = False)  
     # --- Text ---
     
@@ -193,7 +194,8 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
             ax = ax,
             color = "#02b72e",
             hist_kws = {
-                "edgecolor" : "black"},
+                "edgecolor" : "black",
+                "alpha" : 0.6},
             kde = False)  
     
     # --- Text ---
@@ -278,7 +280,8 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
                      ax = ax,
                      color = face_color,
                      hist_kws = {
-                         "edgecolor" : "black"},
+                         "edgecolor" : "black",
+                         "alpha" : 0.6},
                      kde = False)
                
         ax.set_xlabel("Price",
@@ -358,7 +361,8 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
                      ax = ax,
                      color = face_color,
                      hist_kws = {
-                         "edgecolor" : "black"},
+                         "edgecolor" : "black",
+                         "alpha" : 0.6},
                      kde = False)
                
         ax.set_xlabel("Price",
