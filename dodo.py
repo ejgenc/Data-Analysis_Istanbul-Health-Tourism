@@ -174,3 +174,12 @@ def task_visualize_bivariate_analysis_airbnb_count_at_district_level():
         "actions": ["python {}".format(action_path)],
         "targets": [Path("media/figures/raw/visualize_bivariate_analysis_airbnb_count_at_district_level")],
     }
+
+def task_visualize_price_distribution_of_airbnb_rentals_kdeplot():
+    action_path = Path("src/data_visualization/visualize_price_distribution_of_airbnb_rentals_kdeplot.py")
+    return {
+        "file_dep": [Path("data/processed/istanbul_airbnb_processed.csv")],
+        "task_dep": ["run_data_quality_tests_for_processed_airbnb_data"],
+        "actions": ["python {}".format(action_path)],
+        "targets": [Path("media/figures/raw/visualize_price_distribution_of_airbnb_rentals_kdeplot")]
+    }
