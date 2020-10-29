@@ -65,6 +65,12 @@ prices = [prices_raw, prices_log10, prices_within_iqr_1point5]
 #Create a group-by per district
 airbnb_grouped_by_district = airbnb_df.groupby(by = "district_eng")
 airbnb_districts_prices = airbnb_grouped_by_district["price"]
+
+#Create a group-by per district for normalized prices
+
+prices_normalized_within_iqr_1point5 = airbnb_df.loc[combined_mask,["district_eng","price"]]
+airbnb_grouped_by_district_normalized = prices_normalized_within_iqr_1point5.groupby(by = "district_eng")
+airbnb_districts_prices_normalized = airbnb_grouped_by_district_normalized["price"]
 #%% --- Calculate Extra Statistics ---
 # Min max Mean median std skew kurtosis
 
@@ -297,12 +303,122 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
         
         j = 0
         y = .70
+        stat_headings = ["Observations", "Mean", "Median", "STDev", "Skew"]
         for stat in stats:
-            ax.annotate(s = "Skew = {:.2f}".format(stat),
+            ax.annotate(s = "{} = {:.2f}".format(stat_headings[j],stat),
                     xy = (.7, y),
                     xycoords=ax.transAxes,
                     color = "black",
                     weight = "bold",
                     fontsize = 10)
             y -= 0.125
+            j += 1
+            
+    fig_3.suptitle("The distribution of normalized Airbnb rental prices per district.",
+       x = 0.50,
+       y = 0.90,
+       horizontalalignment = "center",
+       fontfamily = "Arial",
+       fontsize = 18,
+       fontweight = "bold",)
+            
+#%% --- Visualization Four: Small multiples histogram for Airbnb price data
+# faceted by district
+
+with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
+
+    # --- Create figure and axes ---
+    i = 0
+   
+    fig_4 = plt.figure(figsize = (25.00, 25.00))
+   
+    for group in airbnb_districts_prices_normalized.groups:
+        
+        price_n_of_observations = len(airbnb_districts_prices_normalized.get_group(group))
+        price_mean = np.mean(airbnb_districts_prices_normalized.get_group(group))
+        price_median = np.median(airbnb_districts_prices_normalized.get_group(group))
+        price_std = np.std(airbnb_districts_prices_normalized.get_group(group))
+        price_skew = skew(airbnb_districts_prices_normalized.get_group(group))
+        
+        stats = [price_n_of_observations, price_mean, price_median,
+                 price_std, price_skew]
+   
+            
+        if price_skew >= 5:
+            face_color = "#DE9C12"
+            
+        else:
+            face_color = "#02b72e"
+        
+        i += 1
+   
+        ax = fig_4.add_subplot(13,3,i)
+   
+        sns.distplot(airbnb_districts_prices_normalized.get_group(group),
+                     ax = ax,
+                     color = face_color,
+                     hist_kws = {
+                         "edgecolor" : "black"},
+                     kde = False)
+               
+        ax.set_xlabel("Price",
+              fontfamily = "Arial",
+              fontsize = 16,
+              fontweight = "bold")
+                
+        if i in [1,22,37]:
+            ax.set_ylabel("Count",
+                  fontfamily = "Arial",
+                  fontsize = 16,
+                  fontweight = "bold")
+   
+        ax.set_title(group,
+                     loc = "right",
+                     x = 1,
+                     y = 0.75,
+                     color = "black",
+                     fontfamily = "Arial",
+                     fontsize = 14,
+                     fontweight = "bold")
+        
+        j = 0
+        y = .70
+        stat_headings = ["Observations", "Mean", "Median", "STDev", "Skew"]
+        for stat in stats:
+            ax.annotate(s = "{} = {:.2f}".format(stat_headings[j],stat),
+                    xy = (.7, y),
+                    xycoords=ax.transAxes,
+                    color = "black",
+                    weight = "bold",
+                    fontsize = 10)
+            y -= 0.125
+            j += 1
+            
+        fig_4.suptitle("The distribution of normalized Airbnb rental prices per district.",
+           x = 0.50,
+           y = 0.90,
+           horizontalalignment = "center",
+           fontfamily = "Arial",
+           fontsize = 18,
+           fontweight = "bold",)
+        
+#%% --- Export Figures ---
+
+current_filename_split = os.path.basename(__file__).split(".")[0].split("_")
+current_filename_complete = "_".join(current_filename_split)
+
+mkdir_path = Path("../../media/figures/raw/{}".format(current_filename_complete))
+os.mkdir(mkdir_path)
+
+figures = [fig_1, fig_2, fig_3, fig_4]
+filenames = ["single_raw", "single_normalized", "multiple_raw", "multiple_normalized"]
+file_extensions = [".png", ".svg"]
+
+for figure, filename in zip(figures, filenames):
+    for file_extension in file_extensions:
+        filename_extended = filename + file_extension
+        export_fp = Path.joinpath(mkdir_path, filename_extended)
+        figure.savefig(export_fp,
+                        dpi = 300,
+                        bbox_inches = "tight")
              
