@@ -256,16 +256,8 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
    
     for group in airbnb_districts_prices.groups:
         
-        price_n_of_observations = len(airbnb_districts_prices.get_group(group))
-        price_mean = np.mean(airbnb_districts_prices.get_group(group))
-        price_median = np.median(airbnb_districts_prices.get_group(group))
-        price_std = np.std(airbnb_districts_prices.get_group(group))
         price_skew = skew(airbnb_districts_prices.get_group(group))
-        
-        stats = [price_n_of_observations, price_mean, price_median,
-                 price_std, price_skew]
-   
-            
+                       
         if price_skew >= 5:
             face_color = "#DE9C12"
             
@@ -303,21 +295,16 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
                      fontfamily = "Arial",
                      fontsize = 14,
                      fontweight = "bold")
-        
-        j = 0
-        y = .70
-        stat_headings = ["Observations", "Mean", "Median", "STDev", "Skew"]
-        for stat in stats:
-            ax.annotate(s = "{} = {:.2f}".format(stat_headings[j],stat),
-                    xy = (.7, y),
-                    xycoords=ax.transAxes,
-                    color = "black",
-                    weight = "bold",
-                    fontsize = 10)
-            y -= 0.125
-            j += 1
+
+        ax.annotate(s = "Skew = {:.2f}".format(price_skew),
+                xy = (.84, 0.65),
+                xycoords=ax.transAxes,
+                color = "black",
+                weight = "bold",
+                fontsize = 10)
+
             
-    fig_3.suptitle("The distribution of normalized Airbnb rental prices per district.",
+    fig_3.suptitle("The distribution Airbnb rental prices per district.",
        x = 0.50,
        y = 0.90,
        horizontalalignment = "center",
@@ -337,16 +324,8 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
    
     for group in airbnb_districts_prices_normalized.groups:
         
-        price_n_of_observations = len(airbnb_districts_prices_normalized.get_group(group))
-        price_mean = np.mean(airbnb_districts_prices_normalized.get_group(group))
-        price_median = np.median(airbnb_districts_prices_normalized.get_group(group))
-        price_std = np.std(airbnb_districts_prices_normalized.get_group(group))
         price_skew = skew(airbnb_districts_prices_normalized.get_group(group))
         
-        stats = [price_n_of_observations, price_mean, price_median,
-                 price_std, price_skew]
-   
-            
         if price_skew >= 5:
             face_color = "#DE9C12"
             
@@ -385,19 +364,13 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
                      fontsize = 14,
                      fontweight = "bold")
         
-        j = 0
-        y = .70
-        stat_headings = ["Observations", "Mean", "Median", "STDev", "Skew"]
-        for stat in stats:
-            ax.annotate(s = "{} = {:.2f}".format(stat_headings[j],stat),
-                    xy = (.7, y),
-                    xycoords=ax.transAxes,
-                    color = "black",
-                    weight = "bold",
-                    fontsize = 10)
-            y -= 0.125
-            j += 1
-            
+        ax.annotate(s = "Skew = {:.2f}".format(price_skew),
+                xy = (.84, 0.65),
+                xycoords=ax.transAxes,
+                color = "black",
+                weight = "bold",
+                fontsize = 10)
+        
         fig_4.suptitle("The distribution of normalized Airbnb rental prices per district.",
            x = 0.50,
            y = 0.90,
