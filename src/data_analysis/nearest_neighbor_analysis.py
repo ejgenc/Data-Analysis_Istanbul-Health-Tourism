@@ -70,22 +70,22 @@ for district in selected_districts:
 #%% --- Export data : nn_analysis_results_all ---
 
 export_fp = Path("../../data/final/nn_analysis_results_all.csv")
-nn_analysis_results_all.to_csv(export_fp, encoding = "utf-8-sig")
+nn_analysis_results_all.to_csv(export_fp,
+                               encoding = "utf-8-sig",
+                               index = False)
 
 #%% --- Export data : nn_analysis_results_normalized ---
 
 export_fp = Path("../../data/final/nn_analysis_results_normalized.csv")
-nn_analysis_results_normalized.to_csv(export_fp, encoding = "utf-8-sig")
+nn_analysis_results_normalized.to_csv(export_fp,
+                                      encoding = "utf-8-sig",
+                                      index = False)
 
 #%% --- Export data: nn_analysis_results_districts ---
 
 for district, nn_analysis in nn_analysis_results_districts.items():
     path_string = ("../../data/final/nn_analysis_results_norm_{}.csv").format(district.lower())
     export_fp = Path(path_string)
-    nn_analysis.to_csv(export_fp, encoding = "utf-8-sig")
-
-
-
-
-
-
+    nn_analysis.to_csv(export_fp,
+                       encoding = "utf-8-sig",
+                       index = False)

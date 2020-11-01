@@ -5,18 +5,11 @@
 This script targets one file:
     - istanbul_airbnb_processed.csv
     
-The script produces kernel-density plots (KDplot) for the distribution of Airbnb
-prices in the city of Istanbul. Kdplots are produced for the following
-categories:
-    - Price data without any tampering
-        - Non-grouped price data
-        - Price data grouped by district
-    - Price data transformed by log10
-        - non-grouped price data
-    - Price data normalized using IQR.
-    - Price data for a specific subset
+The script produces histograms for the distribution of Airbnb
+prices in the city of Istanbul. 
 
-Returns the plots mentioned above.
+Returns five histograms that visualize Airbnb rental price distribution
+under different slices.
 """
 #%% --- Import Required Packages ---
 

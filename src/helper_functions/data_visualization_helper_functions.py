@@ -11,6 +11,8 @@ found under src/data_visualization.
 #%% --- Import required packages ---
 
 import os
+from shapely.geometry import LineString
+import geopandas as gpd
 import matplotlib.pyplot as plt
 from src.helper_functions import data_analysis_helper_functions as functions_analysis
 
