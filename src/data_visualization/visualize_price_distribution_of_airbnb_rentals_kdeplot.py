@@ -477,7 +477,7 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
                  "alpha" : 0.6},
              kde = False)
     
-    ax_6.set_xlabel("Price",
+    ax_6.set_xlabel("Price (normalized)",
       fontfamily = "Arial",
       fontsize = 16,
       fontweight = "bold")
@@ -508,9 +508,7 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
          fontfamily = "Arial",
          fontsize = 14,
          fontweight = "bold")
-
     
-        
 #%% --- Export Figures ---
 
 current_filename_split = os.path.basename(__file__).split(".")[0].split("_")
@@ -519,9 +517,9 @@ current_filename_complete = "_".join(current_filename_split)
 mkdir_path = Path("../../media/figures/raw/{}".format(current_filename_complete))
 os.mkdir(mkdir_path)
 
-figures = [fig_1, fig_2, fig_3, fig_4, fig_5]
+figures = [fig_1, fig_2, fig_3, fig_4, fig_5, fig_5]
 filenames = ["single_raw", "single_normalized", "multiple_raw",
-              "selected_normalized","multiple_normalized"]
+              "multiple_normalized","selected_normalized"]
 file_extensions = [".png", ".svg"]
 
 for figure, filename in zip(figures, filenames):
