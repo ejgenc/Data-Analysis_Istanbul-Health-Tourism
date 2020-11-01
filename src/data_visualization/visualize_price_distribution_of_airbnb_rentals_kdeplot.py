@@ -71,6 +71,14 @@ airbnb_districts_prices = airbnb_grouped_by_district["price"]
 prices_normalized_within_iqr_1point5 = airbnb_df.loc[combined_mask,["district_eng","price"]]
 airbnb_grouped_by_district_normalized = prices_normalized_within_iqr_1point5.groupby(by = "district_eng")
 airbnb_districts_prices_normalized = airbnb_grouped_by_district_normalized["price"]
+
+#%%
+# Sum of all 5 districts
+
+selected_districts = ["Sisli", "Besiktas", "Kadikoy", "Atasehir", "Uskudar"]
+among_selected_districts_mask = prices_normalized_within_iqr_1point5.loc[:,"district_eng"].isin(selected_districts)
+prices_selected_districts = prices_normalized_within_iqr_1point5.loc[among_selected_districts_mask, "price"]
+
 #%% --- Calculate Extra Statistics ---
 # Min max Mean median std skew kurtosis
 
@@ -379,23 +387,148 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
            fontsize = 18,
            fontweight = "bold",)
         
+#%%--- Visualization Five: Nested small multiples histogram for 
+# "selected" and normalized districts. ---
+
+with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
+    
+    # --- Create figure and axes ---
+    
+    fig_5 = plt.figure(figsize = (10.80,10.80))
+    
+    gs = fig_5.add_gridspec(ncols = 3,
+                            nrows = 4,
+                            figure = fig_5)
+
+    ax_6 = fig_5.add_subplot(gs[2:,:])
+    
+    # --- Ax_1 to Ax_5
+    col = 0
+    row = 1
+    
+    for district in selected_districts:
+        
+        ax = fig_5.add_subplot(gs[col, row])
+        sns.distplot(airbnb_districts_prices_normalized.get_group(district),
+                     color = "#02b72e",
+                     hist_kws = {
+                         "edgecolor" : "black",
+                         "alpha" : 0.6},
+                     kde = False)
+        
+        ax.set_xlabel("")
+        
+        
+        price_num_of_obsv = len(airbnb_districts_prices_normalized.get_group(district))
+        price_mean = np.mean(airbnb_districts_prices_normalized.get_group(district))
+        price_median = np.median(airbnb_districts_prices_normalized.get_group(district))
+        price_std = np.std(airbnb_districts_prices_normalized.get_group(district))
+        price_skew = skew(airbnb_districts_prices_normalized.get_group(district))
+        
+        stats = [price_num_of_obsv, price_mean, price_median,
+                 price_std, price_skew]
+        
+        stat_labels = ["Obsv.", "Mean", "Median", "STDev", "Skew"]
+        
+        y = 0.65
+        i = 0
+        for stat in stats:
+            ax.annotate(s = "{} = {:.2f}".format(stat_labels[i],stat),
+            xy = (.60, y),
+            xycoords=ax.transAxes,
+            color = "black",
+            weight = "bold",
+            fontsize = 10)
+            y -= 0.10
+            i += 1
+            
+        ax.set_title(district,
+             loc = "right",
+             x = 0.95,
+             y = 0.75,
+             color = "black",
+             fontfamily = "Arial",
+             fontsize = 14,
+             fontweight = "bold")
+        
+        if row == 2:
+            row = 0
+            col = 1
+        else:
+            row += 1
+
+    
+    # --- Ax_6 ---
+    
+    price_num_of_obsv = len(prices_selected_districts)
+    price_mean = np.mean(prices_selected_districts)
+    price_median = np.median(prices_selected_districts)
+    price_std = np.std(prices_selected_districts)
+    price_skew = skew(prices_selected_districts)
+    
+    stats = [price_num_of_obsv, price_mean, price_median,
+         price_std, price_skew]
+    
+    sns.distplot(prices_selected_districts,
+             ax = ax_6,
+             color = "#02b72e",
+             hist_kws = {
+                 "edgecolor" : "black",
+                 "alpha" : 0.6},
+             kde = False)
+    
+    ax_6.set_xlabel("Price",
+      fontfamily = "Arial",
+      fontsize = 16,
+      fontweight = "bold")
+            
+    ax_6.set_ylabel("Count",
+          fontfamily = "Arial",
+          fontsize = 16,
+          fontweight = "bold",
+          labelpad = -50)
+    
+    y = 0.80
+    i = 0
+    for stat in stats:
+        ax_6.annotate(s = "{} = {:.2f}".format(stat_labels[i],stat),
+        xy = (.70, y),
+        xycoords=ax_6.transAxes,
+        color = "black",
+        weight = "bold",
+        fontsize = 10)
+        y -= 0.05
+        i += 1
+    
+    ax_6.set_title("All five districts",
+         loc = "right",
+         x = 0.90,
+         y = 0.90,
+         color = "black",
+         fontfamily = "Arial",
+         fontsize = 14,
+         fontweight = "bold")
+
+    
+        
 #%% --- Export Figures ---
 
-# current_filename_split = os.path.basename(__file__).split(".")[0].split("_")
-# current_filename_complete = "_".join(current_filename_split)
+current_filename_split = os.path.basename(__file__).split(".")[0].split("_")
+current_filename_complete = "_".join(current_filename_split)
 
-# mkdir_path = Path("../../media/figures/raw/{}".format(current_filename_complete))
-# os.mkdir(mkdir_path)
+mkdir_path = Path("../../media/figures/raw/{}".format(current_filename_complete))
+os.mkdir(mkdir_path)
 
-# figures = [fig_1, fig_2, fig_3, fig_4]
-# filenames = ["single_raw", "single_normalized", "multiple_raw", "multiple_normalized"]
-# file_extensions = [".png", ".svg"]
+figures = [fig_1, fig_2, fig_3, fig_4, fig_5]
+filenames = ["single_raw", "single_normalized", "multiple_raw",
+              "selected_normalized","multiple_normalized"]
+file_extensions = [".png", ".svg"]
 
-# for figure, filename in zip(figures, filenames):
-#     for file_extension in file_extensions:
-#         filename_extended = filename + file_extension
-#         export_fp = Path.joinpath(mkdir_path, filename_extended)
-#         figure.savefig(export_fp,
-#                         dpi = 300,
-#                         bbox_inches = "tight")
+for figure, filename in zip(figures, filenames):
+    for file_extension in file_extensions:
+        filename_extended = filename + file_extension
+        export_fp = Path.joinpath(mkdir_path, filename_extended)
+        figure.savefig(export_fp,
+                        dpi = 300,
+                        bbox_inches = "tight")
              
