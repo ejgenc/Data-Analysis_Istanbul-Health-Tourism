@@ -62,8 +62,8 @@ nn_analysis_results_districts = {}
 selected_districts = ["Sisli", "Besiktas", "Kadikoy", "Atasehir", "Uskudar"]
 
 for district in selected_districts:
-    district_mask = airbnb_gdf.loc[:,"district_e"] == district
-    selection = airbnb_gdf.loc[district_mask,:]
+    district_mask = airbnb_gdf_normalized.loc[:,"district_e"] == district
+    selection = airbnb_gdf_normalized.loc[district_mask,:]
     result = nearest_neighbor_analysis(selection, htourism_gdf)
     nn_analysis_results_districts[district] = result
     
@@ -80,7 +80,7 @@ nn_analysis_results_normalized.to_csv(export_fp, encoding = "utf-8-sig")
 #%% --- Export data: nn_analysis_results_districts ---
 
 for district, nn_analysis in nn_analysis_results_districts.items():
-    path_string = ("../../data/final/nn_analysis_results_{}.csv").format(district.lower())
+    path_string = ("../../data/final/nn_analysis_results_norm_{}.csv").format(district.lower())
     export_fp = Path(path_string)
     nn_analysis.to_csv(export_fp, encoding = "utf-8-sig")
 

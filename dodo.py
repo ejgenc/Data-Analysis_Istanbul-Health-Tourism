@@ -105,11 +105,11 @@ def task_run_nearest_neighbor_analysis():
                     "run_data_quality_tests_for_processed_htourism_centers_data"],
         "actions": ["python {}".format(action_path)],
         "targets": [Path("data/final/nn_analysis_results_all.csv"),
-                    Path("data/final/nn_analysis_results_atasehir.csv"),
-                    Path("data/final/nn_analysis_results_besiktas.csv"),
-                    Path("data/final/nn_analysis_results_kadikoy.csv"),
-                    Path("data/final/nn_analysis_results_sisli.csv"),
-                    Path("data/final/nn_analysis_results_uskudar.csv"),
+                    Path("data/final/nn_analysis_results_norm_atasehir.csv"),
+                    Path("data/final/nn_analysis_results_norm_besiktas.csv"),
+                    Path("data/final/nn_analysis_results_norm_kadikoy.csv"),
+                    Path("data/final/nn_analysis_results_norm_sisli.csv"),
+                    Path("data/final/nn_analysis_results_norm_uskudar.csv"),
                     Path("data/final/nn_analysis_results_normalized.csv")]
     }
 

@@ -26,7 +26,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from scipy.stats import iqr, skew, kurtosis, pearsonr
+from scipy.stats import iqr, skew, kurtosis
 
 #%% --- Set proper directory to assure integration with doit ---
 
@@ -381,21 +381,21 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
         
 #%% --- Export Figures ---
 
-current_filename_split = os.path.basename(__file__).split(".")[0].split("_")
-current_filename_complete = "_".join(current_filename_split)
+# current_filename_split = os.path.basename(__file__).split(".")[0].split("_")
+# current_filename_complete = "_".join(current_filename_split)
 
-mkdir_path = Path("../../media/figures/raw/{}".format(current_filename_complete))
-os.mkdir(mkdir_path)
+# mkdir_path = Path("../../media/figures/raw/{}".format(current_filename_complete))
+# os.mkdir(mkdir_path)
 
-figures = [fig_1, fig_2, fig_3, fig_4]
-filenames = ["single_raw", "single_normalized", "multiple_raw", "multiple_normalized"]
-file_extensions = [".png", ".svg"]
+# figures = [fig_1, fig_2, fig_3, fig_4]
+# filenames = ["single_raw", "single_normalized", "multiple_raw", "multiple_normalized"]
+# file_extensions = [".png", ".svg"]
 
-for figure, filename in zip(figures, filenames):
-    for file_extension in file_extensions:
-        filename_extended = filename + file_extension
-        export_fp = Path.joinpath(mkdir_path, filename_extended)
-        figure.savefig(export_fp,
-                        dpi = 300,
-                        bbox_inches = "tight")
+# for figure, filename in zip(figures, filenames):
+#     for file_extension in file_extensions:
+#         filename_extended = filename + file_extension
+#         export_fp = Path.joinpath(mkdir_path, filename_extended)
+#         figure.savefig(export_fp,
+#                         dpi = 300,
+#                         bbox_inches = "tight")
              
