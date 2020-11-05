@@ -96,7 +96,40 @@ for district_name, district_df in nn_analysis_results_per_district.items():
                                                                            crs = reference_crs,
                                                                            geometry = "point_of_origin")
     
+#%% --- Visualize the results of NN analysis for confirmation ---
 
+fig_1 = confirm_nearest_neighbor_analysis(nn_analysis_results_all_gdf)
 
+fig_2 = confirm_nearest_neighbor_analysis(nn_analysis_results_normalized_gdf)
 
+per_district_confirmation_plot = []
+for district_gdf in nn_analysis_results_per_district_gdf.values():
+    conf_fig = confirm_nearest_neighbor_analysis(district_gdf)
+    per_district_confirmation_plot.append(conf_fig)
+    
+#%% --- Export data ---
 
+current_filename_split = os.path.basename(__file__).split(".")[0].split("_")
+current_filename_complete = "_".join(current_filename_split)
+
+mkdir_path = Path("../../media/figures/raw/{}".format(current_filename_complete))
+os.mkdir(mkdir_path)
+
+figures = [plot for plot in per_district_confirmation_plot]
+figures.extend([fig_1,fig_2])
+
+filenames = ["confirmation_all_norm_atasehir",
+             "confirmation_all_norm_besiktas",
+             "confirmation_all_norm_kadikoy",
+             "confirmation_all_norm_sisli",
+             "confirmation_all_norm_uskudar",
+             "confirmation_all",
+             "confirmation_all_normalized",]
+
+for figure, filename in zip(figures, filenames):
+    filename_extended = filename + ".png"
+    export_fp = Path.joinpath(mkdir_path, filename_extended)
+    figure.savefig(export_fp,
+                    pad_inches = 0,
+                    dpi = 300,
+                    bbox_inches = "tight")

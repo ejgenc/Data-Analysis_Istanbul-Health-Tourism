@@ -195,6 +195,6 @@ def task_visualize_nearest_neighbor_analysis_confirmation():
                     Path("data/final/nn_analysis_results_norm_uskudar.csv"),
                     Path("data/final/nn_analysis_results_normalized.csv")],
         "task_dep": ["run_nearest_neighbor_analysis"],
-        "actions": ["python {}".format(action_path)]
-        #"targets": None,
+        "actions": ["python {}".format(action_path)],
+        "targets": [Path("media/figures/raw/visualize_nearest_neighbor_analysis_confirmation")]
     }
