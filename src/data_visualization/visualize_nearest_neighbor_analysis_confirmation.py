@@ -2,14 +2,25 @@
 """
 ------ What is this file? ------
 
-This script targets one file:
-    - istanbul_airbnb_processed.csv
+This script targets eight files
+    - nn_analysis_results_all.csv
+    - nn_analysis_results_normalized.csv
+    - nn_analysis_results_norm_atasehir.csv
+    - nn_analysis_results_norm_besiktas.csv
+    - nn_analysis_results_norm_kadikoy.csv
+    - nn_analysis_results_norm_sisli.csv
+    - nn_analysis_results_norm_uskudar.csv
     
-The script produces histograms for the distribution of Airbnb
-prices in the city of Istanbul. 
+The script produces abstract maps to confirm nearest neighbor analysis.
+In the maps, each orange triangle represents a health tourism center.
+Each blue circle represents an Airbnb rental.
+The lines in between the two symbols(triangles and circles) show which
+health tourism center is closest to which Airbnb.
+A succesful NN search would result in each circle being connected to
+only the nearest triangle, which would be visible in the visualization.
 
-Returns five histograms that visualize Airbnb rental price distribution
-under different slices.
+Returns eight abstract maps that attempt to confirm nearest neighbor analysis
+for different datsets.
 """
 #%% --- Import Required Packages ---
 
@@ -28,9 +39,9 @@ os.chdir(dname)
 
 #%% --- Import Data ---
 
-#Istanbul districts
+#Istanbul districts for reference crs
 import_fp = Path("../../data/external/istanbul_districts.shp")
-istanbul_districts = gpd.read_file(import_fp, encoding = "utf-8-sig")
+istanbul_districts = gpd.read_file(import_fp)
 
 #All districts - raw
 import_fp = Path("../../data/final/nn_analysis_results_all.csv")
