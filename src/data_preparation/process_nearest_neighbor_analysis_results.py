@@ -67,15 +67,15 @@ nn_results_gdf = gpd.GeoDataFrame(nn_results,
                                   crs = airbnb.crs,
                                   geometry = "point_of_origin")
 
+#rename "point_of_origin" column to geometry
+nn_results_gdf.rename({"point_of_origin":"geometry"},
+                      axis = 1,
+                      inplace = True)
+
 #%% --- Merge two GeoDataFrames ---
 
-#Do a left spatial join on airbnb
-distance_price_dataset = gpd.sjoin(airbnb,
-                                   nn_results_gdf,
-                                   how = "left",
-                                   op = "intersects")
-
-distance_price_dataset.drop("index_right", axis = 1, inplace = True)
+distance_price_dataset = airbnb.merge(nn_results_gdf,
+                                      on = "geometry")
 
 #%% --- Export data ---
 
