@@ -100,7 +100,7 @@ with plt.style.context('matplotlib_stylesheet_ejg_fixes'):
                     zorder = 3,
                     alpha = 0.65,
                     markersize = 120,
-                    marker = "^",
+                    marker = "o",
                     edgecolor = "black")
     
     #Plot district backgrounds
