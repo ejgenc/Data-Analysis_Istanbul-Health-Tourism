@@ -113,6 +113,17 @@ def task_run_nearest_neighbor_analysis():
                     Path("data/final/nn_analysis_results_normalized.csv")]
     }
 
+def task_run_process_nearest_neighbor_analysis_results():
+    action_path = Path("src/data_preparation/process_nearest_neighbor_analysis_results.py")
+    return {
+        "file_dep": [Path("data/final/nn_analysis_results_all.csv"),
+                     Path("data/processed/istanbul_airbnb_processed_shapefile.shp")],
+        "task_dep": ["run_nearest_neighbor_analysis",
+                     "convert_airbnb_data_to_shapefile"],
+        "actions": ["python {}".format(action_path)],
+        "targets": [Path("data/final/distance_price_dataset.shp")]
+    }
+
 def task_analyze_geographic_distribution_of_htourism_centers():
     action_path = Path("src/data_analysis/analyze_geographic_distribution_of_htourism_centers.py")
     return {
