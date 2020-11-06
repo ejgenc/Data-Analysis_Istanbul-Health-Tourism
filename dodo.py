@@ -113,7 +113,7 @@ def task_run_nearest_neighbor_analysis():
                     Path("data/final/nn_analysis_results_normalized.csv")]
     }
 
-def task_run_process_nearest_neighbor_analysis_results():
+def task_process_nearest_neighbor_analysis_results():
     action_path = Path("src/data_preparation/process_nearest_neighbor_analysis_results.py")
     return {
         "file_dep": [Path("data/final/nn_analysis_results_all.csv"),
@@ -208,4 +208,13 @@ def task_visualize_nearest_neighbor_analysis_confirmation():
         "task_dep": ["run_nearest_neighbor_analysis"],
         "actions": ["python {}".format(action_path)],
         "targets": [Path("media/figures/raw/visualize_nearest_neighbor_analysis_confirmation")]
+    }
+
+def task_visualize_nearest_neighbor_analysis_correlation_results():
+    action_path = Path("src/data_visualization/visualize_nearest_neighbor_analysis_correlation_results.py")
+    return {
+        "file_dep": [Path("data/final/distance_price_dataset.shp")],
+        "task_dep": ["process_nearest_neighbor_analysis_results"],
+        "actions": ["python {}".format(action_path)],
+        "targets": [Path("media/figures/raw/visualize_nearest_neighbor_analysis_correlation_results")]
     }
