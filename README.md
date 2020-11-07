@@ -24,7 +24,7 @@ A data analysis project that attempts to measure how much health tourism affects
 
 ### Why reproducibility? ###
 
-I believe that openness and ease of reproduction are two very important concepts that build a foundation of trust under the dissemination of knowledge. You can always consume the end result of my project, that is what most people do. However, there may be people who want to be able to re-create my analysis steps one by one. This is the reason why this project was built with reproducibility in mind.
+I believe that openness and ease of reproduction are two very important concepts that build a foundation of trust under the dissemination of knowledge. You can always consume only the end result of my project by reading the Medium posts. However, there may be people who want to be able to re-create my analysis steps one by one. This is the reason why this project was built with reproducibility in mind.
 
 ### Methods of reproduction ###
 
@@ -62,7 +62,7 @@ To run the whole cleaning, analysis and visualization process from start to fini
 
 * Activate the environment you have created in the previous step
 
-* cd to the project folder
+* cd to the root project folder, the folder in which the **dodo.py** file is located.
 
 * Simply run the following command: `doit`
 
@@ -86,12 +86,10 @@ Below is a document tree of this project for those who wish to explore further.
     ├── eda_notebooks      <- Jupyter notebooks that have data explorations. These files were not created with external viewers in mind.
     |                         You can explore them if you wish. However, a good viewing experience is not promised.
     |
-    |
     |── media              <- Contains internally generated figures and external photos. Internally generated figures come with a license.
     |    ├── external_media <- Images and media downloaded from third party resources. A .txt file of references and attribution is included.
     │    ├── figures        <- Data visualizations generated through scripts
     |                                             
-    |
     |
     ├── references         <- Data dictionaries, manuals, and all other explanatory material.
     │
@@ -99,10 +97,12 @@ Below is a document tree of this project for those who wish to explore further.
     ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
     |
     |
-    ├── src                         <- Source code for use in this project.
-    │   |
+    ├── self_documentation <- Certain notes that the author has written for himself. These files were not created with external viewers in mind.
+    |
+    |
+    ├── src                         <- Source code used in this project.
     │   │
-    │   ├── data_preparation        <- Scripts to download or generate data
+    │   ├── data_preparation        <- Scripts to download or generate data.
     │   |
     |   |── data_analysis           <- Scripts to generate intermediary datasets to base visualizations on.                           
     |   |   
@@ -110,12 +110,10 @@ Below is a document tree of this project for those who wish to explore further.
     |   |
     |   |── helper_functions        <- Scripts that contain various helper functions.
     |   
-    |
     │       
     ├── tests                       <- Contains test modules that test the data analysis pipeline.
     |   |
     |   ├── unit_tests              <- Contains unit tests. Folder structure mirrors that of the folder src.
-    |   |         |
     |   |         |
     |   |         |── data_preparation 
     |   |         |
@@ -129,10 +127,11 @@ Below is a document tree of this project for those who wish to explore further.
     |                        
     |
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
+    │                         Generated with `pip freeze > requirements.txt`
     |
     |
     |── environment.yml    <- A .yml file for reproducing the analysis environment.
+    |                         Generated with "conda env export --from-history -f environment.yml"
     |
     │
     |── dodo.py            <- A file that contains all the information needed to run automation package Doit. Used to implement DAG structure.
