@@ -1,0 +1,27 @@
+This plain text file includes references for the external media that is used for this project.
+
+--- PROCESSED ---
+
+- hair transplant comments_collage.png
+	
+	Explanation : --> A collage of Reddit posts that are related to
+			Turkey and hair transplants.
+	
+	Links : --> None, created by the author using hair1.png ... hair6.png found in external_media/raw
+
+
+--- RAW ---
+
+- strange planet_i have attempted science.jpg 
+
+	Explanation : --> Taken from Nathan W. Pyle's comic series Strange Planet. Image itself is from
+			a Twitter post that features the image.
+
+	Links : --> https://twitter.com/nathanwpyle/status/1176860147223867393
+		    https://nathanwpyle.threadless.com/designs/strange-planet-i-have-attempted-science/home/fine-art-print
+
+- hair1.png to hair6.png
+
+	Explanation : --> Screenshots of Reddit posts that mention Turkey and hair transplant.
+	
+	Links: --> None, accessed through the following Google search: "reddit Turkey hair transplant"
