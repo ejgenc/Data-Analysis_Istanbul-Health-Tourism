@@ -93,7 +93,7 @@ Below is a document tree of this project for those who wish to explore further.
     |                                             
     |
     |
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+    ├── references         <- Data dictionaries, manuals, and all other explanatory material.
     │
     |
     ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
