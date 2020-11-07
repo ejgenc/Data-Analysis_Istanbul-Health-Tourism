@@ -26,18 +26,18 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     inkscape:current-layer="svg2603"
+     inkscape:current-layer="figure_1"
      inkscape:window-maximized="1"
      inkscape:window-y="-11"
      inkscape:window-x="-11"
-     inkscape:cy="450.08081"
-     inkscape:cx="147.07563"
-     inkscape:zoom="0.66725491"
+     inkscape:cy="299.88076"
+     inkscape:cx="439.27932"
+     inkscape:zoom="0.6672549"
      showgrid="false"
      id="namedview2605"
      inkscape:window-height="986"
@@ -49,7 +49,8 @@
      objecttolerance="10"
      borderopacity="1"
      bordercolor="#666666"
-     pagecolor="#ffffff">
+     pagecolor="#ffffff"
+     inkscape:document-rotation="0">
     <inkscape:grid
        id="grid3372"
        type="xygrid" />
@@ -68,11 +69,12 @@
   <g
      id="figure_1">
     <g
+       transform="translate(0,-1.1967873e-5)"
        id="patch_1">
       <path
          id="path6"
-         style="fill:#ffffff;"
-         d="M 0 650.141375  L 649.585551 650.141375  L 649.585551 0  L 0 0  z " />
+         style="fill:#ffffff"
+         d="M 0,650.14138 H 649.58555 V 0 H 0 Z" />
     </g>
     <g
        id="axes_1">
@@ -4154,7 +4156,7 @@
      id="layer1"
      inkscape:groupmode="layer">
     <g
-       transform="translate(-154.68503,-6.9770476)"
+       transform="translate(-149.66061,-6.9770476)"
        style="display:inline;stroke-linecap:butt;stroke-linejoin:round"
        id="text_41-4">
       <!-- The distribution of Airbnb rental prices. -->
