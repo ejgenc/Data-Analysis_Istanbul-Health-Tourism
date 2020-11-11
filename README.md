@@ -1,6 +1,6 @@
-# Data Analysis_Istanbul Health Tourism #
+# A tribute to my wrongness: Airbnb rents and distance to health tourism institutions in Istanbul. #
 
-![Header]()
+![Alt Text]("media/figures/processed/visualize_nearest_neighbor_analysis_confirmation/confirmation_collage_eng)
 
 * * *
 
