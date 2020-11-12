@@ -14,7 +14,7 @@ The results of this analysis are offered as Medium articles. Be sure to check th
  
 ## What is this project about? ##
 
-Motivated by [my previous data analysis project](https://github.com/ejgenc/Data-Analysis_Istanbul-Health-Services-Map) about the distribution of health services across Istanbul, i have come up with another urban data analysis project. This time, **i am looking at various datasets to see whether there is some kind of a linear or monotonic relationship in between the price of an Airbnb rental and its closeness to a health tourism institution.**
+Motivated by [my previous data analysis project](https://github.com/ejgenc/Data-Analysis_Istanbul-Health-Services-Map) about the distribution of health services across Istanbul, I have come up with another urban data analysis project. This time, **I am looking at various datasets to see whether there is some kind of a linear or monotonic relationship in between the price of an Airbnb rental and its closeness to a health tourism institution.**
 
 ## Technical Details ##
 
