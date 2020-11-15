@@ -164,5 +164,26 @@ Below is a document tree of this project for those who wish to explore further.
 
 ## References ##
 
-**PUT REFERENCES HERE**
+**A comprehensive reference of all the external sources and acknowledgements can be found under** `"references/references.txt"`
+However, here is a brief mention of crucial dataset sources and acknowledgements:
+
+### Dataset Sources for Raw Data ###
+
+#### hair_clinics_raw.csv ####
+
+A dataset that contains name and coordinate information for hair transplant clinics in Istanbul.Scraped from [this website](https://www.sacekimiburada.com/istanbul-sac-ekim-merkezleri") using the script located at `"../src/data_preparation/scrape_web_for_hclinics.py"`
+
+#### istanbul_airbnb_raw.csv ####
+
+A dataset that contains the data related to Airbnb rentals in Istanbul. Contains information such as location and price. Taken from a project called [_Inside Airbnb._](http://insideairbnb.com/) Data belongs to May 2019. Accessed through [this link to the data repository.](http://insideairbnb.com/get-the-data.html)
+
+#### istanbul_healthservices_raw.csv ####
+
+A dataset that contains information about all the health service providers in Istanbul. Downloaded from Istanbul Metropolitan Municipality's [Open Data Portal](https://data.ibb.gov.tr/en/). Accessed through [this link to the data portal](https://data.ibb.gov.tr/dataset/istanbul-saglik-kurum-ve-kuruluslari-verisi)
+
+### Acknowledgements ###
+
+The geospatial processing part of the analysis was heavily inspired by the 2019 edition of the course called ["Automating GIS Processes".](https://automating-gis-processes.github.io/site/) The course was created for the University of Helsinki by Henrikki Tenkanen and Vuokko Heikinheimo.
+
+
 
