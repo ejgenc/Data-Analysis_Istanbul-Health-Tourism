@@ -77,6 +77,9 @@ in a supplementary way.
 	"Automating GIS Processes". The course was created for the University of Helsinki by Henrikki Tenkanen and Vuokko Heikinheimo.
 	The course can be accessed through: "https://automating-gis-processes.github.io/site/"
 
+	The project structure was heavily inspired by Driven Data's Cookiecutter Data Science project structure.
+	You can access the Cookiecutter Data Science project structure through: https://drivendata.github.io/cookiecutter-data-science/
+
 
 
 

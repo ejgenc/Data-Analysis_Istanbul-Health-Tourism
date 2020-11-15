@@ -99,12 +99,12 @@ Below is a document tree of this project for those who wish to explore further.
     │   └── raw            <- The original, immutable data dump.
     │
     │
-    ├── eda_notebooks      <- Jupyter notebooks that have data explorations. These files were not created with external viewers in mind.
+    ├── eda_notebooks      <- Jupyter notebooks that serve as scratchpads. These files were not created with external viewers in mind.
     |                         You can explore them if you wish. However, a good viewing experience is not promised.
     |
     |── media              <- Contains internally generated figures and external photos. Internally generated figures come with a license.
     |    ├── external_media <- Images and media downloaded from third party resources. A .txt file of references and attribution is included.
-    │    ├── figures        <- Data visualizations generated through scripts
+    │    ├── figures        <- Data visualizations generated through scripts.
     |                                             
     |
     ├── references         <- Data dictionaries, manuals, and all other explanatory material.
@@ -131,15 +131,10 @@ Below is a document tree of this project for those who wish to explore further.
     |   |
     |   ├── unit_tests              <- Contains unit tests. Folder structure mirrors that of the folder src.
     |   |         |
-    |   |         |── data_preparation 
-    |   |         |
-    |   |         |── data_analysis
-    |   |         |
-    |   |         |── data_visualization
     |   |         |
     |   |         |── helper_functions
     |   |
-    |   ├── data_quality_tests      <- Contains data quality tests that test raw, processed and intermediary datasets.
+    |   ├── data_quality_tests      <- Contains data quality tests for some of the datasets.
     |                        
     |
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
@@ -184,6 +179,8 @@ A dataset that contains information about all the health service providers in Is
 ### Acknowledgements ###
 
 The geospatial processing part of the analysis was heavily inspired by the 2019 edition of the course called ["Automating GIS Processes".](https://automating-gis-processes.github.io/site/) The course was created for the University of Helsinki by Henrikki Tenkanen and Vuokko Heikinheimo.
+
+The project structure was heavily inspired by Driven Data's [Cookiecutter Data Science project structure.](https://drivendata.github.io/cookiecutter-data-science/)
 
 
 
