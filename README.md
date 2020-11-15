@@ -23,7 +23,7 @@ To ensure succesful replication, I've created a minimal packaging of the project
 The following Python packages were used to ensure replicability:
 
 * [**doit**](https://pydoit.org/) --> A Python build tool like _Make_ that is used to order all the scripts in a pipeline fashion.
-* [**pytest**]() --> Used in unit testing helper functions and doing data quality testing on intermediate datasets.
+* [**pytest**](https://docs.pytest.org/en/stable/) --> Used in unit testing helper functions and doing data quality testing on intermediate datasets.
 
 The geospatial analysis portion of the project is done with the help of the following packages:
 
@@ -166,7 +166,7 @@ However, here is a brief mention of crucial dataset sources and acknowledgements
 
 #### hair_clinics_raw.csv ####
 
-A dataset that contains name and coordinate information for hair transplant clinics in Istanbul.Scraped from [this website](https://www.sacekimiburada.com/istanbul-sac-ekim-merkezleri") using the script located at `"../src/data_preparation/scrape_web_for_hclinics.py"`
+A dataset that contains name and coordinate information for hair transplant clinics in Istanbul.Scraped from [this website](https://www.sacekimiburada.com/istanbul-sac-ekim-merkezleri") using the script located at `../src/data_preparation/scrape_web_for_hclinics.py`
 
 #### istanbul_airbnb_raw.csv ####
 
@@ -174,7 +174,7 @@ A dataset that contains the data related to Airbnb rentals in Istanbul. Contains
 
 #### istanbul_healthservices_raw.csv ####
 
-A dataset that contains information about all the health service providers in Istanbul. Downloaded from Istanbul Metropolitan Municipality's [Open Data Portal](https://data.ibb.gov.tr/en/). Accessed through [this link to the data portal](https://data.ibb.gov.tr/dataset/istanbul-saglik-kurum-ve-kuruluslari-verisi)
+A dataset that contains information about all the health service providers in Istanbul. Downloaded from Istanbul Metropolitan Municipality's [Open Data Portal](https://data.ibb.gov.tr/en/). Accessed through [this link to the dataset.](https://data.ibb.gov.tr/dataset/istanbul-saglik-kurum-ve-kuruluslari-verisi)
 
 ### Acknowledgements ###
 
