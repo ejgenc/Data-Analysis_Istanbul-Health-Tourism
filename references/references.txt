@@ -1,0 +1,85 @@
+--- Dataset Sources ---
+
+ --- Raw Data ---
+
+This section includes the sources for the raw datasets that can be found under "../data/raw". These datasets are processed using various scripts.
+
+	- hair_clinics_raw.csv
+
+		- Explanation ---> A dataset that contains name and coordinate information for hair transplant clinics in Istanbul.
+
+		- Source ---> Scraped from "https://www.sacekimiburada.com/istanbul-sac-ekim-merkezleri"
+				using the script located at "../src/data_preparation/scrape_web_for_hclinics.py"
+
+	- istanbul_airbnb_raw.csv
+	
+		- Explanation ---> A dataset that contains the data related to Airbnb rentals in Istanbul. Contains information such as location and price.
+
+		- Source ---> Taken from a project called "Inside Airbnb." Data belongs to May 2019.
+				 Accessed through "http://insideairbnb.com/get-the-data.html"
+
+	- istanbul_healthservices_raw.csv
+
+		- Explanation ---> A dataset that contains information about all the health service providers in Istanbul.
+
+		- Source ---> Downloaded from Istanbul Metropolitan Municipality's Open Data Portal.
+				Accessed through "https://data.ibb.gov.tr/dataset/istanbul-saglik-kurum-ve-kuruluslari-verisi"
+
+ --- External Data ---
+
+This section includes the sources for the external datasets that can be found under "../data/external". These datasets were not processed, but used
+in a supplementary way.
+
+	- district_income.xlsx
+
+		- Explanation ---> Contains the population and yearly average income information for all districts in Istanbul.
+
+		- Source ---> Collected from the project "Mahallem İstanbul" and from secondary sources that report on this project.
+				"Mahallem İstanbul" can be accessed through "https://mahallemistanbul.com/"
+				The complementary newspaper article can be accessed through "https://www.posta.com.tr/iste-istanbul-un-en-zengin-ilceleri-istanbul-da-ilcelere-gore-gelir-dagilimi-haber-fotograf-1359815-9"
+
+	- istanbul_districts.shp and related files
+
+		- Explanation ---> Contains geographical information about Istanbul' districts.
+
+		- Source ---> Accessed through an OpenStreetMap data export. Please see "https://www.openstreetmap.org"
+
+--- External Media Sources ---
+
+ --- Processed---
+	
+	- hair transplant comments_collage.png
+	
+		- Explanation : ---> A collage of Reddit posts that are related to Turkey and hair transplants.
+	
+		- Source : ---> None, created by the author using hair1.png ... hair6.png found in external_media/raw
+
+
+ --- Raw ---
+
+	- strange planet_i have attempted science.jpg 
+
+		- Explanation : ---> Taken from Nathan W. Pyle's comic series Strange Planet. Image itself is from
+					a Twitter post that features the image.
+
+		- Links : ---> https://twitter.com/nathanwpyle/status/1176860147223867393
+		    		https://nathanwpyle.threadless.com/designs/strange-planet-i-have-attempted-science/home/fine-art-print
+
+	- hair1.png to hair6.png
+
+		- Explanation : ---> Screenshots of Reddit posts that mention Turkey and hair transplant.
+	
+		- Links: ---> None, accessed through the following Google search: "reddit Turkey hair transplant"
+
+--- Inspiration & Acknowledgements ---
+
+	The geospatial processing part of the analysis was heavily inspired by the 2019 edition of the course called
+	"Automating GIS Processes". The course was created for the University of Helsinki by Henrikki Tenkanen and Vuokko Heikinheimo.
+	The course can be accessed through: "https://automating-gis-processes.github.io/site/"
+
+
+
+
+
+
+
