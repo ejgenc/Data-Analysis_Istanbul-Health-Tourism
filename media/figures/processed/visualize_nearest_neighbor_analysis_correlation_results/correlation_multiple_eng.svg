@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -35,9 +35,9 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-11"
      inkscape:window-x="-11"
-     inkscape:cy="339.5596"
-     inkscape:cx="470.72512"
-     inkscape:zoom="0.45994434"
+     inkscape:cy="363.28029"
+     inkscape:cx="636.18212"
+     inkscape:zoom="0.91988868"
      showgrid="false"
      id="namedview13576"
      inkscape:window-height="986"
@@ -49,7 +49,8 @@
      objecttolerance="10"
      borderopacity="1"
      bordercolor="#666666"
-     pagecolor="#ffffff">
+     pagecolor="#ffffff"
+     inkscape:document-rotation="0">
     <inkscape:grid
        id="grid13720"
        type="xygrid" />
@@ -39332,7 +39333,7 @@
        y="661.7066"
        x="306.82166"
        id="tspan13686"
-       sodipodi:role="line">Distance to nearest health tourism related institution (meter)</tspan></text>
+       sodipodi:role="line">Distance to the nearest health tourism related institution (meter)</tspan></text>
   <text
      transform="translate(138.55989,25.169808)"
      id="text13710"
@@ -39341,11 +39342,18 @@
      style="font-weight:bold;font-size:22px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';white-space:pre;inline-size:370.834;stroke-width:0.75"
      xml:space="preserve"><tspan
        x="-125.10386"
-       y="98.584152"><tspan>Scatterplots of normalized Airbnb </tspan></tspan><tspan
+       y="98.584152"><tspan
+         style="stroke-linecap:butt;stroke-linejoin:round">Five district-level scatterplots that </tspan></tspan><tspan
        x="-125.10386"
-       y="126.08415"><tspan>rents and distance to nearest </tspan></tspan><tspan
+       y="126.08415"><tspan
+         style="stroke-linecap:butt;stroke-linejoin:round">show the normalized rents of </tspan></tspan><tspan
        x="-125.10386"
-       y="153.58414"><tspan>health tourism related institutions </tspan></tspan><tspan
+       y="153.58414"><tspan
+         style="stroke-linecap:butt;stroke-linejoin:round">Airbnb rentals and their distances </tspan></tspan><tspan
        x="-125.10386"
-       y="181.08414"><tspan>for five districts</tspan></tspan></text>
+       y="181.08414"><tspan
+         style="stroke-linecap:butt;stroke-linejoin:round">to the nearest health tourism </tspan></tspan><tspan
+       x="-125.10386"
+       y="208.58414"><tspan
+         style="stroke-linecap:butt;stroke-linejoin:round">related institution. </tspan></tspan></text>
 </svg>
