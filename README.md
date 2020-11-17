@@ -1,4 +1,4 @@
-# A Tribute to My Wrongness: Airbnb Rental Prices and the Distance to the Nearest Health Tourism Institution #
+# A Tribute to My Wrongness: How Health Tourism Interacts with Airbnb Rents in Istanbul#
 
 ![A sneak peek into the results of the analysis conducted in this project.](https://github.com/ejgenc/Data-Analysis_Istanbul-Health-Tourism/blob/master/media/figures/processed/visualize_nearest_neighbor_analysis_confirmation/confirmation_collage_eng.png)
 _A sneak peek into the results of the analysis conducted in this project._
