@@ -42,11 +42,15 @@ Packages such as **Selenium, Numpy, Pandas, Matplotlib and Seaborn** were also u
 
 I believe that openness and ease of reproduction are two very important concepts that build a foundation of trust under the dissemination of knowledge. You can always consume only the end result of my project by reading my Medium articles. However, there may be people who may want to be able to re-create my analysis steps one by one. This is the reason why this project was built with reproducibility in mind.
 
-### Methods of reproduction ###
+### How to reproduce this project? ###
 
 Successful reproduction of a data science/analysis project requires the communication of the information that is related to the reproduction of the environment that the project was conducted in first. Only then can the analysis be replicated succesfully.  
 
-#### 1.) Recreate the environment that the analysis was conducted in ####
+#### 1.) Clone or download the project files
+
+Before creating the environment, you need to have the project files on your computer. **You can download the source code of this project and the related material either through cloning the repository using a Git client, using GitHub desktop or through manual download.**
+
+#### 2.) Recreate the environment that the analysis was conducted in ####
 
 The project files that i present offer two ways to do this to account for the two most popular package managers for Python, conda and pip. Let's start with my preferred method first:
 
@@ -56,7 +60,9 @@ You can use this option if you have the conda package manager installed in your 
 
 `conda env create -f environment.yml`
 
-Running this command will make conda create a new environment similar to the environment of the analysis with the information provided inside the **environment.yml** file. When you run the command, you will be able to specify the name of this new environment. Once you are done, **don't forget to activate your environment before running the analysis.**
+Running this command will make conda create a new environment similar to the environment of the analysis with the information provided inside the **environment.yml** file. "healthtourism" will be name of this new environment. Once you are done, **don't forget to activate your environment before running the analysis.** You can activate the environment by running the following command:
+
+`conda activate healthtourismenv`
 
 ##### b.) Create the environment yourself and load the packages using the requirements.txt and pip #####
 
@@ -68,7 +74,7 @@ Once you have created your environment, you can now install all the packages usi
 
 **Now that we have recreated an environment similar to the one the project was created in, we can move on to reproducing the analysis.**
 
-#### 2.) Utilize the Python doit package to replicate the analysis ####
+#### 3.) Utilize the Python doit package to replicate the analysis ####
 
 [The doit package](https://pydoit.org/) is a handy tool in Python that can be used to automate certain tasks, including data analysis workflows. This project makes use of the doit package to make replication easier. The doit module was included in both of the dependency creation methods. All the information related to the pipeline structure of the analysis is located in the **dodo.py** file.
 
