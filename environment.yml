@@ -16,8 +16,12 @@ dependencies:
   - doit
   - descartes
   - spyder-kernels
+  - notebook
+  - xlrd
+  - contextily
+  - geoplot
   - pip:
     - -e .
-    - textdistance
+
 
 prefix: F:\Programming_Environment\python_minicondadist\envs\healthtourismenv

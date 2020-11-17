@@ -28,7 +28,7 @@ One must also include the project itself as a package so that the scripts and te
 As above, include this line under the "-pip:" header:
 
 -pip:
-   - -e. --> This is to make sure that the project gets installed as a package.
+   - -e . --> This is to make sure that the project gets installed as a package.
 	   Needed for tests and general functioning.
 
 
