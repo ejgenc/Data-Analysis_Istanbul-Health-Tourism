@@ -1,4 +1,4 @@
-# A Tribute to My Wrongness: How Health Tourism Interacts with Airbnb Rents in Istanbul#
+# A Tribute to My Wrongness: How Health Tourism Interacts with Airbnb Rents in Istanbul #
 
 ![A sneak peek into the results of the analysis conducted in this project.](https://github.com/ejgenc/Data-Analysis_Istanbul-Health-Tourism/blob/master/media/figures/processed/visualize_nearest_neighbor_analysis_confirmation/confirmation_collage_eng.png)
 _A sneak peek into the results of the analysis conducted in this project._
@@ -81,6 +81,12 @@ To run the whole cleaning, analysis and visualization process from start to fini
 * cd to the root project folder, the folder in which the **dodo.py** file is located.
 
 * Simply run the following command: `doit`
+
+**Attention!** Running the whole pipeline on your computer skips two parts of the original analysis:
+
+* Scraping the web for a part of the "hair transplant clinics" datasets. **This part is skipped on purpose to prevent the analysis from being corrupted due to a subsequent change in the websites scraped.** Still, the raw scraped dataset it provided with the source code.
+
+* Manual editing of the final data visualizations. **The data visualizations used in the report were manually edited and translated to Turkish.** However, these changes are not major and you can verify the differences because the "raw" data visualizations will still be re-created.
 
 ## Project  Organization ##
 
