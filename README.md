@@ -178,7 +178,7 @@ However, here is a brief mention of crucial dataset sources and acknowledgements
 
 #### hair_clinics_raw.csv ####
 
-A dataset that contains name and coordinate information for hair transplant clinics in Istanbul.Scraped from [this website](https://www.sacekimiburada.com/istanbul-sac-ekim-merkezleri") using the script located at `../src/data_preparation/scrape_web_for_hclinics.py`
+A dataset that contains name and coordinate information for hair transplant clinics in Istanbul. Scraped from [this website](https://www.sacekimiburada.com/istanbul-sac-ekim-merkezleri") using the script located at `../src/data_preparation/scrape_web_for_hclinics.py`
 
 #### istanbul_airbnb_raw.csv ####
 

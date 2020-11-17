@@ -1,5 +1,17 @@
 from pathlib import Path # To wrap around filepaths
 
+def task_clear_data_output():
+    action_path = Path("src/data_preparation/clear_data_output.py")
+    return {
+        "actions": ["python {}".format(action_path)]
+    }
+
+def task_clear_viz_output():
+    action_path = Path("src/data_preparation/clear_viz_output.py")
+    return {
+        "actions": ["python {}".format(action_path)]
+    }
+    
 def task_run_data_preparation_helper_functions_unit_tests():
     action_path = Path("tests/unit_tests/helper_functions/test_data_preparation_helper_functions.py")
     return {
