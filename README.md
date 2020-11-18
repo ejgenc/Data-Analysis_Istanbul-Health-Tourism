@@ -18,7 +18,7 @@ Motivated by [my previous data analysis project](https://github.com/ejgenc/Data-
 
 ## Technical Details ##
 
-This project features a few major technical improvements over the last one. **I've organized the whole analysis with reproducibility in mind.**
+This Python project features a few major technical improvements over the last one. **I've organized the whole analysis with reproducibility in mind.**
 To ensure succesful replication, I've created a minimal packaging of the project, the environment and the steps that are needed to reproduce the analysis.
 The following Python packages were used to ensure replicability:
 
@@ -60,7 +60,9 @@ First, CD to the root of the project directory that you have downloaded. Then ru
 
 `conda env create -f environment.yml`
 
-Running this command will make conda create a new environment similar to the environment of the analysis with the information provided inside the **environment.yml** file. "healthtourism" will be name of this new environment. Once you are done, **don't forget to activate your environment before running the analysis.** You can activate the environment by running the following command:
+Running this command will make conda create a new environment similar to the environment of the analysis with the information provided inside the **environment.yml** file. "healthtourism" will be name of this new environment. **The specific Python version that the analysis was conducted in is also encoded into the environment.yml file.**
+
+Once you are done, **don't forget to activate your environment before running the analysis.** You can activate the environment using the following command:
 
 `conda activate healthtourismenv`
 
