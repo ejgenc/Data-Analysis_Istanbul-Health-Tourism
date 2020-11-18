@@ -64,6 +64,8 @@ Running this command will make conda create a new environment similar to the env
 
 `conda activate healthtourismenv`
 
+**This is the preferred method of environment replication for this project because the conda package manager is more likely to download the main dependencies and their co-dependencies is a way that fits your specific operation system.**
+
 ##### b.) Create the environment yourself and load the packages using the requirements.txt and pip #####
 
 It is still possible to recreate the original environment if you are not using the conda package manager. The pip manager that comes with many Python distributions is able to install requirements using the **requirements.txt** file present in the project. **However, you first need to create an environment yourself separate from your base Python environment so as to prevent potential problems.** The process of creating a virtual environment through pip is lengthier than the method above. [Here's the official documentation on how to install packages and create virtual environments using pip.](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
@@ -86,7 +88,9 @@ To run the whole cleaning, analysis and visualization process from start to fini
 
 * cd to the root project folder, the folder in which the **dodo.py** file is located.
 
-* Simply run the following command: `doit`
+* Simply run the following commands in the following order: `doit forget` and then `doit`
+
+Whenever you want to re-run the analysis, repeat the two commands in the same order.
 
 **Attention!** Running the whole pipeline on your computer skips two parts of the original analysis:
 
