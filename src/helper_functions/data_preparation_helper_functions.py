@@ -205,7 +205,6 @@ def plot_null_values_matrix(dataframe):
                 cbar = False)
     
     plt.xticks(rotation=90, size='x-large')
-    plt.show()
     
     fig = plot_object.get_figure()
     return fig 

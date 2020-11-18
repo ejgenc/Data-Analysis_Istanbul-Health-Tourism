@@ -37,7 +37,7 @@ airbnb_gdf= gpd.read_file(import_fp, encoding = "utf-8-sig")
 
 #Import extra data
 import_fp = Path("../../data/external/district_income.xlsx")
-extra_data = pd.read_excel(import_fp)
+extra_data = pd.read_excel(import_fp, engine = "openpyxl")
 
 #%% --- Aggregate airbnb count per district ---
 

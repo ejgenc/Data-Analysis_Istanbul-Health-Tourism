@@ -47,7 +47,7 @@ plot_null_values_matrix(hservices)
 #The number of missing values appears to be either 0 or insignificant.
 #Let's tackle this numerically:
     
-report_null_values(hservices, print_results = True)
+report_null_values(hservices, print_results = False)
 
 #There are some missing values, but none in important columns such as lat/long and
 #name.
