@@ -9,8 +9,8 @@ _A sneak peek into the results of the analysis conducted in this project._
 
 The results of this analysis are offered as Medium articles. Be sure to check them out!
 
-- [Medium Article (in English)](#)
-- [Medium Article (in Turkish)](#)
+- [Medium Article (in English)](https://ejgenc.medium.com/a-tribute-to-my-wrongness-istanbul-data-analysis-2c4f63176dc6)
+- [Medium Article (in Turkish)](https://ejgenc.medium.com/istanbul-saglik-turizmi-d4ffd0694ddf)
  
 ## What is this project about? ##
 
