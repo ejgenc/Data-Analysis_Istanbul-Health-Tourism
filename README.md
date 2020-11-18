@@ -104,9 +104,6 @@ Below is a document tree of this project for those who wish to explore further.
     │   ├── processed      <- Cleaned and processed data ready to be analyzed.
     │   └── raw            <- The original, immutable data dump.
     │
-    │
-    ├── eda_notebooks      <- Jupyter notebooks that serve as scratchpads. These files were not created with external viewers in mind.
-    |                         You can explore them if you wish. However, a good viewing experience is not promised.
     |
     |── media              <- Contains internally generated figures and external photos. Internally generated figures come with a license.
     |    ├── external_media <- Images and media downloaded from third party resources. A .txt file of references and attribution is included.

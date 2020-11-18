@@ -22,6 +22,6 @@ dependencies:
   - geoplot=0.4.1
   - pip:
     - -e .
-    - textdistance=4.2.0
+    - textdistance==4.2.0
     
 prefix: F:\Programming_Environment\python_minicondadist\envs\healthtourismenv
