@@ -52,11 +52,11 @@ Before creating the environment, you need to have the project files on your comp
 
 #### 2.) Recreate the environment that the analysis was conducted in ####
 
-The project files that i present offer two ways to do this to account for the two most popular package managers for Python, conda and pip. Let's start with my preferred method first:
+I decided to use [**Conda package manager**](https://docs.conda.io/en/latest/) as a package and environment manager for this project. **This was the preferred method of environment replication for this project because the conda package manager is more likely to download the main dependencies and their co-dependencies is a way that fits your specific operation system.**
 
-##### a.) Using the environment.yml file with conda package manager #####
+##### Using the environment.yml file with Conda package manager #####
 
-You can use this option if you have the conda package manager installed in your computer. The preferred method is to cd to the directory of the project and then run the following command in the Anaconda prompt (or any terminal where you can run conda from):
+First, CD to the root of the project directory that you have downloaded. Then run the following command in the Anaconda prompt (or any terminal where you can run conda package manager from from):
 
 `conda env create -f environment.yml`
 
@@ -64,21 +64,9 @@ Running this command will make conda create a new environment similar to the env
 
 `conda activate healthtourismenv`
 
-**This is the preferred method of environment replication for this project because the conda package manager is more likely to download the main dependencies and their co-dependencies is a way that fits your specific operation system.**
-
-##### b.) Create the environment yourself and load the packages using the requirements.txt and pip #####
-
-It is still possible to recreate the original environment if you are not using the conda package manager. The pip manager that comes with many Python distributions is able to install requirements using the **requirements.txt** file present in the project. **However, you first need to create an environment yourself separate from your base Python environment so as to prevent potential problems.** The process of creating a virtual environment through pip is lengthier than the method above. [Here's the official documentation on how to install packages and create virtual environments using pip.](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
-
-Once you have created your environment, you can now install all the packages using the requirements.txt file. To do so, **activate your virtual environment**, cd to the project folder and run the following in a Python terminal:
-
-`pip install --requirement requirements.txt`
-
-**Now that we have recreated an environment similar to the one the project was created in, we can move on to reproducing the analysis.**
-
 #### 3.) Utilize the Python doit package to replicate the analysis ####
 
-[The doit package](https://pydoit.org/) is a handy tool in Python that can be used to automate certain tasks, including data analysis workflows. This project makes use of the doit package to make replication easier. The doit module was included in both of the dependency creation methods. All the information related to the pipeline structure of the analysis is located in the **dodo.py** file.
+[The doit package](https://pydoit.org/) is a handy tool in Python that can be used to automate certain tasks, including data analysis workflows. This project makes use of the doit package to make replication easier. All the information related to the pipeline structure of the analysis is located in the **dodo.py** file.
 
 To run the whole cleaning, analysis and visualization process from start to finish, do the following:
 

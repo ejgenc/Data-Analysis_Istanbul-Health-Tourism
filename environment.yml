@@ -3,24 +3,24 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - pip
-  - requests
-  - geopandas
-  - selenium
-  - matplotlib
-  - pytest
-  - pandas
-  - seaborn
+  - pip=20.2.2
+  - requests=2.24.0
+  - geopandas=0.8.1
+  - selenium=3.141.0
+  - matplotlib=3.2.2
+  - pytest=6.0.1
+  - pandas=1.1.1
+  - seaborn=0.10.1
   - openpyxl
-  - lxml
-  - doit
-  - descartes
+  - lxml=4.5.2
+  - doit=0.32.0
+  - descartes=1.1.0
   - notebook
-  - xlrd
-  - contextily
-  - geoplot
+  - xlrd=1.2.0
+  - contextily=1.0.0
+  - geoplot=0.4.1
   - pip:
     - -e .
-    - textdistance
+    - textdistance=4.2.0
     
 prefix: F:\Programming_Environment\python_minicondadist\envs\healthtourismenv

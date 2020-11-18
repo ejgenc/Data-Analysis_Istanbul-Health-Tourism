@@ -2,11 +2,8 @@
 	- doit (through conda forge)
 	- pytest
 
-2.) Ensure that the local package is present in environment.yml and requirements.txt:
+2.) Ensure that the local package is present in environment.yml
 	In environment.yml, add this under the "-pip" portion:
-		-.
-	In requirements.txt, add this:
-		# local package
 		-e .
 
 3.) Update the name of the environment that you will export in the environment.yml file.
