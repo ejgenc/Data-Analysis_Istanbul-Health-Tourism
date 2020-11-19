@@ -140,10 +140,6 @@ Below is a document tree of this project for those who wish to explore further.
     |   ├── data_quality_tests      <- Contains data quality tests for some of the datasets.
     |                        
     |
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         Generated with `pip freeze > requirements.txt`
-    |
-    |
     |── environment.yml    <- A .yml file for reproducing the analysis environment.
     |                         Generated with "conda env export --from-history -f environment.yml"
     |
