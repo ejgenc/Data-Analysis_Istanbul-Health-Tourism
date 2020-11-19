@@ -1,4 +1,4 @@
-1.) Ensure that the following packages are present in environment.yml and requirements.txt:
+1.) Ensure that the following packages are present in environment.yml
 	- doit (through conda forge)
 	- pytest
 

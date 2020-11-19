@@ -1,7 +1,7 @@
 A REMINDER ON REPLICATION
 
 Replication of the original project environment is important. The project structure here aims
-to provide two methods of environment creation for two different package managers: conda and pip.
+to provide two methods of environment creation for the conda package manager
 
 Conda environment creation works with environment.yml files. To create an environment.yml file, run the following
 command in an Anaconda interpreter before loading it all into GitHub:
